@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sanka Follow Up</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#3b4fd8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Sanka">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Readex+Pro:wght@500;600;700&display=swap">
+<style>
+/* Layout: control room — summary strip, approved projects across all areas, then one section per area (its proposed pipeline + its tasks), archive last. RTL. */
+:root{
+  --bg:#f3f4f7; --surface:#ffffff; --surface-2:#eceef3; --line:#dde0e8;
+  --fg:#1a1d2b; --muted:#646a80;
+  --accent:#3b4fd8; --accent-soft:#e4e7fb;
+  --ok:#1f8a5b; --ok-soft:#dcf2e7;
+  --warn:#b26a00; --warn-soft:#fbeed6;
+  --bad:#c23a3a; --bad-soft:#fbe1e1;
+  --info:#2f6fa8; --info-soft:#dceaf7;
+  --on-solid:#ffffff;
+  --display:"Readex Pro","IBM Plex Sans Arabic",system-ui,sans-serif;
+  --body:"IBM Plex Sans Arabic",system-ui,"Segoe UI",Tahoma,sans-serif;
+  --r:10px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12141c; --surface:#1b1e2a; --surface-2:#232736; --line:#2e3344;
+  --fg:#e9ebf2; --muted:#9aa0b6; --accent:#8b9bff; --accent-soft:#272c4d;
+  --ok:#55c48f; --ok-soft:#1b3328; --warn:#e8a64a; --warn-soft:#3a2d17;
+  --bad:#ef7b7b; --bad-soft:#3d2023; --info:#7fb3e6; --info-soft:#1d2d3e; --on-solid:#10121a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12141c; --surface:#1b1e2a; --surface-2:#232736; --line:#2e3344;
+  --fg:#e9ebf2; --muted:#9aa0b6; --accent:#8b9bff; --accent-soft:#272c4d;
+  --ok:#55c48f; --ok-soft:#1b3328; --warn:#e8a64a; --warn-soft:#3a2d17;
+  --bad:#ef7b7b; --bad-soft:#3d2023; --info:#7fb3e6; --info-soft:#1d2d3e; --on-solid:#10121a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.6}
+.wrap{max-width:1180px;margin:0 auto;padding-block:28px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:32px}
+h1,h2,h3,h4{font-family:var(--display);margin:0;text-wrap:balance}
+h1{font-size:28px;font-weight:700}
+h2{font-size:19px;font-weight:600}
+.top{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between}
+.top p{margin:4px 0 0;color:var(--muted)}
+.lock{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 12px}
+.lock svg{width:14px;height:14px}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+
+/* summary */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.kpi{background:var(--surface);padding:14px 16px;display:grid;gap:2px;align-content:start}
+.kpi b{font-family:var(--display);font-size:26px;font-weight:600;line-height:1.3}
+.kpi span{font-size:12.5px;color:var(--muted)}
+.kpi small{font-size:11.5px;color:var(--muted)}
+.kpi.bad b{color:var(--bad)} .kpi.ok b{color:var(--ok)} .kpi.acc b{color:var(--accent)}
+.ring{display:flex;align-items:center;gap:12px}
+.ring svg{width:46px;height:46px;flex:none}
+
+/* controls */
+button,input,select{font:inherit;color:inherit}
+.btn{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 13px;cursor:pointer;font-size:13.5px;white-space:nowrap}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-solid);font-weight:600}
+.btn.ok{background:var(--ok);border-color:var(--ok);color:var(--on-solid);font-weight:600}
+.btn.danger{background:var(--bad);border-color:var(--bad);color:var(--on-solid);font-weight:600}
+.btn.ghost-bad{color:var(--bad)}
+.btn.sm{padding:3px 10px;font-size:12.5px}
+.btn:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+input,select{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 10px;min-width:0;width:100%}
+input[type=checkbox],input[type=range]{width:auto}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{all:unset;cursor:pointer;padding:4px 11px;border-radius:6px;font-size:13px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--accent-soft);color:var(--fg);font-weight:600}
+.seg button:focus-visible{outline:2px solid var(--accent)}
+.icon{all:unset;cursor:pointer;width:28px;height:28px;display:grid;place-items:center;border-radius:6px;color:var(--muted);flex:none}
+.icon:hover{background:var(--surface-2);color:var(--fg)}
+.icon:focus-visible{outline:2px solid var(--accent)}
+.icon svg{width:16px;height:16px}
+.sec-head{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.sec-head .tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.count{background:var(--surface-2);border-radius:99px;padding:0 9px;font-size:12px;font-weight:500;color:var(--muted)}
+.empty{padding:22px 16px;text-align:center;color:var(--muted);font-size:14px}
+.hint{margin:0;font-size:12.5px;color:var(--muted)}
+.notice{background:var(--warn-soft);color:var(--warn);border-radius:var(--r);padding:12px 14px;font-size:13.5px}
+
+/* composer forms */
+.panel{background:var(--surface);border:1px solid var(--accent);border-radius:var(--r);padding:16px;display:grid;gap:12px;margin-bottom:16px}
+.panel h3{font-size:15px;font-weight:600}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.fgrid label{display:grid;gap:4px;font-size:12px;color:var(--muted);min-width:0}
+.fgrid .wide{grid-column:1/-1}
+.factions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* projects */
+.projs{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.proj{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:grid;gap:9px;align-content:start;min-width:0}
+.proj.active{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.proj.pipe{border-style:dashed}
+.proj.wide{grid-column:1/-1}
+.proj-top{display:flex;gap:8px;justify-content:space-between;align-items:flex-start}
+.proj h4{font-size:15.5px;font-weight:600;overflow-wrap:anywhere;min-width:0}
+.proj .area-tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.proj .area-tag::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c,var(--accent))}
+.badge{font-size:11.5px;font-weight:600;border-radius:999px;padding:2px 10px;white-space:nowrap}
+.b-active{background:var(--ok-soft);color:var(--ok)}
+.b-rfq,.b-sent,.b-nego{background:var(--warn-soft);color:var(--warn)}
+.b-closed{background:var(--surface-2);color:var(--muted)}
+.b-rejected{background:var(--bad-soft);color:var(--bad)}
+.pipeline{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.pipeline button{all:unset;cursor:pointer;text-align:center;font-size:11.5px;padding:5px 4px;border-radius:6px;background:var(--surface-2);color:var(--muted);line-height:1.3}
+.pipeline button.on{background:var(--warn-soft);color:var(--warn);font-weight:600}
+.pipeline button.cur{background:var(--warn);color:var(--on-solid)}
+.pipeline button:focus-visible{outline:2px solid var(--accent)}
+.proj dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:13px}
+.proj dt{color:var(--muted)} .proj dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.proj dd.late{color:var(--bad);font-weight:600}
+.proj dd.soon{color:var(--warn);font-weight:600}
+.bar{height:6px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--c,var(--accent));border-radius:99px}
+.pct{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px}
+.lastup{font-size:13px;background:var(--surface-2);border-radius:8px;padding:7px 10px;overflow-wrap:anywhere}
+.lastup time,.updates time{color:var(--muted);font-size:12px}
+.reason{font-size:13px;color:var(--bad);overflow-wrap:anywhere}
+.proj-ops{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.proj-ops .spacer{flex:1}
+.rejectbox{display:grid;gap:8px;background:var(--bad-soft);border-radius:8px;padding:10px}
+.rejectbox label{font-size:12.5px;color:var(--bad);display:grid;gap:4px}
+.pdetail{display:grid;grid-template-columns:1fr 1fr;gap:18px;border-top:1px solid var(--line);padding-top:12px}
+.pdetail>div{min-width:0;display:grid;gap:8px;align-content:start}
+.plabel{font-family:var(--display);font-weight:600;font-size:13.5px}
+.ptasks,.updates{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.ptasks li{display:flex;align-items:center;gap:8px;padding:4px 6px;border-radius:6px;font-size:13.5px}
+.ptasks li:hover{background:var(--surface-2)}
+.ptasks label{display:flex;gap:8px;align-items:flex-start;cursor:pointer;min-width:0;overflow-wrap:anywhere;flex:1}
+.ptasks input{accent-color:var(--ok);margin-top:5px}
+.ptasks li.done span{color:var(--muted);text-decoration:line-through}
+.ptasks .mini{font-size:11.5px;color:var(--muted);white-space:nowrap}
+.updates li{display:grid;grid-template-columns:1fr auto;gap:0 6px;border-inline-start:2px solid var(--line);padding:2px 10px 6px}
+.updates li:first-child{border-inline-start-color:var(--accent)}
+.updates p{margin:0;font-size:13.5px;grid-column:1;overflow-wrap:anywhere}
+.updates .icon{grid-column:2;grid-row:1/3;width:24px;height:24px}
+form.inline{display:flex;gap:6px}
+form.inline input{flex:1}
+.manual{display:flex;gap:10px;align-items:center}
+.manual input{flex:1;accent-color:var(--accent);padding:0;border:0}
+@media (max-width:760px){.pdetail{grid-template-columns:1fr}}
+
+/* area sections */
+.areas{display:grid;gap:18px}
+.asec{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);border-top:4px solid var(--c,var(--accent));padding:16px;display:grid;gap:14px;min-width:0}
+.asec-head{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.asec-head h3{font-size:18px;font-weight:600}
+.asec-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:2px}
+.asec-meta .late{color:var(--bad);font-weight:600}
+.asec-prog{display:flex;align-items:center;gap:8px;min-width:150px;font-size:12px;color:var(--muted)}
+.asec-prog .bar{flex:1}
+.sub{font-size:12.5px;font-weight:600;color:var(--muted);letter-spacing:.01em;display:flex;align-items:center;gap:8px}
+.sub::after{content:"";flex:1;height:1px;background:var(--line)}
+.asec .projs .proj{background:var(--bg)}
+
+/* task rows */
+.list{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.row{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto auto;gap:12px;align-items:center;padding:10px 12px;border-top:1px solid var(--line);background:var(--surface)}
+.row:first-child{border-top:0}
+.row.done .t>span{color:var(--muted);text-decoration:line-through}
+.t{min-width:0;overflow-wrap:anywhere}
+.t small{display:block;color:var(--muted);font-size:12px}
+.t small b{font-weight:500;color:var(--fg)}
+.due{font-size:12.5px;color:var(--muted);white-space:nowrap}
+.due.late{color:var(--bad);font-weight:600}
+.due.soon{color:var(--warn);font-weight:600}
+.st{appearance:none;width:auto;border-radius:999px;padding:3px 12px;font-size:12.5px;font-weight:600;border:0;cursor:pointer;text-align:center}
+.st[data-s="todo"]{background:var(--surface-2);color:var(--muted)}
+.st[data-s="doing"]{background:var(--info-soft);color:var(--info)}
+.st[data-s="wait"]{background:var(--warn-soft);color:var(--warn)}
+.st[data-s="done"]{background:var(--ok-soft);color:var(--ok)}
+.pr{width:4px;align-self:stretch;border-radius:2px;background:transparent}
+.pr[data-p="high"]{background:var(--bad)} .pr[data-p="mid"]{background:var(--warn)}
+.ops{display:flex;gap:2px}
+.confirm{display:flex;gap:6px;align-items:center;font-size:12.5px;flex-wrap:wrap}
+@media (max-width:640px){
+  .row{grid-template-columns:auto minmax(0,1fr) auto;row-gap:6px}
+  .row .due{grid-column:2}
+  .row .st{grid-column:3;grid-row:1}
+  .row .ops,.row .confirm{grid-column:3;grid-row:2}
+}
+details.arch{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+details.arch summary{cursor:pointer;font-family:var(--display);font-weight:600;font-size:15px}
+details.arch .projs{margin-top:12px}
+details.arch .proj{background:var(--bg)}
+@media (prefers-reduced-motion:no-preference){.bar i{transition:width .4s ease}}
+
+[hidden]{display:none!important}
+html,body{margin:0}
+body{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);-webkit-text-size-adjust:100%}
+.login{min-height:100vh;min-height:100dvh;display:grid;place-items:center;padding-block:24px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.login form{width:100%;max-width:380px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px 22px;display:grid;gap:14px}
+.login .mark{width:44px;height:44px;border-radius:12px;background:var(--accent);display:grid;place-items:center;color:var(--on-solid)}
+.login .mark svg{width:22px;height:22px}
+.login h1{font-size:22px}
+.login p{margin:0;color:var(--muted);font-size:13.5px}
+.login label{display:grid;gap:5px;font-size:12.5px;color:var(--muted)}
+.login input{padding:10px 12px;font-size:16px}
+.login .btn{padding:10px;font-size:15px}
+.login .err{color:var(--bad);font-size:13px;min-height:1em}
+@media (max-width:640px){input,select{font-size:16px}}
+</style>
+</head>
+<body>
+<div class="login" id="login" hidden>
+  <form id="loginForm" autocomplete="on">
+    <div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12l5 5L20 6"/></svg></div>
+    <div><h1>Sanka Follow Up</h1><p>سجّل دخولك عشان تشوف مهامك ومشاريعك.</p></div>
+    <label>الإيميل<input id="lEmail" type="email" autocomplete="username" required dir="ltr" inputmode="email"></label>
+    <label>الباسوورد<input id="lPass" type="password" autocomplete="current-password" required dir="ltr"></label>
+    <div class="err" id="loginErr" role="alert"></div>
+    <button class="btn primary" type="submit" id="loginBtn">دخول</button>
+  </form>
+</div>
+<div class="wrap" id="app" hidden>
+  <header class="top">
+    <div>
+      <h1>لوحة مهامي</h1>
+      <p id="today"></p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>دخول خاص</span><button class="btn sm" type="button" id="signOut">تسجيل خروج</button></div>
+  </header>
+
+  <div id="notice" class="notice" hidden></div>
+
+  <section class="kpis" id="kpis" aria-label="ملخص"></section>
+
+  <section>
+    <div class="sec-head"><h2>المشاريع الحالية <span class="count num" id="curCount">0</span></h2><span class="muted num" id="curValue"></span></div>
+    <div id="current"></div>
+  </section>
+
+  <section id="areasSec">
+    <div class="sec-head">
+      <h2>المجالات</h2>
+      <div class="tools">
+        <div class="seg" id="statusFilter" role="group" aria-label="المهام المعروضة">
+          <button type="button" data-f="open" aria-pressed="true">المفتوحة</button>
+          <button type="button" data-f="late" aria-pressed="false">المتأخرة</button>
+          <button type="button" data-f="done" aria-pressed="false">المنجزة</button>
+          <button type="button" data-f="all" aria-pressed="false">الكل</button>
+        </div>
+        <button class="btn" type="button" data-open="task">+ مهمة</button>
+        <button class="btn" type="button" data-open="proj">+ مشروع مقترح</button>
+        <button class="btn" type="button" data-open="area">+ مجال</button>
+      </div>
+    </div>
+
+    <form class="panel" id="taskForm" hidden>
+      <h3 id="tfTitle">مهمة جديدة</h3>
+      <div class="fgrid">
+        <label class="wide">المهمة<input id="fTitle" required placeholder="مثال: إرسال عرض سعر للعميل"></label>
+        <label>المجال<select id="fArea"></select></label>
+        <label>المشروع<select id="fProj"></select></label>
+        <label>الأولوية<select id="fPri"><option value="high">عالية</option><option value="mid" selected>متوسطة</option><option value="low">عادية</option></select></label>
+        <label>الموعد<input id="fDue" type="date"></label>
+      </div>
+      <div class="factions"><button class="btn primary" type="submit" id="fSubmit">إضافة المهمة</button><button class="btn" type="button" data-close="task">إلغاء</button></div>
+    </form>
+
+    <form class="panel" id="projForm" hidden>
+      <h3 id="pfTitle">مشروع جديد</h3>
+      <div class="fgrid">
+        <label class="wide">اسم المشروع<input id="pName" required placeholder="مثال: توريد أجهزة لجهة حكومية"></label>
+        <label>المجال<select id="pArea" required></select></label>
+        <label>المرحلة<select id="pStage">
+          <option value="rfq">طلب عرض سعر</option><option value="sent">تم إرسال العرض</option><option value="nego">تفاوض</option>
+          <option value="active">معمّد (حالي)</option><option value="closed">منتهي</option><option value="rejected">مرفوض</option></select></label>
+        <label>العميل / الجهة<input id="pClient"></label>
+        <label>القيمة (ر.س)<input id="pValue" type="number" min="0" step="any"></label>
+        <label>المسؤول عن المشروع<input id="pOwner"></label>
+        <label>شخص التواصل<input id="pContact"></label>
+        <label>رقم التواصل<input id="pPhone" inputmode="tel" dir="ltr"></label>
+        <label>موعد التسليم / الانتهاء<input id="pDue" type="date"></label>
+        <label>موعد المتابعة القادم<input id="pFollow" type="date"></label>
+      </div>
+      <div class="factions"><button class="btn primary" type="submit" id="pSubmit">إضافة المشروع</button><button class="btn" type="button" data-close="proj">إلغاء</button></div>
+    </form>
+
+    <form class="panel" id="areaForm" hidden>
+      <h3>مجال جديد</h3>
+      <div class="fgrid"><label>اسم المجال<input id="aName" required></label></div>
+      <div class="factions"><button class="btn primary" type="submit">إضافة المجال</button><button class="btn" type="button" data-close="area">إلغاء</button></div>
+    </form>
+
+    <div class="areas" id="areas"><div class="empty">جاري تحميل لوحتك…</div></div>
+  </section>
+
+  <section id="archive"></section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="config.js"></script>
+<script>
+const STATUS={todo:"جديدة",doing:"قيد العمل",wait:"بانتظار رد",done:"منجزة"};
+const ORDER=["todo","doing","wait","done"];
+const PRI={high:0,mid:1,low:2};
+const COLORS=["#3b4fd8","#1f9e8f","#d0584a","#b07d12","#7a4fc4","#2f6fa8","#c2477f","#4c8a2f"];
+const PIPE=[["rfq","طلب عرض سعر"],["sent","تم إرسال العرض"],["nego","تفاوض"]];
+const STAGE={rfq:"طلب عرض سعر",sent:"تم إرسال العرض",nego:"تفاوض",active:"معمّد",closed:"منتهي",rejected:"مرفوض"};
+const S={areas:[],tasks:[],projects:[],filter:"open",tEdit:null,pEdit:null,confirm:null,pConfirm:null,rejecting:null,open:new Set(),db:null};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const todayISO=()=>{const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,10)};
+const LOC="ar-SA-u-ca-gregory-nu-latn";
+const fmt=d=>d?new Date(d+"T00:00").toLocaleDateString(LOC,{day:"numeric",month:"short"}):"";
+const fmtDT=iso=>iso?new Date(iso).toLocaleString(LOC,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}):"";
+const money=v=>(v||v===0)&&v!==""?Number(v).toLocaleString("en-US")+" ر.س":"";
+const stageOf=p=>p.stage==="proposed"||!p.stage?"rfq":p.stage;
+const inPipe=p=>["rfq","sent","nego"].includes(stageOf(p));
+const areaOf=id=>S.areas.find(a=>a.id===id);
+const projById=id=>S.projects.find(p=>p.id===id);
+const isLate=t=>t.status!=="done"&&t.due&&t.due<todayISO();
+const isSoon=t=>{if(t.status==="done"||!t.due)return false;const d=(new Date(t.due)-new Date(todayISO()))/864e5;return d>=0&&d<=3};
+const dateState=d=>{if(!d)return"";const diff=(new Date(d)-new Date(todayISO()))/864e5;return diff<0?"late":diff<=2?"soon":""};
+const projTasks=id=>S.tasks.filter(t=>t.project===id);
+function projProgress(p){const ts=projTasks(p.id);if(ts.length)return Math.round(ts.filter(t=>t.status==="done").length/ts.length*100);return Math.max(0,Math.min(100,Number(p.progress)||0))}
+const I={
+  edit:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h4L19 9l-4-4L4 16v4z"/></svg>',
+  del:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13"/></svg>',
+  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>'
+};
+$("today").textContent=new Date().toLocaleDateString(LOC,{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+
+/* ---------- render ---------- */
+function renderKpis(){
+  const T=S.tasks,done=T.filter(t=>t.status==="done").length,late=T.filter(isLate).length;
+  const pct=T.length?Math.round(done/T.length*100):0,C=2*Math.PI*18;
+  const won=S.projects.filter(p=>["active","closed"].includes(stageOf(p))).length,lost=S.projects.filter(p=>stageOf(p)==="rejected").length;
+  const pipe=S.projects.filter(inPipe).length;
+  const rate=won+lost?Math.round(won/(won+lost)*100)+"%":"—";
+  $("kpis").innerHTML=`
+    <div class="kpi"><div class="ring"><svg viewBox="0 0 46 46" aria-hidden="true"><circle cx="23" cy="23" r="18" fill="none" stroke="var(--surface-2)" stroke-width="6"/><circle cx="23" cy="23" r="18" fill="none" stroke="var(--accent)" stroke-width="6" stroke-linecap="round" stroke-dasharray="${C*pct/100} ${C}" transform="rotate(-90 23 23)"/></svg><div><b class="num">${pct}%</b><span style="display:block">إنجاز المهام</span></div></div></div>
+    <div class="kpi"><b class="num">${T.length}</b><span>كل المهام</span></div>
+    <div class="kpi"><b class="num">${T.length-done}</b><span>مفتوحة</span></div>
+    <div class="kpi"><b class="num">${T.filter(t=>t.status==="doing").length}</b><span>قيد العمل</span></div>
+    <div class="kpi"><b class="num">${T.filter(t=>t.status==="wait").length}</b><span>بانتظار رد</span></div>
+    <div class="kpi ${late?"bad":""}"><b class="num">${late}</b><span>متأخرة</span></div>
+    <div class="kpi ok"><b class="num">${done}</b><span>منجزة</span></div>
+    <div class="kpi acc"><b class="num">${rate}</b><span>نسبة التعميد</span><small class="num">${won} معمّد · ${lost} مرفوض · ${pipe} قيد الدراسة</small></div>`;
+}
+
+function projCard(p,{showArea=false}={}){
+  const st=stageOf(p),a=areaOf(p.area),id=esc(p.id),pr=projProgress(p);
+  const ups=Array.isArray(p.updates)?p.updates:[],last=ups[ups.length-1],open=S.open.has(p.id);
+  const live=inPipe(p)||st==="active";
+  const rows=[];
+  if(p.client)rows.push(["العميل",esc(p.client)]);
+  if(p.value||p.value===0)rows.push(["القيمة",money(p.value)]);
+  if(p.owner)rows.push(["المسؤول",esc(p.owner)]);
+  if(p.contact||p.phone)rows.push(["التواصل",esc(p.contact||"")+(p.phone?` <span dir="ltr" class="num">${esc(p.phone)}</span>`:"")]);
+  if(p.due)rows.push(["التسليم",fmt(p.due),live?dateState(p.due):""]);
+  if(p.followUp&&live){const ds=dateState(p.followUp);rows.push(["المتابعة",(ds==="late"?"فاتت · ":"")+fmt(p.followUp),ds])}
+  if(st==="active"&&p.approvedAt)rows.push(["عُمّد في",fmt(p.approvedAt.slice(0,10))]);
+
+  const pipeline=inPipe(p)?`<div class="pipeline" role="group" aria-label="مرحلة المشروع">${PIPE.map(([k,l],i)=>{const ci=PIPE.findIndex(x=>x[0]===st);return `<button type="button" class="${i<ci?"on":""} ${i===ci?"cur":""}" data-stage="${k}" data-pid="${id}" aria-pressed="${i===ci}">${l}</button>`}).join("")}</div>`:"";
+
+  let ops;
+  if(S.pConfirm===p.id) ops=`<div class="confirm"><span>حذف المشروع نهائياً؟ مهامه تبقى بدون مشروع.</span><button type="button" class="btn danger sm" data-pdel="${id}">حذف</button><button type="button" class="btn sm" data-pno>لا</button></div>`;
+  else{
+    let b="";
+    if(inPipe(p))b+=`<button type="button" class="btn ok sm" data-stage="active" data-pid="${id}">تم التعميد</button><button type="button" class="btn sm ghost-bad" data-reject="${id}">مرفوض</button>`;
+    if(st==="active")b+=`<button type="button" class="btn sm" data-stage="closed" data-pid="${id}">إنهاء المشروع</button><button type="button" class="btn sm" data-stage="nego" data-pid="${id}">إرجاع للمقترحة</button>`;
+    if(st==="closed")b+=`<button type="button" class="btn sm" data-stage="active" data-pid="${id}">إعادة فتح</button>`;
+    if(st==="rejected")b+=`<button type="button" class="btn sm" data-stage="nego" data-pid="${id}">إرجاع للمقترحة</button>`;
+    ops=`<div class="proj-ops"><button type="button" class="btn sm" data-ptoggle="${id}" aria-expanded="${open}">${open?"إخفاء التفاصيل":"المتابعة والتفاصيل"}</button>${b}<span class="spacer"></span><button type="button" class="icon" data-pedit="${id}" aria-label="تعديل المشروع">${I.edit}</button><button type="button" class="icon" data-pask="${id}" aria-label="حذف المشروع">${I.del}</button></div>`;
+  }
+  const reject=S.rejecting===p.id?`<form class="rejectbox" data-rejectform="${id}"><label>سبب الرفض<input name="r" placeholder="مثال: السعر أعلى من الميزانية" aria-label="سبب الرفض"></label><div class="factions"><button class="btn danger sm" type="submit">تأكيد الرفض</button><button class="btn sm" type="button" data-rno>إلغاء</button></div></form>`:"";
+
+  const ts=projTasks(p.id).slice().sort((x,y)=>(x.status==="done")-(y.status==="done")||(x.due||"9").localeCompare(y.due||"9"));
+  const detail=open?`<div class="pdetail">
+    <div><div class="plabel">مهام المشروع ${ts.length?`<span class="num muted">(${ts.filter(t=>t.status==="done").length}/${ts.length})</span>`:""}</div>
+      ${ts.length?`<ul class="ptasks">${ts.map(t=>`<li class="${t.status==="done"?"done":""}"><label><input type="checkbox" data-tcheck="${esc(t.id)}" ${t.status==="done"?"checked":""}><span>${esc(t.title)}</span></label>${t.status!=="done"&&t.status!=="todo"?`<span class="mini">${STATUS[t.status]}</span>`:""}${t.due?`<span class="mini num ${isLate(t)?"late":""}">${fmt(t.due)}</span>`:""}</li>`).join("")}</ul>`
+        :`<div class="manual"><input type="range" min="0" max="100" step="5" value="${pr}" data-prog="${id}" aria-label="نسبة الإنجاز"><span class="num">${pr}%</span></div><p class="hint">ما فيه مهام مربوطة، فالنسبة يدوية. أضف مهام وتنحسب تلقائياً.</p>`}
+      <form class="inline" data-addtask="${id}"><input name="t" placeholder="مهمة جديدة لهذا المشروع" aria-label="مهمة جديدة لهذا المشروع"><button class="btn sm" type="submit">إضافة</button></form></div>
+    <div><div class="plabel">وش قاعد يصير</div>
+      <form class="inline" data-addupd="${id}"><input name="t" placeholder="اكتب آخر تحديث…" aria-label="تحديث جديد"><button class="btn sm" type="submit">نشر</button></form>
+      ${ups.length?`<ol class="updates">${ups.slice().reverse().map((u,ri)=>`<li><time class="num">${fmtDT(u.at)}</time><p>${esc(u.text)}</p><button type="button" class="icon" data-udel="${id}" data-i="${ups.length-1-ri}" aria-label="حذف التحديث">${I.x}</button></li>`).join("")}</ol>`:`<p class="hint">ما فيه تحديثات بعد.</p>`}
+    </div></div>`:"";
+
+  const barColor=st==="active"?"var(--ok)":inPipe(p)?"var(--warn)":"var(--muted)";
+  return `<article class="proj ${st==="active"?"active":""} ${inPipe(p)?"pipe":""} ${open?"wide":""}">
+    <div class="proj-top"><div style="min-width:0"><h4>${esc(p.name)}</h4>${showArea&&a?`<span class="area-tag" style="--c:${esc(a.color)}">${esc(a.name)}</span>`:""}</div><span class="badge b-${st}">${STAGE[st]}</span></div>
+    ${pipeline}
+    ${rows.length?`<dl class="num">${rows.map(([k,v,c])=>`<dt>${k}</dt><dd class="${c||""}">${v}</dd>`).join("")}</dl>`:""}
+    ${st==="rejected"&&p.rejectReason?`<div class="reason">سبب الرفض: ${esc(p.rejectReason)}</div>`:""}
+    <div><div class="bar" style="--c:${barColor}"><i style="width:${pr}%"></i></div><div class="pct num"><span>الإنجاز</span><span>${pr}%</span></div></div>
+    ${last?`<div class="lastup"><time class="num">${fmtDT(last.at)}</time> ${esc(last.text)}</div>`:""}
+    ${reject}${detail}${ops}
+  </article>`;
+}
+
+function taskRow(t){
+  const p=t.project?projById(t.project):null,id=esc(t.id),dc=isLate(t)?"late":isSoon(t)?"soon":"";
+  const ops=S.confirm===t.id
+    ?`<div class="confirm"><span>حذف؟</span><button type="button" class="btn danger sm" data-del="${id}">حذف</button><button type="button" class="btn sm" data-cancel>لا</button></div>`
+    :`<div class="ops"><button type="button" class="icon" data-edit="${id}" aria-label="تعديل المهمة">${I.edit}</button><button type="button" class="icon" data-ask="${id}" aria-label="حذف المهمة">${I.del}</button></div>`;
+  return `<div class="row ${t.status==="done"?"done":""}">
+    <span class="pr" data-p="${esc(t.priority)}" title="الأولوية"></span>
+    <div class="t"><span>${esc(t.title)}</span>${p?`<small>مشروع: <b>${esc(p.name)}</b></small>`:""}</div>
+    <span class="due num ${dc}">${t.due?(isLate(t)?"متأخرة · ":"")+fmt(t.due):"—"}</span>
+    <select class="st" data-s="${esc(t.status)}" data-status="${id}" aria-label="حالة المهمة">${ORDER.map(s=>`<option value="${s}" ${s===t.status?"selected":""}>${STATUS[s]}</option>`).join("")}</select>
+    ${ops}
+  </div>`;
+}
+
+function filtered(list){
+  let r=list;
+  if(S.filter==="open")r=r.filter(t=>t.status!=="done");
+  if(S.filter==="done")r=r.filter(t=>t.status==="done");
+  if(S.filter==="late")r=r.filter(isLate);
+  return r.slice().sort((a,b)=>(a.status==="done")-(b.status==="done")||(isLate(b)-isLate(a))||(PRI[a.priority]??1)-(PRI[b.priority]??1)||(a.due||"9999").localeCompare(b.due||"9999"));
+}
+
+function areaSection(a){
+  const ts=S.tasks.filter(t=>a?t.area===a.id:!areaOf(t.area));
+  const done=ts.filter(t=>t.status==="done").length,late=ts.filter(isLate).length,pct=ts.length?Math.round(done/ts.length*100):0;
+  const pipe=S.projects.filter(p=>inPipe(p)&&(a?p.area===a.id:!areaOf(p.area)));
+  const active=S.projects.filter(p=>stageOf(p)==="active"&&a&&p.area===a.id).length;
+  const rows=filtered(ts);
+  const emptyMsg={open:"ما فيه مهام مفتوحة في هذا المجال.",late:"ما فيه مهام متأخرة.",done:"ما فيه مهام منجزة بعد.",all:"ما فيه مهام بعد."}[S.filter];
+  const aid=a?esc(a.id):"";
+  return `<section class="asec" style="--c:${esc(a?.color||"var(--muted)")}">
+    <div class="asec-head">
+      <div><h3>${esc(a?.name||"بدون مجال")}</h3>
+        <div class="asec-meta num"><span>${ts.length-done} مهمة مفتوحة</span>${late?`<span class="late">${late} متأخرة</span>`:""}<span>${pipe.length} مقترح</span>${active?`<span>${active} حالي</span>`:""}</div></div>
+      <div class="asec-prog num"><div class="bar"><i style="width:${pct}%"></i></div><span>${pct}%</span></div>
+    </div>
+    <div class="sub">المشاريع المقترحة <span class="count num">${pipe.length}</span></div>
+    ${pipe.length?`<div class="projs">${pipe.map(p=>projCard(p)).join("")}</div>`:`<p class="hint">ما فيه مشاريع مقترحة هنا.</p>`}
+    ${a?`<div><button type="button" class="btn sm" data-open="proj" data-area="${aid}">+ مشروع مقترح</button></div>`:""}
+    <div class="sub">المهام <span class="count num">${rows.length}</span></div>
+    ${rows.length?`<div class="list">${rows.map(taskRow).join("")}</div>`:`<p class="hint">${emptyMsg}</p>`}
+    ${a?`<div><button type="button" class="btn sm" data-open="task" data-area="${aid}">+ مهمة</button></div>`:""}
+  </section>`;
+}
+
+function renderCurrent(){
+  const act=S.projects.filter(p=>stageOf(p)==="active").sort((a,b)=>(b.approvedAt||"").localeCompare(a.approvedAt||""));
+  $("curCount").textContent=act.length;
+  const sum=act.reduce((s,p)=>s+(Number(p.value)||0),0);
+  $("curValue").textContent=sum?"القيمة الإجمالية: "+money(sum):"";
+  $("current").innerHTML=act.length?`<div class="projs">${act.map(p=>projCard(p,{showArea:true})).join("")}</div>`
+    :`<div class="empty" style="background:var(--surface);border:1px dashed var(--line);border-radius:var(--r)">ما فيه مشاريع معمّدة حالياً. لما يتعمّد مشروع مقترح من أي مجال، اضغط «تم التعميد» ويطلع هنا.</div>`;
+}
+
+function renderArchive(){
+  const rej=S.projects.filter(p=>stageOf(p)==="rejected"),cl=S.projects.filter(p=>stageOf(p)==="closed");
+  $("archive").innerHTML=(cl.length?`<details class="arch"><summary>المشاريع المنتهية <span class="count num">${cl.length}</span></summary><div class="projs">${cl.map(p=>projCard(p,{showArea:true})).join("")}</div></details>`:"")
+    +(rej.length?`<details class="arch" style="margin-top:12px"><summary>المشاريع المرفوضة <span class="count num">${rej.length}</span></summary><div class="projs">${rej.map(p=>projCard(p,{showArea:true})).join("")}</div></details>`:"");
+}
+
+function fillSelects(){
+  const opts=S.areas.map(a=>`<option value="${esc(a.id)}">${esc(a.name)}</option>`).join("");
+  for(const id of ["fArea","pArea"]){const s=$(id),v=s.value;s.innerHTML=opts;if(v&&areaOf(v))s.value=v}
+  fillProjSelect();
+}
+function fillProjSelect(){
+  const s=$("fProj"),v=s.value,area=$("fArea").value;
+  const ps=S.projects.filter(p=>p.area===area&&(inPipe(p)||stageOf(p)==="active"||p.id===v));
+  s.innerHTML=`<option value="">بدون مشروع</option>`+ps.map(p=>`<option value="${esc(p.id)}">${esc(p.name)}</option>`).join("");
+  if(v&&ps.some(p=>p.id===v))s.value=v;
+}
+
+function render(){
+  renderKpis();renderCurrent();
+  const orphan=S.tasks.some(t=>!areaOf(t.area))||S.projects.some(p=>inPipe(p)&&!areaOf(p.area));
+  $("areas").innerHTML=S.areas.length||orphan?S.areas.map(areaSection).join("")+(orphan?areaSection(null):"")
+    :`<div class="empty">ما فيه مجالات بعد. أضف أول مجال من زر «+ مجال».</div>`;
+  renderArchive();fillSelects();
+}
+
+/* ---------- writes ---------- */
+function showNotice(m){const n=$("notice");n.textContent=m;n.hidden=!m}
+async function write(fn){try{await fn()}catch(e){showNotice(e?.code==="invalid_argument"?"ما قدرت أحفظ التعديل. هذه اللوحة تقبل التعديل من صاحبها فقط.":"ما قدرت أحفظ التعديل، جرّب مرة ثانية بعد لحظات.")}}
+const now=()=>new Date().toISOString();
+function stagePatch(st){const u={stage:st};if(st==="active")u.approvedAt=now();if(st==="closed")u.closedAt=now();if(st==="rejected")u.rejectedAt=now();return u}
+
+/* ---------- forms ---------- */
+function closeForms(){for(const id of ["taskForm","projForm","areaForm"]){$(id).hidden=true;$(id).reset()}S.tEdit=S.pEdit=null}
+function openForm(kind,area){
+  closeForms();
+  if(kind==="task"){$("tfTitle").textContent="مهمة جديدة";$("fSubmit").textContent="إضافة المهمة";$("fPri").value="mid";if(area)$("fArea").value=area;fillProjSelect();$("taskForm").hidden=false;$("taskForm").scrollIntoView({block:"nearest"});$("fTitle").focus()}
+  if(kind==="proj"){$("pfTitle").textContent="مشروع مقترح جديد";$("pSubmit").textContent="إضافة المشروع";$("pStage").value="rfq";if(area)$("pArea").value=area;$("projForm").hidden=false;$("projForm").scrollIntoView({block:"nearest"});$("pName").focus()}
+  if(kind==="area"){$("areaForm").hidden=false;$("aName").focus()}
+}
+function editTask(t){openForm("task",t.area);S.tEdit=t.id;$("tfTitle").textContent="تعديل المهمة";$("fSubmit").textContent="حفظ التعديل";$("fTitle").value=t.title;$("fArea").value=t.area||"";fillProjSelect();$("fProj").value=t.project||"";$("fPri").value=t.priority||"mid";$("fDue").value=t.due||""}
+function editProj(p){openForm("proj",p.area);S.pEdit=p.id;$("pfTitle").textContent="تعديل المشروع";$("pSubmit").textContent="حفظ التعديل";
+  $("pName").value=p.name||"";$("pStage").value=stageOf(p);$("pClient").value=p.client||"";$("pValue").value=p.value??"";$("pOwner").value=p.owner||"";$("pContact").value=p.contact||"";$("pPhone").value=p.phone||"";$("pDue").value=p.due||"";$("pFollow").value=p.followUp||""}
+
+$("fArea").addEventListener("change",fillProjSelect);
+$("taskForm").addEventListener("submit",e=>{e.preventDefault();if(!S.db)return;
+  const body={title:$("fTitle").value.trim(),area:$("fArea").value,project:$("fProj").value,priority:$("fPri").value,due:$("fDue").value||""};
+  if(!body.title)return;
+  const id=S.tEdit;
+  if(id)write(()=>S.db.doc("tasks/"+id).update(body));
+  else write(()=>S.db.collection("tasks").add({...body,status:"todo",created:now()}));
+  closeForms()});
+$("projForm").addEventListener("submit",e=>{e.preventDefault();if(!S.db)return;
+  const v=$("pValue").value;
+  const body={name:$("pName").value.trim(),area:$("pArea").value,client:$("pClient").value.trim(),value:v===""?null:Number(v),owner:$("pOwner").value.trim(),
+    contact:$("pContact").value.trim(),phone:$("pPhone").value.trim(),due:$("pDue").value||"",followUp:$("pFollow").value||""};
+  if(!body.name||!body.area)return;
+  const st=$("pStage").value,id=S.pEdit,old=id&&projById(id);
+  if(id){Object.assign(body,stageOf(old)!==st?stagePatch(st):{stage:st});write(()=>S.db.doc("projects/"+id).update(body))}
+  else write(()=>S.db.collection("projects").add({...body,...stagePatch(st),updates:[],created:now()}));
+  closeForms()});
+$("areaForm").addEventListener("submit",e=>{e.preventDefault();if(!S.db)return;const name=$("aName").value.trim();if(!name)return;
+  const order=Math.max(0,...S.areas.map(a=>a.order||0))+1;
+  write(()=>S.db.collection("areas").add({name,color:COLORS[S.areas.length%COLORS.length],order}));closeForms()});
+
+/* ---------- delegated events ---------- */
+const wrap=document.querySelector(".wrap");
+$("statusFilter").addEventListener("click",e=>{const b=e.target.closest("[data-f]");if(!b)return;S.filter=b.dataset.f;[...$("statusFilter").children].forEach(x=>x.setAttribute("aria-pressed",x===b));render()});
+wrap.addEventListener("click",e=>{
+  const q=s=>e.target.closest(s);let el;
+  if(el=q("[data-open]")){openForm(el.dataset.open,el.dataset.area);return}
+  if(el=q("[data-close]")){closeForms();return}
+  if(el=q("[data-ptoggle]")){const k=el.dataset.ptoggle;S.open.has(k)?S.open.delete(k):S.open.add(k);render();return}
+  if(el=q("[data-stage]")){if(S.db)write(()=>S.db.doc("projects/"+el.dataset.pid).update(stagePatch(el.dataset.stage)));return}
+  if(el=q("[data-reject]")){S.rejecting=el.dataset.reject;render();setTimeout(()=>document.querySelector(`[data-rejectform] input`)?.focus());return}
+  if(q("[data-rno]")){S.rejecting=null;render();return}
+  if(el=q("[data-pedit]")){const p=projById(el.dataset.pedit);if(p)editProj(p);return}
+  if(el=q("[data-pask]")){S.pConfirm=el.dataset.pask;render();return}
+  if(q("[data-pno]")){S.pConfirm=null;render();return}
+  if(el=q("[data-pdel]")){const id=el.dataset.pdel;S.pConfirm=null;if(!S.db)return;
+    write(async()=>{for(const t of projTasks(id))await S.db.doc("tasks/"+t.id).update({project:""});await S.db.doc("projects/"+id).delete()});return}
+  if(el=q("[data-udel]")){const p=projById(el.dataset.udel);if(p&&S.db){const updates=(p.updates||[]).filter((_,i)=>i!==+el.dataset.i);write(()=>S.db.doc("projects/"+p.id).update({updates}))}return}
+  if(el=q("[data-edit]")){const t=S.tasks.find(x=>x.id===el.dataset.edit);if(t)editTask(t);return}
+  if(el=q("[data-ask]")){S.confirm=el.dataset.ask;render();return}
+  if(q("[data-cancel]")){S.confirm=null;render();return}
+  if(el=q("[data-del]")){const id=el.dataset.del;S.confirm=null;if(S.db)write(()=>S.db.doc("tasks/"+id).delete());return}
+});
+wrap.addEventListener("change",e=>{
+  const t=e.target;if(!S.db)return;
+  if(t.dataset.status){const u={status:t.value};if(t.value==="done")u.doneAt=now();write(()=>S.db.doc("tasks/"+t.dataset.status).update(u))}
+  if(t.dataset.tcheck){const u=t.checked?{status:"done",doneAt:now()}:{status:"todo"};write(()=>S.db.doc("tasks/"+t.dataset.tcheck).update(u))}
+  if(t.dataset.prog)write(()=>S.db.doc("projects/"+t.dataset.prog).update({progress:Number(t.value)}));
+});
+wrap.addEventListener("input",e=>{if(e.target.dataset.prog)e.target.nextElementSibling.textContent=e.target.value+"%"});
+wrap.addEventListener("submit",e=>{
+  const f=e.target;
+  if(!(f.dataset.addtask||f.dataset.addupd||f.dataset.rejectform))return;
+  e.preventDefault();if(!S.db)return;
+  if(f.dataset.rejectform){const id=f.dataset.rejectform,r=f.elements.r.value.trim();S.rejecting=null;write(()=>S.db.doc("projects/"+id).update({...stagePatch("rejected"),rejectReason:r}));return}
+  const txt=f.elements.t.value.trim();if(!txt)return;
+  const pid=f.dataset.addtask||f.dataset.addupd,p=projById(pid);if(!p)return;
+  if(f.dataset.addtask)write(()=>S.db.collection("tasks").add({title:txt,area:p.area||"",project:pid,priority:"mid",due:"",status:"todo",created:now()}));
+  else write(()=>S.db.doc("projects/"+pid).update({updates:[...(p.updates||[]),{at:now(),text:txt}].slice(-100)}));
+  f.reset();
+});
+
+
+/* ---------- Supabase data layer ---------- */
+const KIND={areas:"area",projects:"project",tasks:"task"};
+const LIST={area:"areas",project:"projects",task:"tasks"};
+const newId=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,10);
+function localGet(kind,id){return S[LIST[kind]].find(x=>x.id===id)}
+function sortAreas(){S.areas.sort((a,b)=>(a.order||0)-(b.order||0))}
+function applyLocal(kind,id,data){const arr=S[LIST[kind]],i=arr.findIndex(x=>x.id===id),row={id,...data};if(i<0)arr.push(row);else arr[i]=row;if(kind==="area")sortAreas();render()}
+function removeLocal(kind,id){const k=LIST[kind];S[k]=S[k].filter(x=>x.id!==id);render()}
+function stripId(o){const {id,...rest}=o||{};return rest}
+
+function makeDb(sb){
+  async function save(kind,id,data){
+    const {error}=await sb.from("items").upsert({id,kind,data,updated_at:new Date().toISOString()});
+    if(error)throw error;
+  }
+  return{
+    doc(path){
+      const [c,id]=path.split("/"),kind=KIND[c];
+      return{
+        async update(patch){const data={...stripId(localGet(kind,id)),...patch};applyLocal(kind,id,data);await save(kind,id,data)},
+        async set(data){applyLocal(kind,id,data);await save(kind,id,data)},
+        async delete(){removeLocal(kind,id);const {error}=await sb.from("items").delete().eq("id",id);if(error)throw error}
+      };
+    },
+    collection(c){
+      const kind=KIND[c];
+      return{async add(data){const id=newId();applyLocal(kind,id,data);await save(kind,id,data);return{id}}};
+    }
+  };
+}
+
+let SB=null,reloadTimer=null;
+async function loadAll(){
+  const {data,error}=await SB.from("items").select("id,kind,data").limit(5000);
+  if(error){showNotice("ما قدرت أحمّل بياناتك. تأكد من الاتصال بالإنترنت وحدّث الصفحة.");return}
+  S.areas=[];S.projects=[];S.tasks=[];
+  for(const r of data){const k=LIST[r.kind];if(k)S[k].push({id:r.id,...r.data})}
+  sortAreas();showNotice("");render();
+}
+const scheduleReload=()=>{clearTimeout(reloadTimer);reloadTimer=setTimeout(loadAll,400)};
+
+/* writes: on failure show a notice and reload the true state */
+write=async function(fn){try{await fn()}catch(e){showNotice("ما انحفظ التعديل. تأكد من الاتصال بالإنترنت وجرّب مرة ثانية.");scheduleReload()}};
+
+/* ---------- auth + boot ---------- */
+const showLogin=on=>{$("login").hidden=!on;$("app").hidden=on};
+$("loginForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const btn=$("loginBtn"),err=$("loginErr");err.textContent="";btn.disabled=true;btn.textContent="جاري الدخول…";
+  const {error}=await SB.auth.signInWithPassword({email:$("lEmail").value.trim(),password:$("lPass").value});
+  btn.disabled=false;btn.textContent="دخول";
+  if(error){err.textContent=/invalid/i.test(error.message)?"الإيميل أو الباسوورد غير صحيح.":"ما قدرت أسجّل دخولك. تأكد من الاتصال وجرّب مرة ثانية.";return}
+  $("lPass").value="";
+});
+$("signOut").addEventListener("click",()=>SB.auth.signOut());
+
+let channel=null;
+async function startApp(){
+  showLogin(false);
+  S.db=makeDb(SB);
+  await loadAll();
+  if(!channel)channel=SB.channel("items-sync").on("postgres_changes",{event:"*",schema:"public",table:"items"},scheduleReload).subscribe();
+}
+function stopApp(){
+  if(channel){SB.removeChannel(channel);channel=null}
+  S.db=null;S.areas=[];S.projects=[];S.tasks=[];showLogin(true);
+}
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&S.db)loadAll()});
+
+(function boot(){
+  const cfg=window.SANKA_CONFIG||{};
+  if(!window.supabase||!cfg.url||!cfg.anonKey){
+    showLogin(true);$("loginErr").textContent="الموقع مو مربوط بقاعدة البيانات بعد.";$("loginBtn").disabled=true;return;
+  }
+  SB=window.supabase.createClient(cfg.url,cfg.anonKey,{auth:{persistSession:true,autoRefreshToken:true}});
+  SB.auth.onAuthStateChange((ev,session)=>{if(session){if(!S.db)startApp()}else stopApp()});
+  SB.auth.getSession().then(({data})=>{if(data.session){if(!S.db)startApp()}else showLogin(true)});
+})();
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body>
+</html>
