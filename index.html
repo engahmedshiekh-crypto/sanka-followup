@@ -298,6 +298,38 @@ body.bulk-on .wrap{padding-bottom:120px}
 .upl:focus-within{outline:2px solid var(--accent);outline-offset:1px}
 .clip{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--muted);margin-inline-start:8px}
 .clip svg{width:13px;height:13px}
+.logo-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.logo-prev img{max-height:48px;max-width:160px;display:block;border-radius:6px;background:#fff;padding:4px;border:1px solid var(--line)}
+/* clients */
+.clients{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.client{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:grid;gap:10px;align-content:start;min-width:0}
+.client h3{font-size:16px;font-weight:600;overflow-wrap:anywhere}
+.client .cmeta{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12.5px;color:var(--muted)}
+.cstats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border-radius:8px;overflow:hidden}
+.cstats div{background:var(--bg);padding:8px;display:grid;gap:1px;text-align:center}
+.cstats b{font-family:var(--display);font-size:16px}
+.cstats span{font-size:11.5px;color:var(--muted)}
+.cprojs{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:13px}
+.cprojs li{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.cprojs li span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chip{all:unset;cursor:pointer;font-size:12.5px;border:1px dashed var(--accent);color:var(--accent);border-radius:999px;padding:3px 11px}
+.chip:focus-visible{outline:2px solid var(--accent)}
+/* quote editor */
+.quote{grid-column:1/-1;display:grid;gap:10px;min-width:0;border-top:1px solid var(--line);padding-top:12px}
+.qwrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+.qtable{width:100%;border-collapse:collapse;font-size:13px;min-width:640px}
+.qtable th{font-weight:600;color:var(--muted);font-size:12px;text-align:start;padding:7px 6px;background:var(--surface-2)}
+.qtable td{padding:4px 4px;border-top:1px solid var(--line)}
+.qtable input{padding:6px 7px;font-size:13px}
+.qtable .n{width:70px}.qtable .u{width:80px}.qtable .m{width:110px}
+.qtable td.tot{white-space:nowrap;font-variant-numeric:tabular-nums;text-align:end;padding-inline:8px}
+.qsum{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end}
+.qsum label{display:grid;gap:4px;font-size:12px;color:var(--muted)}
+.qtotals{display:grid;grid-template-columns:auto auto;gap:3px 16px;justify-content:start;font-size:13.5px;font-variant-numeric:tabular-nums}
+.qtotals dt{color:var(--muted)}.qtotals dd{margin:0;font-weight:600}
+.qtotals .grand{font-size:16px;color:var(--accent)}
+.qtotals .profit{color:var(--ok)}.qtotals .loss{color:var(--bad)}
 .behind{color:var(--bad);font-weight:600}
 .plinks{grid-column:1/-1;display:grid;gap:8px}
 .links{list-style:none;margin:0;padding:0;display:grid;gap:4px}
@@ -337,12 +369,32 @@ body.bulk-on .wrap{padding-bottom:120px}
       <h1>لوحة مهامي</h1>
       <p id="today"></p>
     </div>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>دخول خاص</span><button class="btn sm" type="button" id="notifBtn" hidden>تفعيل التنبيهات</button><button class="btn sm" type="button" id="exportBtn">تصدير نسخة</button><button class="btn sm" type="button" id="importBtn">استيراد نسخة</button><input type="file" id="importFile" accept="application/json,.json" hidden><button class="btn sm" type="button" id="signOut">تسجيل خروج</button></div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>دخول خاص</span><button class="btn sm" type="button" id="notifBtn" hidden>تفعيل التنبيهات</button><button class="btn sm" type="button" id="settingsBtn">إعدادات الشركة</button><button class="btn sm" type="button" id="exportBtn">تصدير نسخة</button><button class="btn sm" type="button" id="importBtn">استيراد نسخة</button><input type="file" id="importFile" accept="application/json,.json" hidden><button class="btn sm" type="button" id="signOut">تسجيل خروج</button></div>
   </header>
 
   <div id="offline" class="notice offline" hidden role="status"></div>
   <div id="notice" class="notice" hidden></div>
   <div id="importPanel" class="panel" hidden role="alertdialog" aria-labelledby="impTitle"></div>
+  <form class="panel" id="settingsForm" hidden>
+    <h3>إعدادات الشركة (تظهر في عروض الأسعار)</h3>
+    <div class="fgrid">
+      <label>اسم الشركة<input id="sName" placeholder="MW TECH FIX"></label>
+      <label>الاسم القانوني (اختياري)<input id="sLegal"></label>
+      <label>السجل التجاري<input id="sCR" dir="ltr" inputmode="numeric"></label>
+      <label>الرقم الضريبي<input id="sVAT" dir="ltr" inputmode="numeric"></label>
+      <label>الجوال<input id="sPhone" dir="ltr" inputmode="tel"></label>
+      <label>الإيميل<input id="sEmail" type="email" dir="ltr"></label>
+      <label>الموقع الإلكتروني<input id="sWeb" dir="ltr"></label>
+      <label>العنوان<input id="sAddress"></label>
+      <label>اسم البنك<input id="sBank"></label>
+      <label>الآيبان<input id="sIBAN" dir="ltr" placeholder="SA…"></label>
+      <label>صلاحية العرض الافتراضية (يوم)<input id="sValid" type="number" min="1" step="1" value="15"></label>
+      <label>بادئة رقم العرض<input id="sPrefix" dir="ltr" placeholder="Q"></label>
+      <label class="wide">الشروط والأحكام الافتراضية<textarea id="sTerms" rows="3" placeholder="مثال: الأسعار شاملة التوريد، الدفع 50% مقدم و50% عند التسليم…"></textarea></label>
+      <div class="wide logo-row"><span id="logoPreview" class="logo-prev"></span><label class="btn sm upl">رفع الشعار<input type="file" id="sLogo" accept="image/png,image/jpeg,image/webp,image/svg+xml" hidden></label><button type="button" class="btn sm ghost-bad" id="sLogoDel" hidden>إزالة الشعار</button></div>
+    </div>
+    <div class="factions"><button class="btn primary" type="submit">حفظ الإعدادات</button><button class="btn" type="button" id="settingsClose">إغلاق</button></div>
+  </form>
 
   <section class="kpis" id="kpis" aria-label="ملخص"></section>
 
@@ -367,6 +419,7 @@ body.bulk-on .wrap{padding-bottom:120px}
       <div class="seg" id="viewSeg" role="group" aria-label="طريقة العرض">
         <button type="button" data-v="areas" aria-pressed="true">حسب المجال</button>
         <button type="button" data-v="week" aria-pressed="false">الأسبوع</button>
+        <button type="button" data-v="clients" aria-pressed="false">العملاء</button>
       </div>
       <div class="tools">
         <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="q" type="search" placeholder="بحث في المهام والمشاريع  ( / )" aria-label="بحث في المهام والمشاريع" autocomplete="off"></label>
@@ -406,7 +459,7 @@ body.bulk-on .wrap{padding-bottom:120px}
         <label>المرحلة<select id="pStage">
           <option value="rfq">طلب عرض سعر</option><option value="sent">تم إرسال العرض</option><option value="nego">تفاوض</option>
           <option value="active">معمّد (حالي)</option><option value="closed">منتهي</option><option value="rejected">مرفوض</option></select></label>
-        <label>العميل / الجهة<input id="pClient"></label>
+        <label>العميل / الجهة<input id="pClient" list="clientList" autocomplete="off" placeholder="اختر من العملاء أو اكتب اسم جديد"></label><datalist id="clientList"></datalist>
         <label>القيمة (ر.س)<input id="pValue" type="number" min="0" step="any"></label>
         <label>المسؤول عن المشروع<input id="pOwner"></label>
         <label>شخص التواصل<input id="pContact"></label>
@@ -424,8 +477,24 @@ body.bulk-on .wrap{padding-bottom:120px}
       <div class="factions"><button class="btn primary" type="submit">إضافة المجال</button><button class="btn" type="button" data-close="area">إلغاء</button></div>
     </form>
 
+    <form class="panel" id="clientForm" hidden>
+      <h3 id="cfTitle">عميل جديد</h3>
+      <div class="fgrid">
+        <label class="wide">اسم العميل / الجهة<input id="cName" required placeholder="مثال: شركة وضاح للمقاولات"></label>
+        <label>الشخص المسؤول<input id="cPerson"></label>
+        <label>الجوال<input id="cPhone" inputmode="tel" dir="ltr"></label>
+        <label>الإيميل<input id="cEmail" type="email" dir="ltr"></label>
+        <label>المدينة / العنوان<input id="cAddress"></label>
+        <label>السجل التجاري<input id="cCR" dir="ltr" inputmode="numeric"></label>
+        <label>الرقم الضريبي<input id="cVAT" dir="ltr" inputmode="numeric"></label>
+        <label class="wide">ملاحظات<textarea id="cNotes" rows="2"></textarea></label>
+      </div>
+      <div class="factions"><button class="btn primary" type="submit" id="cSubmit">إضافة العميل</button><button class="btn" type="button" data-close="client">إلغاء</button></div>
+    </form>
+
     <div class="areas" id="areas"><div class="empty">جاري تحميل لوحتك…</div></div>
     <div class="week" id="week" hidden></div>
+    <div id="clientsView" hidden></div>
   </section>
 
   <section id="archive"></section>
@@ -451,7 +520,7 @@ const PRI={high:0,mid:1,low:2};
 const COLORS=["#3b4fd8","#1f9e8f","#d0584a","#b07d12","#7a4fc4","#2f6fa8","#c2477f","#4c8a2f"];
 const PIPE=[["rfq","طلب عرض سعر"],["sent","تم إرسال العرض"],["nego","تفاوض"]];
 const STAGE={rfq:"طلب عرض سعر",sent:"تم إرسال العرض",nego:"تفاوض",active:"معمّد",closed:"منتهي",rejected:"مرفوض"};
-const S={view:"areas",select:false,picked:new Set(),bulkConfirm:false,areas:[],tasks:[],projects:[],filter:"open",q:"",tEdit:null,pEdit:null,confirm:null,pConfirm:null,rejecting:null,open:new Set(),openTask:new Set(),db:null};
+const S={clients:[],settings:[],cEdit:null,cConfirm:null,view:"areas",select:false,picked:new Set(),bulkConfirm:false,areas:[],tasks:[],projects:[],filter:"open",q:"",tEdit:null,pEdit:null,confirm:null,pConfirm:null,rejecting:null,open:new Set(),openTask:new Set(),db:null};
 const subsOf=t=>Array.isArray(t.subtasks)?t.subtasks:[];
 const SOON_DAYS=3; /* one threshold for tasks and projects */
 const $=id=>document.getElementById(id);
@@ -497,6 +566,32 @@ const SIGNED=new Map(); /* path -> {url,exp} */
 const fsize=b=>b<1024?b+" ب":b<1048576?Math.round(b/1024)+" ك.ب":(b/1048576).toFixed(1)+" م.ب";
 const isImg=f=>/^image\/(png|jpe?g|gif|webp|avif|bmp|svg\+xml)$/i.test(f.type||"");
 const extOf=n=>(String(n).match(/\.([a-z0-9]{1,5})$/i)?.[1]||"ملف").toUpperCase();
+function quoteBlock(p){
+  const q=quoteOf(p),t=quoteTotals(q),id=esc(p.id);
+  const row=(it,i)=>`<tr>
+    <td><input data-qi="${id}" data-i="${i}" data-f="n" value="${esc(it.n||"")}" placeholder="وصف البند" aria-label="البند ${i+1}"></td>
+    <td class="n"><input data-qi="${id}" data-i="${i}" data-f="q" type="number" min="0" step="any" inputmode="decimal" value="${esc(it.q??"")}" aria-label="الكمية"></td>
+    <td class="u"><input data-qi="${id}" data-i="${i}" data-f="u" value="${esc(it.u||"")}" placeholder="حبة" aria-label="الوحدة"></td>
+    <td class="m"><input data-qi="${id}" data-i="${i}" data-f="c" type="number" min="0" step="any" inputmode="decimal" value="${esc(it.c??"")}" aria-label="سعر التكلفة"></td>
+    <td class="m"><input data-qi="${id}" data-i="${i}" data-f="s" type="number" min="0" step="any" inputmode="decimal" value="${esc(it.s??"")}" aria-label="سعر البيع"></td>
+    <td class="tot" data-qline="${i}">${sar((+it.q||0)*(+it.s||0))}</td>
+    <td><button type="button" class="icon" data-qdel="${id}" data-i="${i}" aria-label="حذف البند">${I.x}</button></td></tr>`;
+  return `<div class="quote" data-quote="${id}">
+    <div class="plabel">عرض السعر ${q.number?`<span class="num muted">${esc(q.number)}</span>`:""}</div>
+    ${q.items.length?`<div class="qwrap"><table class="qtable"><thead><tr><th>البند</th><th>الكمية</th><th>الوحدة</th><th>التكلفة</th><th>سعر البيع</th><th>الإجمالي</th><th></th></tr></thead><tbody>${q.items.map(row).join("")}</tbody></table></div>`:`<p class="hint">أضف بنود العرض: الكمية، وسعر التكلفة (لك فقط)، وسعر البيع للعميل.</p>`}
+    <div><button type="button" class="btn sm" data-qadd="${id}">+ بند</button></div>
+    <div class="qsum">
+      <label>خصم (ر.س)<input data-qf="${id}" data-f="discount" type="number" min="0" step="any" inputmode="decimal" value="${q.discount||""}"></label>
+      <label>الضريبة %<input data-qf="${id}" data-f="vat" type="number" min="0" max="100" step="any" value="${q.vat}"></label>
+      <label>صلاحية العرض (يوم)<input data-qf="${id}" data-f="valid" type="number" min="1" step="1" value="${q.valid}"></label>
+      <label style="display:flex;gap:6px;align-items:center;color:var(--fg)"><input type="checkbox" data-qf="${id}" data-f="sync" ${q.sync?"checked":""} style="width:auto"> قيمة المشروع = الصافي قبل الضريبة</label>
+    </div>
+    <label class="wide" style="display:grid;gap:4px;font-size:12px;color:var(--muted)">الشروط والملاحظات (تظهر في العرض)<textarea data-qf="${id}" data-f="terms" rows="2" placeholder="${esc(company().terms||"مثال: الأسعار شاملة التوريد والتركيب…")}">${esc(q.terms)}</textarea></label>
+    <dl class="qtotals" data-qtotals="${id}">${totalsHTML(t,q)}</dl>
+    <div class="factions"><button type="button" class="btn primary sm" data-qprint="${id}" ${q.items.length?"":"disabled"}>معاينة العرض وحفظه PDF</button>${clientOf(p)?"":`<span class="hint">اربط المشروع بعميل من السجل عشان تظهر بياناته (الرقم الضريبي والسجل) في العرض.</span>`}</div>
+  </div>`;
+}
+function totalsHTML(t,q){return `<dt>المجموع</dt><dd>${sar(t.sub)}</dd>${t.disc?`<dt>الخصم</dt><dd>- ${sar(t.disc)}</dd>`:""}<dt>الصافي قبل الضريبة</dt><dd>${sar(t.net)}</dd><dt>الضريبة ${q.vat}%</dt><dd>${sar(t.vat)}</dd><dt>الإجمالي شامل الضريبة</dt><dd class="grand">${sar(t.total)} ر.س</dd><dt>التكلفة</dt><dd>${sar(t.cost)}</dd><dt>الربح المتوقع</dt><dd class="${t.profit<0?"loss":"profit"}">${sar(t.profit)} (${t.margin}%)</dd>`}
 function filesBlock(kind,item){
   const fs=filesOf(item),key=kind+":"+item.id,up=S.uploading?.[key];
   return `<div class="files"><div class="plabel">المرفقات ${fs.length?`<span class="num muted">(${fs.length})</span>`:""}</div>
@@ -545,9 +640,24 @@ async function uploadFiles(key,list){
   if(failed)showNotice(`ما انرفع ${failed} من الملفات. تأكد من الاتصال وجرّب مرة ثانية.`);
 }
 async function removeStored(paths){if(paths.length&&SB?.storage){try{await SB.storage.from(BUCKET).remove(paths)}catch(_){}}}
+/* ---------- clients ---------- */
+const clientById=id=>id?S.clients.find(c=>c.id===id):null;
+const clientName=p=>clientById(p.clientId)?.name||p.client||"";
+const clientOf=p=>clientById(p.clientId)||(p.client?S.clients.find(c=>norm(c.name)===norm(p.client)):null)||null;
+const company=()=>S.settings.find(x=>x.id==="company")||{};
+/* ---------- quotes: line items, discount, VAT 15%, margin ---------- */
+const VAT_DEFAULT=15;
+const quoteOf=p=>{const q=p.quote&&typeof p.quote==="object"?p.quote:{};return{items:Array.isArray(q.items)?q.items:[],discount:+q.discount||0,vat:q.vat===0||q.vat?+q.vat:VAT_DEFAULT,valid:+q.valid||+company().valid||15,terms:q.terms??"",number:q.number||"",date:q.date||"",sync:q.sync!==false}};
+const n2=v=>Math.round((+v||0)*100)/100;
+function quoteTotals(q){
+  const sub=n2(q.items.reduce((s,i)=>s+(+i.q||0)*(+i.s||0),0)),cost=n2(q.items.reduce((s,i)=>s+(+i.q||0)*(+i.c||0),0));
+  const disc=Math.min(Math.max(0,+q.discount||0),sub),net=n2(sub-disc),vat=n2(net*(+q.vat||0)/100),total=n2(net+vat),profit=n2(net-cost);
+  return{sub,cost,disc,net,vat,total,profit,margin:net?Math.round(profit/net*1000)/10:0};
+}
+const sar=v=>Number(v||0).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
 const linksOf=p=>Array.isArray(p.links)?p.links:[];
 function safeUrl(u){u=String(u||"").trim();if(!u)return"";if(!/^https?:\/\//i.test(u))u="https://"+u;try{const x=new URL(u);return /^https?:$/.test(x.protocol)?x.href:""}catch(_){return""}}
-function projectMatches(p){if(!S.q)return true;const a=areaOf(p.area);return norm([p.name,p.client,p.owner,p.contact,a?.name,p.rejectReason].join(" ")).includes(norm(S.q))}
+function projectMatches(p){if(!S.q)return true;const a=areaOf(p.area);return norm([p.name,clientName(p),p.quote?.number,p.owner,p.contact,a?.name,p.rejectReason].join(" ")).includes(norm(S.q))}
 function projProgress(p){const ts=projTasks(p.id);if(ts.length)return Math.round(ts.filter(t=>t.status==="done").length/ts.length*100);return Math.max(0,Math.min(100,Number(p.progress)||0))}
 const I={
   edit:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h4L19 9l-4-4L4 16v4z"/></svg>',
@@ -584,7 +694,7 @@ function projCard(p,{showArea=false}={}){
   const ups=Array.isArray(p.updates)?p.updates:[],last=ups[ups.length-1],open=S.open.has(p.id);
   const live=inPipe(p)||st==="active";
   const rows=[];
-  if(p.client)rows.push(["العميل",esc(p.client)]);
+  if(clientName(p))rows.push(["العميل",esc(clientName(p))]);
   if(p.value||p.value===0)rows.push(["القيمة",money(p.value)]);
   if(p.owner)rows.push(["المسؤول",esc(p.owner)]);
   if(p.contact||p.phone)rows.push(["التواصل",esc(p.contact||"")+(p.phone?` <span dir="ltr" class="num">${esc(p.phone)}</span>`:"")]);
@@ -621,7 +731,8 @@ function projCard(p,{showArea=false}={}){
       ${linksOf(p).length?`<ul class="links">${linksOf(p).map((l,i)=>`<li><a href="${esc(safeUrl(l.url))}" target="_blank" rel="noopener noreferrer">${esc(l.label||l.url)}</a><span class="muted" dir="ltr">${esc((()=>{try{return new URL(l.url).hostname}catch(_){return""}})())}</span><button type="button" class="icon" data-ldel="${id}" data-i="${i}" aria-label="حذف الرابط">${I.x}</button></li>`).join("")}</ul>`:`<p class="hint">أضف رابط عرض السعر أو القائمة أو الشيت.</p>`}
       ${filesBlock("project",p)}
       <form class="inline linkform" data-addlink="${id}"><input name="l" placeholder="الاسم (مثال: عرض السعر)" aria-label="اسم الرابط"><input name="u" type="text" inputmode="url" autocapitalize="off" spellcheck="false" dir="ltr" required placeholder="https://…" aria-label="الرابط"><button class="btn sm" type="submit">إضافة</button></form>
-    </div></div>`:"";
+    </div>
+    ${quoteBlock(p)}</div>`:"";
 
   const barColor=st==="active"?"var(--ok)":inPipe(p)?"var(--warn)":"var(--muted)";
   const sch=schedule(p,pr);
@@ -711,7 +822,26 @@ function renderArchive(){
     +(rej.length?`<details class="arch" data-arch="rejected" style="margin-top:12px" ${isOpen("rejected")}><summary>المشاريع المرفوضة <span class="count num">${rej.length}</span></summary><div class="projs">${rej.map(p=>projCard(p,{showArea:true})).join("")}</div></details>`:"");
 }
 
+function renderClients(){
+  const stats=c=>{const ps=S.projects.filter(p=>clientOf(p)?.id===c.id);const won=ps.filter(p=>["active","closed"].includes(stageOf(p))),lost=ps.filter(p=>stageOf(p)==="rejected"),pipe=ps.filter(inPipe);
+    const sum=a=>a.reduce((s,p)=>s+(Number(p.value)||0),0);return{ps,won,lost,pipe,wonVal:sum(won),pipeVal:sum(pipe),rate:won.length+lost.length?Math.round(won.length/(won.length+lost.length)*100)+"%":"—"}};
+  const list=S.clients.filter(c=>!S.q||norm([c.name,c.person,c.phone,c.email,c.address].join(" ")).includes(norm(S.q))).sort((a,b)=>stats(b).ps.length-stats(a).ps.length||String(a.name).localeCompare(b.name,"ar"));
+  const known=new Set(S.clients.map(c=>norm(c.name)));
+  const loose=[...new Set(S.projects.filter(p=>!p.clientId&&p.client&&!known.has(norm(p.client))).map(p=>p.client.trim()))];
+  $("clientsView").innerHTML=`<div class="sec-head"><h2 style="font-size:17px">العملاء <span class="count num">${S.clients.length}</span></h2><button type="button" class="btn" data-open="client">+ عميل</button></div>
+    ${loose.length?`<div class="chips" style="margin-bottom:12px"><span class="hint">عملاء مكتوبين في المشاريع وما هم في السجل:</span>${loose.map(n=>`<button type="button" class="chip" data-cadd="${esc(n)}">+ ${esc(n)}</button>`).join("")}</div>`:""}
+    ${list.length?`<div class="clients">${list.map(c=>{const st=stats(c),id=esc(c.id);
+      const ops=S.cConfirm===c.id?`<div class="confirm"><span>حذف العميل؟ مشاريعه تبقى ويبقى اسمه مكتوب فيها.</span><button type="button" class="btn danger sm" data-cdel="${id}">حذف</button><button type="button" class="btn sm" data-cno>لا</button></div>`
+        :`<div class="proj-ops"><button type="button" class="btn sm" data-open="proj" data-client="${id}">+ مشروع لهذا العميل</button><span class="spacer"></span><button type="button" class="icon" data-cedit="${id}" aria-label="تعديل العميل">${I.edit}</button><button type="button" class="icon" data-cask="${id}" aria-label="حذف العميل">${I.del}</button></div>`;
+      return `<article class="client"><div><h3>${esc(c.name)}</h3><div class="cmeta">${c.person?`<span>${esc(c.person)}</span>`:""}${c.phone?`<span dir="ltr" class="num">${esc(c.phone)}</span>`:""}${c.email?`<span dir="ltr">${esc(c.email)}</span>`:""}${c.address?`<span>${esc(c.address)}</span>`:""}${c.vat?`<span>ض: <span class="num">${esc(c.vat)}</span></span>`:""}</div></div>
+        <div class="cstats"><div><b class="num">${st.ps.length}</b><span>مشروع</span></div><div><b class="num">${st.rate}</b><span>نسبة التعميد</span></div><div><b class="num" style="font-size:14px">${Number(st.wonVal).toLocaleString("en-US")}</b><span>قيمة المعمّد</span></div></div>
+        ${st.ps.length?`<ul class="cprojs">${st.ps.map(p=>`<li><span>${esc(p.name)}</span><span class="badge b-${stageOf(p)}">${STAGE[stageOf(p)]}</span></li>`).join("")}</ul>`:`<p class="hint">ما فيه مشاريع لهذا العميل بعد.</p>`}
+        ${st.pipeVal?`<p class="hint num">قيد الدراسة: ${money(st.pipeVal)}</p>`:""}
+        ${c.notes?`<p class="hint" style="white-space:pre-line">${esc(c.notes)}</p>`:""}${ops}</article>`}).join("")}</div>`
+      :`<div class="empty">${S.q?"ما فيه عملاء يطابقون البحث.":"ما فيه عملاء بعد. أضف أول عميل من زر «+ عميل»."}</div>`}`;
+}
 function fillSelects(){
+  $("clientList").innerHTML=S.clients.map(c=>`<option value="${esc(c.name)}"></option>`).join("");
   const opts=S.areas.map(a=>`<option value="${esc(a.id)}">${esc(a.name)}</option>`).join("");
   for(const id of ["fArea","pArea"]){const s=$(id),v=s.value;s.innerHTML=opts;if(v&&areaOf(v))s.value=v}
   fillProjSelect();
@@ -723,13 +853,29 @@ function fillProjSelect(){
   if(v&&ps.some(p=>p.id===v))s.value=v;
 }
 
+/* re-renders replace the DOM; keep the field you are typing in (focus, unsaved text, caret) */
+function focusKey(el){
+  if(!el||el===document.body||!el.closest?.(".wrap"))return null;
+  const d=el.dataset||{};
+  if(d.qi)return `[data-qi="${CSS.escape(d.qi)}"][data-i="${d.i}"][data-f="${d.f}"]`;
+  if(d.qf)return `[data-qf="${CSS.escape(d.qf)}"][data-f="${d.f}"]`;
+  const f=el.form;if(!f||!el.name)return null;
+  const attrs=[...f.attributes].filter(x=>x.name.startsWith("data-")).map(x=>`[${x.name}="${CSS.escape(x.value)}"]`).join("");
+  return attrs?`form${attrs}${f.classList.contains("quick")?".quick":":not(.quick)"} [name="${el.name}"]`:null;
+}
 function render(){
+  const ae=document.activeElement,key=focusKey(ae),val=key?ae.value:null,caret=key&&ae.selectionStart!=null?[ae.selectionStart,ae.selectionEnd]:null;
+  renderAll();
+  if(key){const el=document.querySelector(key);if(el&&el!==ae){if(el.type!=="checkbox"&&el.value!==val)el.value=val;el.focus({preventScroll:true});if(caret)try{el.setSelectionRange(caret[0],caret[1])}catch(_){}}}
+}
+function renderAll(){
   renderKpis();renderInsights();renderCurrent();
   const orphan=S.tasks.some(t=>!areaOf(t.area))||S.projects.some(p=>inPipe(p)&&!areaOf(p.area));
   $("areas").innerHTML=S.areas.length||orphan?S.areas.map(areaSection).join("")+(orphan?areaSection(null):"")
     :`<div class="empty">ما فيه مجالات بعد. أضف أول مجال من زر «+ مجال».</div>`;
   renderArchive();fillSelects();renderBulk();hydrateFiles();
-  $("areas").hidden=S.view!=="areas";$("week").hidden=S.view!=="week";
+  $("areas").hidden=S.view!=="areas";$("week").hidden=S.view!=="week";$("clientsView").hidden=S.view!=="clients";
+  if(S.view==="clients")renderClients();
   if(S.view==="week")renderWeek();
 }
 /* ---------- insights: weekly done/overdue chart + workload ---------- */
@@ -808,16 +954,19 @@ async function setTaskStatus(t,st){
 }
 
 /* ---------- forms ---------- */
-function closeForms(){for(const id of ["taskForm","projForm","areaForm"]){$(id).hidden=true;$(id).reset()}S.tEdit=S.pEdit=null}
+function closeForms(){for(const id of ["taskForm","projForm","areaForm","clientForm"]){$(id).hidden=true;$(id).reset()}S.tEdit=S.pEdit=S.cEdit=null}
 function openForm(kind,area){
   closeForms();
   if(kind==="task"){$("tfTitle").textContent="مهمة جديدة";$("fSubmit").textContent="إضافة المهمة";$("fPri").value="mid";if(area)$("fArea").value=area;fillProjSelect();$("taskForm").hidden=false;$("taskForm").scrollIntoView({block:"nearest"});$("fTitle").focus()}
   if(kind==="proj"){$("pfTitle").textContent="مشروع مقترح جديد";$("pSubmit").textContent="إضافة المشروع";$("pStage").value="rfq";if(area)$("pArea").value=area;$("projForm").hidden=false;$("projForm").scrollIntoView({block:"nearest"});$("pName").focus()}
   if(kind==="area"){$("areaForm").hidden=false;$("aName").focus()}
+  if(kind==="client"){$("cfTitle").textContent="عميل جديد";$("cSubmit").textContent="إضافة العميل";$("clientForm").hidden=false;$("clientForm").scrollIntoView({block:"nearest"});$("cName").focus()}
 }
+function editClient(c){openForm("client");S.cEdit=c.id;$("cfTitle").textContent="تعديل العميل";$("cSubmit").textContent="حفظ التعديل";
+  $("cName").value=c.name||"";$("cPerson").value=c.person||"";$("cPhone").value=c.phone||"";$("cEmail").value=c.email||"";$("cAddress").value=c.address||"";$("cCR").value=c.cr||"";$("cVAT").value=c.vat||"";$("cNotes").value=c.notes||""}
 function editTask(t){openForm("task",t.area);S.tEdit=t.id;$("tfTitle").textContent="تعديل المهمة";$("fSubmit").textContent="حفظ التعديل";$("fTitle").value=t.title;$("fArea").value=t.area||"";fillProjSelect();$("fProj").value=t.project||"";$("fPri").value=t.priority||"mid";$("fDue").value=t.due||"";$("fNotes").value=t.notes||"";$("fRepeat").value=t.repeat||""}
 function editProj(p){openForm("proj",p.area);S.pEdit=p.id;$("pfTitle").textContent="تعديل المشروع";$("pSubmit").textContent="حفظ التعديل";
-  $("pName").value=p.name||"";$("pStage").value=stageOf(p);$("pClient").value=p.client||"";$("pValue").value=p.value??"";$("pOwner").value=p.owner||"";$("pContact").value=p.contact||"";$("pPhone").value=p.phone||"";$("pDue").value=p.due||"";$("pFollow").value=p.followUp||"";$("pStart").value=p.start||""}
+  $("pName").value=p.name||"";$("pStage").value=stageOf(p);$("pClient").value=clientName(p);$("pValue").value=p.value??"";$("pOwner").value=p.owner||"";$("pContact").value=p.contact||"";$("pPhone").value=p.phone||"";$("pDue").value=p.due||"";$("pFollow").value=p.followUp||"";$("pStart").value=p.start||""}
 
 $("fArea").addEventListener("change",fillProjSelect);
 $("taskForm").addEventListener("submit",e=>{e.preventDefault();if(!S.db)return;
@@ -829,7 +978,8 @@ $("taskForm").addEventListener("submit",e=>{e.preventDefault();if(!S.db)return;
   closeForms()});
 $("projForm").addEventListener("submit",e=>{e.preventDefault();if(!S.db)return;
   const v=$("pValue").value;
-  const body={name:$("pName").value.trim(),area:$("pArea").value,client:$("pClient").value.trim(),value:v===""?null:Number(v),owner:$("pOwner").value.trim(),
+  const cn=$("pClient").value.trim(),cl=S.clients.find(c=>norm(c.name)===norm(cn));
+  const body={name:$("pName").value.trim(),area:$("pArea").value,client:cl?cl.name:cn,clientId:cl?cl.id:undefined,value:v===""?null:Number(v),owner:$("pOwner").value.trim(),
     contact:$("pContact").value.trim(),phone:$("pPhone").value.trim(),due:$("pDue").value||"",followUp:$("pFollow").value||"",start:$("pStart").value||""};
   if(!body.name||!body.area)return;
   if(body.start&&body.due&&body.start>body.due){showNotice("تاريخ البداية بعد موعد التسليم. عدّل أحدهم وجرّب مرة ثانية.");return}
@@ -837,6 +987,16 @@ $("projForm").addEventListener("submit",e=>{e.preventDefault();if(!S.db)return;
   if(id){Object.assign(body,stageOf(old)!==st?stagePatch(st):{stage:st});write(()=>S.db.doc("projects/"+id).update(body))}
   else write(()=>S.db.collection("projects").add({...body,...stagePatch(st),updates:[],created:now()}));
   closeForms()});
+$("clientForm").addEventListener("submit",e=>{e.preventDefault();if(!S.db)return;
+  const body={name:$("cName").value.trim(),person:$("cPerson").value.trim(),phone:$("cPhone").value.trim(),email:$("cEmail").value.trim(),address:$("cAddress").value.trim(),cr:$("cCR").value.trim(),vat:$("cVAT").value.trim(),notes:$("cNotes").value.trim()};
+  if(!body.name)return;
+  const dup=S.clients.find(c=>c.id!==S.cEdit&&norm(c.name)===norm(body.name));if(dup){showNotice(`فيه عميل بنفس الاسم «${dup.name}». عدّل الاسم أو افتح العميل الموجود.`);return}
+  const id=S.cEdit;
+  if(id)write(async()=>{await S.db.doc("clients/"+id).update(body);for(const p of S.projects.filter(p=>p.clientId===id&&p.client!==body.name))await S.db.doc("projects/"+p.id).update({client:body.name})});
+  else write(async()=>{const r=await S.db.collection("clients").add({...body,created:now()});await linkLoose(body.name,r.id)});
+  closeForms()});
+/* link projects that only have the client name typed in */
+async function linkLoose(name,cid){for(const p of S.projects.filter(p=>!p.clientId&&p.client&&norm(p.client)===norm(name)))await S.db.doc("projects/"+p.id).update({clientId:cid,client:name})}
 $("areaForm").addEventListener("submit",e=>{e.preventDefault();if(!S.db)return;const name=$("aName").value.trim();if(!name)return;
   const order=Math.max(0,...S.areas.map(a=>a.order||0))+1;
   write(()=>S.db.collection("areas").add({name,color:COLORS[S.areas.length%COLORS.length],order}));closeForms()});
@@ -846,7 +1006,16 @@ const wrap=document.querySelector(".wrap");
 $("statusFilter").addEventListener("click",e=>{const b=e.target.closest("[data-f]");if(!b)return;S.filter=b.dataset.f;[...$("statusFilter").children].forEach(x=>x.setAttribute("aria-pressed",x===b));render()});
 wrap.addEventListener("click",e=>{
   const q=s=>e.target.closest(s);let el;
-  if(el=q("[data-open]")){openForm(el.dataset.open,el.dataset.area);return}
+  if(el=q("[data-open]")){openForm(el.dataset.open,el.dataset.area);if(el.dataset.client){const c=clientById(el.dataset.client);if(c){$("pClient").value=c.name;const lp=S.projects.find(p=>p.clientId===c.id);if(lp?.area)$("pArea").value=lp.area}}return}
+  if(el=q("[data-cadd]")){const name=el.dataset.cadd;if(S.db)write(async()=>{const r=await S.db.collection("clients").add({name,created:now()});await linkLoose(name,r.id)});return}
+  if(el=q("[data-cedit]")){const c=clientById(el.dataset.cedit);if(c)editClient(c);return}
+  if(el=q("[data-cask]")){S.cConfirm=el.dataset.cask;render();return}
+  if(q("[data-cno]")){S.cConfirm=null;render();return}
+  if(el=q("[data-cdel]")){const id=el.dataset.cdel,c=clientById(id);S.cConfirm=null;if(!S.db||!c)return;
+    write(async()=>{for(const p of S.projects.filter(p=>p.clientId===id))await S.db.doc("projects/"+p.id).update({clientId:undefined,client:c.name});await S.db.doc("clients/"+id).delete()});return}
+  if(el=q("[data-qadd]")){const p=projById(el.dataset.qadd);if(p&&S.db){const qq=quoteOf(p);saveQuote(p,{...qq,items:[...qq.items,{n:"",q:1,u:"",c:"",s:""}]});setTimeout(()=>{const ins=document.querySelectorAll(`[data-qi="${CSS.escape(p.id)}"][data-f="n"]`);ins[ins.length-1]?.focus()},60)}return}
+  if(el=q("[data-qdel]")){const p=projById(el.dataset.qdel);if(p&&S.db){const qq=quoteOf(p);saveQuote(p,{...qq,items:qq.items.filter((_,i)=>i!==+el.dataset.i)})}return}
+  if(el=q("[data-qprint]")){const p=projById(el.dataset.qprint);if(p)printQuote(p);return}
   if(el=q("[data-close]")){closeForms();return}
   if(el=q("[data-ptoggle]")){const k=el.dataset.ptoggle;S.open.has(k)?S.open.delete(k):S.open.add(k);render();return}
   if(el=q("[data-stage]")){if(S.db)write(()=>S.db.doc("projects/"+el.dataset.pid).update(stagePatch(el.dataset.stage)));return}
@@ -886,6 +1055,116 @@ $("archive").addEventListener("toggle",e=>{const d=e.target.closest?.("[data-arc
 
 $("viewSeg").addEventListener("click",e=>{const b=e.target.closest("[data-v]");if(!b)return;S.view=b.dataset.v;[...$("viewSeg").children].forEach(x=>x.setAttribute("aria-pressed",x===b));try{localStorage.setItem("sanka.view",S.view)}catch(_){}render()});
 try{const v=localStorage.getItem("sanka.view");if(v==="week"){S.view=v;[...$("viewSeg").children].forEach(x=>x.setAttribute("aria-pressed",x.dataset.v===v))}}catch(_){}
+
+/* ---------- quote editing: save on change, recalc totals live while typing ---------- */
+function saveQuote(p,qq){
+  const t=quoteTotals(qq),patch={quote:{...p.quote,...qq}};
+  if(qq.sync&&qq.items.length)patch.value=t.net;
+  write(()=>S.db.doc("projects/"+p.id).update(patch));
+}
+function quoteFromDom(p){
+  const qq=quoteOf(p),box=document.querySelector(`[data-quote="${CSS.escape(p.id)}"]`);if(!box)return qq;
+  const items=qq.items.map(x=>({...x}));
+  box.querySelectorAll("[data-qi]").forEach(inp=>{const i=+inp.dataset.i,f=inp.dataset.f;if(!items[i])return;items[i][f]=inp.type==="number"?(inp.value===""?"":Number(inp.value)):inp.value});
+  const val=f=>box.querySelector(`[data-qf][data-f="${f}"]`);
+  return{...qq,items,discount:val("discount").value===""?0:Number(val("discount").value),vat:val("vat").value===""?0:Number(val("vat").value),valid:Number(val("valid").value)||qq.valid,terms:val("terms").value,sync:val("sync").checked};
+}
+wrap.addEventListener("input",e=>{const el=e.target.closest("[data-qi],[data-qf]");if(!el)return;const p=projById(el.dataset.qi||el.dataset.qf);if(!p)return;
+  const qq=quoteFromDom(p),box=document.querySelector(`[data-quote="${CSS.escape(p.id)}"]`);
+  box.querySelectorAll("[data-qline]").forEach(td=>{const it=qq.items[+td.dataset.qline];td.textContent=sar((+it?.q||0)*(+it?.s||0))});
+  box.querySelector("[data-qtotals]").innerHTML=totalsHTML(quoteTotals(qq),qq)});
+/* save after focus has moved (Tab fires "change" before the next field is focused) */
+wrap.addEventListener("change",e=>{const el=e.target.closest("[data-qi],[data-qf]");if(!el||!S.db)return;const p=projById(el.dataset.qi||el.dataset.qf);if(!p)return;const qq=quoteFromDom(p);setTimeout(()=>saveQuote(projById(p.id)||p,qq),0)});
+
+/* ---------- quote document (print → save as PDF) ---------- */
+async function printQuote(p){
+  const w=window.open("","_blank");
+  if(!w){showNotice("المتصفح منع فتح نافذة العرض. اسمح بالنوافذ المنبثقة لهذا الموقع وجرّب مرة ثانية.");return}
+  w.document.write('<p style="font-family:sans-serif;padding:24px">جاري تجهيز العرض…</p>');
+  let qq=quoteOf(p);const co=company();
+  if(!qq.number){
+    const seq=(+co.quoteSeq||0)+1,pref=(co.prefix||"Q").trim()||"Q";
+    qq={...qq,number:`${pref}-${new Date().getFullYear()}-${String(seq).padStart(3,"0")}`,date:todayISO()};
+    try{await S.db.doc("settings/company").update({quoteSeq:seq});await S.db.doc("projects/"+p.id).update({quote:{...p.quote,...qq}})}catch(_){}
+  }
+  let logo="";
+  if(co.logoPath&&SB?.storage){try{const {data}=await SB.storage.from(BUCKET).createSignedUrl(co.logoPath,600);logo=data?.signedUrl||""}catch(_){}}
+  const cl=clientOf(p),t=quoteTotals(qq),d=qq.date||todayISO();
+  const until=(()=>{const x=new Date(d+"T00:00:00Z");x.setUTCDate(x.getUTCDate()+(+qq.valid||15));return x.toISOString().slice(0,10)})();
+  const dl=iso=>new Date(iso+"T00:00").toLocaleDateString(LOC,{day:"numeric",month:"long",year:"numeric"});
+  const terms=(qq.terms||co.terms||"").trim();
+  const line=(k,v)=>v?`<div><span>${k}</span> <b dir="auto">${esc(v)}</b></div>`:"";
+  w.document.open();w.document.write(`<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>عرض سعر ${esc(qq.number)} - ${esc(clientName(p)||p.name)}</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
+<style>
+@page{size:A4;margin:14mm}
+*{box-sizing:border-box}body{margin:0;font-family:"IBM Plex Sans Arabic",Tahoma,sans-serif;color:#1a1d2b;background:#eef0f4;font-size:13px;line-height:1.6}
+.sheet{max-width:210mm;margin:16px auto;background:#fff;padding:14mm;box-shadow:0 2px 14px rgba(0,0,0,.12)}
+@media print{body{background:#fff}.sheet{margin:0;padding:0;box-shadow:none;max-width:none}.bar{display:none}}
+.bar{max-width:210mm;margin:12px auto 0;display:flex;gap:8px;justify-content:flex-start;padding:0 4px}
+.bar button{font:inherit;padding:8px 16px;border-radius:8px;border:1px solid #3b4fd8;background:#3b4fd8;color:#fff;cursor:pointer}
+.bar button.alt{background:#fff;color:#3b4fd8}
+.head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;border-bottom:3px solid #3b4fd8;padding-bottom:12px}
+.co h1{margin:0;font-size:22px;color:#3b4fd8;letter-spacing:.02em}.co div{font-size:12px;color:#555}
+.logo{max-height:70px;max-width:200px}
+.title{display:flex;justify-content:space-between;align-items:flex-end;margin:18px 0 10px;gap:12px;flex-wrap:wrap}
+.title h2{margin:0;font-size:24px}.meta{font-size:12.5px;display:grid;gap:2px}.meta span,.box span{color:#666}
+.box{border:1px solid #dde0e8;border-radius:8px;padding:10px 12px;display:grid;grid-template-columns:1fr 1fr;gap:3px 18px;font-size:12.5px}
+.box h3{grid-column:1/-1;margin:0 0 2px;font-size:13px;color:#3b4fd8}
+table{width:100%;border-collapse:collapse;margin-top:14px;font-size:12.5px}
+th{background:#3b4fd8;color:#fff;font-weight:600;padding:7px 8px;text-align:right}
+td{padding:7px 8px;border-bottom:1px solid #e5e7ee;vertical-align:top}
+tr:nth-child(even) td{background:#f7f8fb}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}td.num,th.num{text-align:left}
+.totals{margin-top:12px;margin-inline-start:auto;width:min(320px,100%);border:1px solid #dde0e8;border-radius:8px;overflow:hidden}
+.totals div{display:flex;justify-content:space-between;padding:6px 12px;border-bottom:1px solid #eef0f4}
+.totals .g{background:#3b4fd8;color:#fff;font-weight:700;font-size:15px;border:0}
+.terms{margin-top:16px;font-size:12.5px;white-space:pre-line;border-inline-start:3px solid #3b4fd8;padding-inline-start:10px}
+.foot{margin-top:28px;display:flex;justify-content:space-between;gap:20px;font-size:12px;color:#555;flex-wrap:wrap}
+.sign{min-width:200px;border-top:1px solid #999;padding-top:6px;text-align:center}
+</style></head><body>
+<div class="bar"><button onclick="print()">حفظ PDF / طباعة</button><button class="alt" onclick="close()">إغلاق</button></div>
+<div class="sheet">
+ <div class="head"><div class="co"><h1>${esc(co.name||"MW TECH FIX")}</h1>${co.legal?`<div>${esc(co.legal)}</div>`:""}
+  <div>${[co.cr&&("س.ت: "+co.cr),co.vat&&("الرقم الضريبي: "+co.vat)].filter(Boolean).map(esc).join(" · ")}</div>
+  <div dir="auto">${[co.phone,co.email,co.web].filter(Boolean).map(esc).join(" · ")}</div>${co.address?`<div>${esc(co.address)}</div>`:""}</div>
+  ${logo?`<img class="logo" src="${esc(logo)}" alt="">`:""}</div>
+ <div class="title"><h2>عرض سعر</h2><div class="meta"><div><span>رقم العرض:</span> <b class="num" dir="ltr">${esc(qq.number)}</b></div><div><span>التاريخ:</span> ${dl(d)}</div><div><span>صالح حتى:</span> ${dl(until)}</div></div></div>
+ <div class="box"><h3>مقدم إلى</h3>${line("العميل:",cl?.name||clientName(p))}${line("عناية:",cl?.person||p.contact)}${line("الجوال:",cl?.phone||p.phone)}${line("الإيميل:",cl?.email)}${line("العنوان:",cl?.address)}${line("السجل التجاري:",cl?.cr)}${line("الرقم الضريبي:",cl?.vat)}${line("المشروع:",p.name)}</div>
+ <table><thead><tr><th style="width:34px">#</th><th>البيان</th><th class="num">الكمية</th><th>الوحدة</th><th class="num">سعر الوحدة</th><th class="num">الإجمالي</th></tr></thead><tbody>
+ ${qq.items.map((it,i)=>`<tr><td class="num">${i+1}</td><td>${esc(it.n||"")}</td><td class="num">${esc(it.q??"")}</td><td>${esc(it.u||"")}</td><td class="num">${sar(it.s)}</td><td class="num">${sar((+it.q||0)*(+it.s||0))}</td></tr>`).join("")}
+ </tbody></table>
+ <div class="totals"><div><span>المجموع</span><b class="num">${sar(t.sub)}</b></div>${t.disc?`<div><span>الخصم</span><b class="num">- ${sar(t.disc)}</b></div>`:""}<div><span>الصافي قبل الضريبة</span><b class="num">${sar(t.net)}</b></div><div><span>ضريبة القيمة المضافة ${qq.vat}%</span><b class="num">${sar(t.vat)}</b></div><div class="g"><span>الإجمالي شامل الضريبة</span><span class="num">${sar(t.total)} ر.س</span></div></div>
+ ${terms?`<div class="terms"><b>الشروط والملاحظات</b>\n${esc(terms)}</div>`:""}
+ ${co.iban?`<div class="terms"><b>بيانات التحويل</b>\n${esc([co.bank,co.iban].filter(Boolean).join(" — "))}</div>`:""}
+ <div class="foot"><div>شاكرين لكم ثقتكم،<br>${esc(co.name||"MW TECH FIX")}</div><div class="sign">الختم والتوقيع</div></div>
+</div>
+<script>window.addEventListener("load",()=>setTimeout(()=>{try{print()}catch(e){}},400))<\/script>
+</body></html>`);w.document.close();
+}
+
+/* ---------- company settings ---------- */
+function fillSettings(){const c=company();
+  const m={sName:"name",sLegal:"legal",sCR:"cr",sVAT:"vat",sPhone:"phone",sEmail:"email",sWeb:"web",sAddress:"address",sBank:"bank",sIBAN:"iban",sValid:"valid",sPrefix:"prefix",sTerms:"terms"};
+  for(const [el,k] of Object.entries(m))$(el).value=c[k]??(k==="name"?"MW TECH FIX":k==="valid"?15:"");
+  $("sLogoDel").hidden=!c.logoPath;$("logoPreview").innerHTML="";
+  if(c.logoPath&&SB?.storage)SB.storage.from(BUCKET).createSignedUrl(c.logoPath,600).then(({data})=>{if(data?.signedUrl)$("logoPreview").innerHTML=`<img src="${esc(data.signedUrl)}" alt="الشعار">`}).catch(()=>{});
+}
+$("settingsBtn").addEventListener("click",()=>{const f=$("settingsForm");f.hidden=!f.hidden;if(!f.hidden){fillSettings();f.scrollIntoView({block:"nearest"});$("sName").focus()}});
+$("settingsClose").addEventListener("click",()=>{$("settingsForm").hidden=true});
+$("settingsForm").addEventListener("submit",e=>{e.preventDefault();if(!S.db)return;
+  const v=id=>$(id).value.trim();
+  const body={name:v("sName")||"MW TECH FIX",legal:v("sLegal"),cr:v("sCR"),vat:v("sVAT"),phone:v("sPhone"),email:v("sEmail"),web:v("sWeb"),address:v("sAddress"),bank:v("sBank"),iban:v("sIBAN").replace(/\s+/g,"").toUpperCase(),valid:Math.max(1,parseInt(v("sValid"))||15),prefix:v("sPrefix")||"Q",terms:$("sTerms").value.trim()};
+  write(async()=>{await S.db.doc("settings/company").update(body);$("settingsForm").hidden=true;showNotice("")});
+});
+$("sLogo").addEventListener("change",async e=>{const f=e.target.files[0];e.target.value="";if(!f||!S.db||!S.uid)return;
+  if(f.size>2*1024*1024){showNotice("الشعار أكبر من 2 ميجا. صغّره وجرّب مرة ثانية.");return}
+  const path=`${S.uid}/settings/logo-${Date.now().toString(36)}.${(f.name.split(".").pop()||"png").toLowerCase().replace(/[^a-z0-9]/g,"")}`;
+  write(async()=>{const {error}=await SB.storage.from(BUCKET).upload(path,f,{contentType:f.type,upsert:false});if(error)throw error;
+    const old=company().logoPath;await S.db.doc("settings/company").update({logoPath:path});if(old)await removeStored([old]);fillSettings()});
+});
+$("sLogoDel").addEventListener("click",()=>{const old=company().logoPath;if(!old||!S.db)return;write(async()=>{await S.db.doc("settings/company").update({logoPath:undefined});await removeStored([old]);fillSettings()})});
 
 /* ---------- bulk select ---------- */
 function setSelect(on){S.select=on;S.picked.clear();S.bulkConfirm=false;render()}
@@ -962,15 +1241,15 @@ function parseBackup(txt){
   let j;try{j=JSON.parse(txt)}catch(_){return{err:"الملف مو JSON صالح."}}
   if(!j||typeof j!=="object"||!["areas","projects","tasks"].every(k=>Array.isArray(j[k])))return{err:"الملف ما فيه المجالات والمشاريع والمهام. اختر ملف صدّرته من زر «تصدير نسخة»."};
   const clean=(a)=>a.filter(x=>x&&typeof x==="object"&&typeof x.id==="string"&&x.id&&x.id.length<=200);
-  const out={areas:clean(j.areas),projects:clean(j.projects),tasks:clean(j.tasks)};
-  const ids=new Set();for(const k of ["areas","projects","tasks"])for(const x of out[k]){if(ids.has(x.id))return{err:"الملف فيه عناصر مكررة بنفس المعرّف."};ids.add(x.id)}
+  const out={areas:clean(j.areas),projects:clean(j.projects),tasks:clean(j.tasks),clients:clean(Array.isArray(j.clients)?j.clients:[]),settings:clean(Array.isArray(j.settings)?j.settings:[])};
+  const ids=new Set();for(const k of ["areas","projects","tasks","clients","settings"])for(const x of out[k]){if(ids.has(x.id))return{err:"الملف فيه عناصر مكررة بنفس المعرّف."};ids.add(x.id)}
   return{data:out,exportedAt:j.exportedAt};
 }
 function showImport(){
   const P=$("importPanel");if(!pendingImport){P.hidden=true;P.innerHTML="";return}
   const d=pendingImport.data;P.hidden=false;
   P.innerHTML=`<h3 id="impTitle">استيراد نسخة احتياطية</h3>
-    <p style="margin:0">الملف فيه <b class="num">${d.areas.length}</b> مجال و<b class="num">${d.projects.length}</b> مشروع و<b class="num">${d.tasks.length}</b> مهمة${pendingImport.exportedAt?` (صُدّر في ${esc(fmtDT(pendingImport.exportedAt))})`:""}.</p>
+    <p style="margin:0">الملف فيه <b class="num">${d.areas.length}</b> مجال و<b class="num">${d.projects.length}</b> مشروع و<b class="num">${d.tasks.length}</b> مهمة و<b class="num">${(d.clients||[]).length}</b> عميل${pendingImport.exportedAt?` (صُدّر في ${esc(fmtDT(pendingImport.exportedAt))})`:""}.</p>
     <p style="margin:0;color:var(--bad);font-weight:600">الاستيراد يحذف كل بياناتك الحالية (${S.areas.length} مجال، ${S.projects.length} مشروع، ${S.tasks.length} مهمة) ويحط بدالها محتوى الملف. ما تقدر تتراجع بعدها.</p>
     <div class="factions"><button type="button" class="btn" id="impBackup">صدّر نسختي الحالية أولاً</button><button type="button" class="btn danger" id="impYes">استبدال بياناتي</button><button type="button" class="btn" id="impNo">إلغاء</button></div>`;
   P.scrollIntoView({block:"nearest"});
@@ -1020,7 +1299,7 @@ setInterval(checkReminders,30*60*1000);
 /* export a JSON backup of everything */
 $("exportBtn").addEventListener("click",()=>{
   const strip=a=>a.map(x=>({...x}));
-  const data={app:"sanka-followup",version:1,exportedAt:now(),areas:strip(S.areas),projects:strip(S.projects),tasks:strip(S.tasks)};
+  const data={app:"sanka-followup",version:2,exportedAt:now(),areas:strip(S.areas),projects:strip(S.projects),tasks:strip(S.tasks),clients:strip(S.clients),settings:strip(S.settings)};
   const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
   const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`sanka-backup-${todayISO()}.json`;document.body.appendChild(a);a.click();
   setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);
@@ -1047,8 +1326,8 @@ wrap.addEventListener("submit",e=>{
 
 
 /* ---------- Supabase data layer ---------- */
-const KIND={areas:"area",projects:"project",tasks:"task"};
-const LIST={area:"areas",project:"projects",task:"tasks"};
+const KIND={areas:"area",projects:"project",tasks:"task",clients:"client",settings:"setting"};
+const LIST={area:"areas",project:"projects",task:"tasks",client:"clients",setting:"settings"};
 const newId=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,10);
 function localGet(kind,id){return S[LIST[kind]].find(x=>x.id===id)}
 function sortAreas(){S.areas.sort((a,b)=>(a.order||0)-(b.order||0))}
@@ -1096,17 +1375,17 @@ async function loadAll(){
   const {data,error}=await SB.from("items").select("id,kind,data,updated_at").limit(5000);
   if(error){
     const c=readCache();
-    if(c){S.areas=[];S.projects=[];S.tasks=[];for(const r of c.rows){const k=LIST[r.kind];if(k)S[k].push({id:r.id,...r.data})}sortAreas();setOffline(true,c.at);render();return}
+    if(c){S.areas=[];S.projects=[];S.tasks=[];S.clients=[];S.settings=[];for(const r of c.rows){const k=LIST[r.kind];if(k)S[k].push({id:r.id,...r.data})}sortAreas();setOffline(true,c.at);render();return}
     showNotice("ما قدرت أحمّل بياناتك. تأكد من الاتصال بالإنترنت وحدّث الصفحة.","load");return}
   writeCache(data);setOffline(false);setTimeout(checkReminders,500);
-  S.areas=[];S.projects=[];S.tasks=[];VER.clear();
+  S.areas=[];S.projects=[];S.tasks=[];S.clients=[];S.settings=[];VER.clear();
   for(const r of data){const k=LIST[r.kind];if(k){S[k].push({id:r.id,...r.data});VER.set(r.id,r.updated_at)}}
   sortAreas();if($("notice").dataset.kind==="load")showNotice("");render();
 }
 const scheduleReload=()=>{clearTimeout(reloadTimer);reloadTimer=setTimeout(loadAll,400)};
 /* replace every row this account owns (row-level security limits delete to the signed-in user) */
 async function replaceAll(d){
-  const rowsIn=[...d.areas.map(x=>["area",x]),...d.projects.map(x=>["project",x]),...d.tasks.map(x=>["task",x])]
+  const rowsIn=[...d.areas.map(x=>["area",x]),...d.projects.map(x=>["project",x]),...d.tasks.map(x=>["task",x]),...(d.clients||[]).map(x=>["client",x]),...(d.settings||[]).map(x=>["setting",x])]
     .map(([kind,x])=>({id:x.id,kind,data:stripId(x),updated_at:new Date().toISOString()}));
   const del=await SB.from("items").delete().neq("id","");if(del.error)throw del.error;
   for(let i=0;i<rowsIn.length;i+=200){const {error}=await SB.from("items").insert(rowsIn.slice(i,i+200));if(error)throw error}
@@ -1177,7 +1456,7 @@ async function startApp(){
 }
 function stopApp(){
   if(channel){SB.removeChannel(channel);channel=null}
-  S.db=null;S.locked=false;$("lock").hidden=true;try{localStorage.removeItem(ACT_KEY)}catch(_){}S.areas=[];S.projects=[];S.tasks=[];clearCache();setOffline(false);showLogin(true);
+  S.db=null;S.locked=false;$("lock").hidden=true;try{localStorage.removeItem(ACT_KEY)}catch(_){}S.areas=[];S.projects=[];S.tasks=[];S.clients=[];S.settings=[];clearCache();setOffline(false);showLogin(true);
 }
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&S.db&&!S.locked)loadAll()});
 
