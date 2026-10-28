@@ -2,6 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
+<script>try{var _t=localStorage.getItem("sanka.theme");if(_t==="light"||_t==="dark")document.documentElement.dataset.theme=_t;if(localStorage.getItem("sanka.lang")==="en"){document.documentElement.lang="en";document.documentElement.dir="ltr"}}catch(e){}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Eng Ahmed Shiekh Dashboard</title>
 <meta name="robots" content="noindex,nofollow">
@@ -18,28 +19,28 @@
 <style>
 /* Layout: control room — summary strip, approved projects across all areas, then one section per area (its proposed pipeline + its tasks), archive last. RTL. */
 :root{
-  --bg:#f3f4f7; --surface:#ffffff; --surface-2:#eceef3; --line:#dde0e8;
-  --fg:#1a1d2b; --muted:#646a80;
-  --accent:#3b4fd8; --accent-soft:#e4e7fb;
-  --ok:#1f8a5b; --ok-soft:#dcf2e7;
-  --warn:#b26a00; --warn-soft:#fbeed6;
-  --bad:#c23a3a; --bad-soft:#fbe1e1;
-  --info:#2f6fa8; --info-soft:#dceaf7;
+  --bg:#efebe3; --surface:#f8f5ef; --surface-2:#ebe6dc; --line:#ddd6c8;
+  --fg:#2a2622; --muted:#6c645a;
+  --accent:#1f6f6b; --accent-soft:#dbe9e5;
+  --ok:#2a7d4f; --ok-soft:#dcefe2;
+  --warn:#a76300; --warn-soft:#f6e6c9;
+  --bad:#b8392f; --bad-soft:#f6dcd6;
+  --info:#2f679b; --info-soft:#dde8f2;
   --on-solid:#ffffff;
   --display:"Readex Pro","IBM Plex Sans Arabic",system-ui,sans-serif;
   --body:"IBM Plex Sans Arabic",system-ui,"Segoe UI",Tahoma,sans-serif;
   --r:10px;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#12141c; --surface:#1b1e2a; --surface-2:#232736; --line:#2e3344;
-  --fg:#e9ebf2; --muted:#9aa0b6; --accent:#8b9bff; --accent-soft:#272c4d;
+  --bg:#14171f; --surface:#1c2030; --surface-2:#242838; --line:#2f3446;
+  --fg:#e4e6ec; --muted:#9aa0b2; --accent:#4fb8ad; --accent-soft:#1d3537;
   --ok:#55c48f; --ok-soft:#1b3328; --warn:#e8a64a; --warn-soft:#3a2d17;
-  --bad:#ef7b7b; --bad-soft:#3d2023; --info:#7fb3e6; --info-soft:#1d2d3e; --on-solid:#10121a; color-scheme:dark}}
+  --bad:#ef7b7b; --bad-soft:#3d2023; --info:#7fb3e6; --info-soft:#1d2d3e; --on-solid:#0f1418; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#12141c; --surface:#1b1e2a; --surface-2:#232736; --line:#2e3344;
-  --fg:#e9ebf2; --muted:#9aa0b6; --accent:#8b9bff; --accent-soft:#272c4d;
+  --bg:#14171f; --surface:#1c2030; --surface-2:#242838; --line:#2f3446;
+  --fg:#e4e6ec; --muted:#9aa0b2; --accent:#4fb8ad; --accent-soft:#1d3537;
   --ok:#55c48f; --ok-soft:#1b3328; --warn:#e8a64a; --warn-soft:#3a2d17;
-  --bad:#ef7b7b; --bad-soft:#3d2023; --info:#7fb3e6; --info-soft:#1d2d3e; --on-solid:#10121a; color-scheme:dark}
+  --bad:#ef7b7b; --bad-soft:#3d2023; --info:#7fb3e6; --info-soft:#1d2d3e; --on-solid:#0f1418; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.6}
 .wrap{max-width:1180px;margin:0 auto;padding-block:28px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:32px}
@@ -54,7 +55,7 @@ h2{font-size:19px;font-weight:600}
 .muted{color:var(--muted)}
 
 /* summary */
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:1px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .kpis>*{outline:1px solid var(--line)}
 .kpi{background:var(--surface);padding:14px 16px;display:grid;gap:2px;align-content:start}
 .kpi b{font-family:var(--display);font-size:26px;font-weight:600;line-height:1.3}
@@ -357,15 +358,19 @@ a.btn{text-decoration:none;color:inherit;display:inline-flex;align-items:center}
 .brandhead small{color:var(--muted);font-size:13px}
 body::before{content:"";position:fixed;z-index:-1;pointer-events:none;background:center/contain no-repeat;opacity:0;transition:opacity .3s}
 /* MW TECH FIX — monochrome, silver gradient like the logo */
-:root[data-brand="mw"]{--bg:#d9d9db;--surface:#ffffff;--surface-2:#eeeef0;--line:#cfcfd3;--fg:#111114;--muted:#5c5c63;--accent:#16161a;--accent-soft:#e3e3e7;--on-solid:#ffffff}
+:root[data-brand="mw"]{--bg:#d9d9db;--surface:#f1f1f2;--surface-2:#eeeef0;--line:#cfcfd3;--fg:#111114;--muted:#5c5c63;--accent:#16161a;--accent-soft:#e3e3e7;--on-solid:#ffffff}
 :root[data-brand="mw"] body{background:linear-gradient(115deg,#a7a7aa 0%,#d4d4d7 45%,#f4f4f5 100%) fixed}
 :root[data-brand="mw"] body::before{background-image:var(--logo-mw);opacity:.11;width:min(70vw,620px);aspect-ratio:310/247;inset-inline-start:-4vw;bottom:-2vh}
-.brand-mw{background:linear-gradient(115deg,#ffffff,#ececee);border-color:#c4c4c8}
+.brand-mw{background:linear-gradient(115deg,#f6f6f7,#e6e6e9);border-color:#c4c4c8}
 .brand-mw .blogo{width:96px;height:76px;background-image:var(--logo-mw)}
 @media (prefers-color-scheme:dark){:root[data-brand="mw"]:not([data-theme="light"]){--bg:#18181b;--surface:#222226;--surface-2:#2b2b30;--line:#38383e;--fg:#f0f0f2;--muted:#a3a3ab;--accent:#f0f0f2;--accent-soft:#34343a;--on-solid:#111114}
 :root[data-brand="mw"]:not([data-theme="light"]) body{background:linear-gradient(115deg,#0f0f11 0%,#1d1d21 55%,#2f2f34 100%) fixed}
 :root[data-brand="mw"]:not([data-theme="light"]) body::before,:root[data-brand="mw"]:not([data-theme="light"]) .brand-mw .blogo{filter:invert(1)}
 :root[data-brand="mw"]:not([data-theme="light"]) .brand-mw{background:linear-gradient(115deg,#26262b,#1b1b1f);border-color:#3a3a40}}
+:root[data-theme="dark"][data-brand="mw"]{--bg:#18181b;--surface:#222226;--surface-2:#2b2b30;--line:#38383e;--fg:#f0f0f2;--muted:#a3a3ab;--accent:#f0f0f2;--accent-soft:#34343a;--on-solid:#111114}
+:root[data-theme="dark"][data-brand="mw"] body{background:linear-gradient(115deg,#0f0f11 0%,#1d1d21 55%,#2f2f34 100%) fixed}
+:root[data-theme="dark"][data-brand="mw"] body::before,:root[data-theme="dark"][data-brand="mw"] .brand-mw .blogo{filter:invert(1)}
+:root[data-theme="dark"][data-brand="mw"] .brand-mw{background:linear-gradient(115deg,#26262b,#1b1b1f);border-color:#3a3a40}
 /* sensing store — deep navy with teal + coral dots */
 :root[data-brand="store"]{--bg:#0d1322;--surface:#141c30;--surface-2:#1a2440;--line:#25304d;--fg:#e6f2f0;--muted:#8d9bb5;--accent:#1fc3ac;--accent-soft:#123a3b;--on-solid:#0d1322;--coral:#ff6b5b;
   --ok:#3fd6a0;--ok-soft:#113529;--warn:#f2b45a;--warn-soft:#3a2d17;--bad:#ff6b5b;--bad-soft:#3d1f22;--info:#7fb3e6;--info-soft:#1d2d3e;color-scheme:dark}
@@ -378,6 +383,121 @@ body::before{content:"";position:fixed;z-index:-1;pointer-events:none;background
 :root[data-brand="store"] .subtabs button[aria-selected="true"]{box-shadow:0 0 0 3px rgba(31,195,172,.18)}
 :root[data-brand="store"] .tabs [data-tab="store"][aria-selected="true"]{color:var(--accent)}
 @media (max-width:640px){.brandhead{padding:10px 14px}.brand-mw .blogo{width:64px;height:51px}.brand-store .blogo{width:38px;height:49px}.brandhead b{font-size:17px}}
+/* ---------- v4: toolbar, menus, search, preview, library owners/types ---------- */
+.top{align-items:center}
+.tbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;position:relative}
+.tbtn{all:unset;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;height:38px;min-width:38px;padding:0 10px;border-radius:10px;background:var(--surface);border:1px solid var(--line);color:var(--fg);font-size:13.5px;font-weight:600;position:relative;transition:background .15s,border-color .15s}
+.tbtn:hover{background:var(--surface-2)}
+.tbtn:focus-visible,.avatar:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tbtn svg{width:18px;height:18px;flex:none}
+.tbtn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-solid)}
+.tbtn.primary:hover{filter:brightness(1.08)}
+.tbtn kbd{font:inherit;font-size:11px;font-weight:500;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:0 5px;line-height:18px}
+.tbtn.lang{font-size:12.5px;letter-spacing:.03em;min-width:44px}
+.bcount{position:absolute;top:-6px;inset-inline-end:-6px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--bad);color:#fff;font-size:11px;font-weight:700;line-height:18px;text-align:center;box-sizing:border-box}
+.avatar{all:unset;box-sizing:border-box;cursor:pointer;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:13.5px;letter-spacing:.04em;background:var(--fg);color:var(--bg)}
+.sdot{width:10px;height:10px;border-radius:50%;flex:none;background:var(--ok);box-shadow:0 0 0 3px var(--ok-soft);margin-inline:4px}
+.sdot.busy{background:var(--warn);box-shadow:0 0 0 3px var(--warn-soft);animation:pulse 1s infinite}
+.sdot.err,.sdot.off{background:var(--bad);box-shadow:0 0 0 3px var(--bad-soft)}
+@keyframes pulse{50%{opacity:.4}}
+.menu{position:absolute;top:calc(100% + 8px);inset-inline-end:0;z-index:60;min-width:240px;max-width:min(360px,calc(100vw - 32px));background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.18);padding:6px;display:grid;gap:2px}
+.menu[hidden]{display:none}
+.menu>button,.menu .bitem{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:14px;color:var(--fg)}
+.menu>button:hover,.menu>button:focus-visible,.menu .bitem:hover,.menu .bitem:focus-visible{background:var(--surface-2)}
+.menu>button[disabled]{opacity:.55;cursor:default}
+.menu>button.danger{color:var(--bad)}
+.menu hr{border:0;border-top:1px solid var(--line);margin:4px 2px}
+.menu .mhead{padding:8px 12px 6px;display:grid}
+.menu .mhead small{color:var(--muted);font-size:12.5px;overflow-wrap:anywhere}
+.menu .qi{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);font-size:14px;flex:none}
+#qaMenu{inset-inline-end:auto;inset-inline-start:0}
+.blist{max-height:min(60vh,420px);overflow:auto;display:grid;gap:2px}
+.bitem{align-items:flex-start!important}
+.bitem>span:last-child{display:grid;min-width:0}
+.bitem b{font-weight:600;font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bitem small{color:var(--muted);font-size:12px}
+.bdot{width:8px;height:8px;border-radius:50%;margin-top:7px;flex:none;background:var(--info)}
+.bitem.bad .bdot{background:var(--bad)}.bitem.warn .bdot{background:var(--warn)}
+.fab{display:none}
+@media (max-width:640px){
+  .top{align-items:flex-start}
+  .tbar{width:100%;justify-content:space-between}
+  #qaBtn,#gsBtn kbd{display:none}
+  .menu{position:fixed;top:auto;bottom:12px;inset-inline:12px;max-width:none;min-width:0}
+  .blist{max-height:55vh}
+  .fab{all:unset;display:grid;place-items:center;position:fixed;bottom:18px;inset-inline-start:18px;z-index:55;width:56px;height:56px;border-radius:50%;background:var(--accent);color:var(--on-solid);box-shadow:0 8px 24px rgba(0,0,0,.28);cursor:pointer}
+  .fab svg{width:26px;height:26px}
+  .menu.fabmenu{bottom:84px}
+  body{padding-bottom:84px}
+}
+/* modals */
+.modal{position:fixed;inset:0;z-index:80;background:rgba(10,12,18,.55);display:grid;place-items:start center;padding:10vh 16px 16px;backdrop-filter:blur(2px)}
+.modal[hidden]{display:none}
+.mbox{width:min(640px,100%);background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,.35);overflow:hidden;display:grid;max-height:80vh;grid-template-rows:auto 1fr}
+.gsin{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line)}
+.gsin svg{width:20px;height:20px;color:var(--muted);flex:none}
+.gsin input{all:unset;flex:1;font-size:16px;min-width:0;color:var(--fg)}
+.gsin kbd{font:inherit;font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:0 6px}
+#gsList{overflow:auto;padding:8px}
+#gsList .hint{padding:10px}
+.gsg h4{margin:8px 10px 4px;font-size:12px;color:var(--muted);font-weight:600}
+.gsr{all:unset;box-sizing:border-box;cursor:pointer;display:flex;justify-content:space-between;gap:12px;width:100%;padding:9px 10px;border-radius:8px;font-size:14px}
+.gsr:hover,.gsr:focus-visible{background:var(--accent-soft)}
+.gsr span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.gsr small{color:var(--muted);font-size:12px;white-space:nowrap;flex:none}
+.pvbox{width:min(980px,100%);max-height:88vh}
+.pvhead{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line)}
+.pvhead b{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#pvBody{display:grid;place-items:center;background:var(--surface-2);min-height:240px;overflow:auto}
+#pvBody img,#pvBody video{max-width:100%;max-height:76vh;display:block}
+#pvBody iframe{width:100%;height:76vh;border:0;background:#fff}
+.pvnone{display:grid;justify-items:center;gap:10px;padding:40px 20px;text-align:center;color:var(--muted)}
+.pvnone svg{width:40px;height:40px}
+.flash{animation:flash 1.8s ease}
+@keyframes flash{0%,40%{box-shadow:0 0 0 3px var(--accent)}100%{box-shadow:0 0 0 0 transparent}}
+/* library: owners + types */
+.ownbar{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin-bottom:10px;padding:2px}
+.ownbar::-webkit-scrollbar{display:none}
+.obtn{all:unset;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:12px;background:var(--surface);border:1px solid var(--line);font-size:14px;font-weight:600;white-space:nowrap}
+.obtn:hover{background:var(--surface-2)}
+.obtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.obtn .count{font-size:12px;color:var(--muted);background:var(--surface-2);border-radius:999px;padding:0 8px}
+.obtn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-solid)}
+.obtn[aria-pressed="true"] .count{background:rgba(255,255,255,.2);color:inherit}
+.ologo{width:22px;height:18px;display:inline-block;background:center/contain no-repeat;flex:none}
+.o-mw .ologo{background-image:var(--logo-mw)}
+.o-sensing .ologo{background-image:var(--logo-s);width:14px}
+.obtn.o-mw[aria-pressed="true"] .ologo{filter:invert(1)}
+:root[data-brand="mw"] .obtn.o-mw[aria-pressed="true"] .ologo{filter:var(--mwlogo-on,invert(1))}
+.typebar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tbtn2{all:unset;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:13px}
+.tbtn2 .num{color:var(--muted);font-size:12px}
+.tbtn2[aria-pressed="true"]{border-color:var(--fg);background:var(--fg);color:var(--bg)}
+.tbtn2[aria-pressed="true"] .num{color:inherit;opacity:.7}
+.tbtn2:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tdot{width:9px;height:9px;border-radius:3px;background:var(--tc,var(--muted))}
+.t-pdf{--tc:#d6453d}.t-word{--tc:#2b6cd4}.t-excel{--tc:#1d8a4e}.t-image{--tc:#9a5bd6}.t-video{--tc:#e07a1f}.t-other{--tc:#7a8090}
+button.dthumb{cursor:pointer;border:0;padding:0;font:inherit;color:inherit;appearance:none}
+button.dthumb:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.doc .dthumb .fic{background:var(--tc);color:#fff;font-weight:700;letter-spacing:.03em}
+.doc .dthumb .fic svg{width:24px;height:24px}
+.fic.big{width:72px;height:72px;border-radius:12px;display:grid;place-items:center;background:var(--tc);color:#fff;font-weight:700}
+.chip-s.tch{background:color-mix(in srgb,var(--tc) 14%,transparent);color:var(--tc);font-weight:600}
+.chip-s.own.o-mw{background:#2a2a2e;color:#fff}.chip-s.own.o-sensing{background:#0d1322;color:#1fc3ac}
+.chip-s.own.o-personal{background:#efe3fb;color:#6a3fb0}.chip-s.own.o-general{background:var(--surface-2);color:var(--muted)}
+.cmeta{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}
+.cmeta .sep{color:var(--muted);opacity:.6}
+.ownpick{border:0;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px}
+.ownpick legend{font-size:13px;color:var(--muted);margin-bottom:6px;padding:0}
+.opick{display:inline-flex!important;cursor:pointer;position:relative}
+.opick input{position:absolute;opacity:0;pointer-events:none;width:1px!important;height:1px;margin:0;inset:0}
+.opick span{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:14px}
+.opick input:checked+span{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 1px var(--accent)}
+.opick input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+.ferr{color:var(--bad);font-size:13px;margin:6px 0 0;min-height:0}
+.ferr:empty{display:none}
+.libcat span:first-child{white-space:normal;min-width:0}
+[dir="ltr"] .brand{text-align:start}
 @media (prefers-reduced-motion:no-preference){.bar i{transition:width .4s ease}}
 
 [hidden]{display:none!important}
@@ -541,7 +661,36 @@ body.bulk-on .wrap{padding-bottom:120px}
       <h1 class="brand" dir="ltr">Eng Ahmed Shiekh <span>Dashboard</span></h1>
       <p id="today"></p>
     </div>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>دخول خاص</span><button class="btn sm" type="button" id="notifBtn" hidden>تفعيل التنبيهات</button><button class="btn sm" type="button" id="settingsBtn">إعدادات الشركة</button><button class="btn sm" type="button" id="exportBtn">تصدير نسخة</button><button class="btn sm" type="button" id="importBtn">استيراد نسخة</button><input type="file" id="importFile" accept="application/json,.json" hidden><button class="btn sm" type="button" id="signOut">تسجيل خروج</button></div>
+    <div class="tbar">
+      <button type="button" class="tbtn primary" id="qaBtn" aria-haspopup="menu" aria-controls="qaMenu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>إضافة</span></button>
+      <button type="button" class="tbtn" id="gsBtn" aria-label="بحث شامل" title="بحث شامل"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><kbd dir="ltr">Ctrl K</kbd></button>
+      <button type="button" class="tbtn" id="bellBtn" aria-haspopup="menu" aria-controls="bellMenu" aria-expanded="false" aria-label="التنبيهات"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="bcount num" id="bellN" hidden></span></button>
+      <button type="button" class="tbtn lang" id="langBtn"></button>
+      <button type="button" class="tbtn" id="themeBtn"></button>
+      <span id="saveDot" class="sdot ok" role="status" aria-label="كل شي محفوظ" title="كل شي محفوظ"></span>
+      <button type="button" class="avatar" id="acctBtn" aria-haspopup="menu" aria-controls="acctMenu" aria-expanded="false" aria-label="الحساب والإعدادات" dir="ltr">AS</button>
+      <div class="menu" id="qaMenu" role="menu" hidden>
+        <div class="mhead"><b>إضافة سريعة</b></div>
+        <button type="button" role="menuitem" data-qa="task"><span class="qi">✓</span>مهمة جديدة</button>
+        <button type="button" role="menuitem" data-qa="proj"><span class="qi">◆</span>مشروع مقترح</button>
+        <button type="button" role="menuitem" data-qa="file"><span class="qi">⇪</span>رفع ملف</button>
+        <button type="button" role="menuitem" data-qa="post"><span class="qi">▶</span>مقطع جديد</button>
+        <button type="button" role="menuitem" data-qa="metric"><span class="qi">#</span>أرقام اليوم</button>
+        <button type="button" role="menuitem" data-qa="issue"><span class="qi">!</span>مشكلة جديدة</button>
+      </div>
+      <div class="menu" id="bellMenu" hidden></div>
+      <div class="menu" id="acctMenu" role="menu" hidden>
+        <div class="mhead"><b dir="ltr">Eng Ahmed Shiekh</b><small id="acctEmail" dir="ltr"></small></div>
+        <button type="button" role="menuitem" id="settingsBtn">إعدادات الشركة</button>
+        <button type="button" role="menuitem" id="notifBtn" hidden>تفعيل التنبيهات</button>
+        <button type="button" role="menuitem" id="exportBtn">تصدير نسخة احتياطية</button>
+        <button type="button" role="menuitem" id="importBtn">استيراد نسخة</button><input type="file" id="importFile" accept="application/json,.json" hidden>
+        <hr>
+        <button type="button" role="menuitem" id="lockNowBtn">قفل الآن</button>
+        <button type="button" role="menuitem" id="signOut" class="danger">تسجيل خروج</button>
+      </div>
+    </div>
+    <button type="button" class="fab" id="fabBtn" aria-label="إضافة سريعة" aria-haspopup="menu" aria-controls="qaMenu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
   </header>
 
   <div id="offline" class="notice offline" hidden role="status"></div>
@@ -689,6 +838,8 @@ body.bulk-on .wrap{padding-bottom:120px}
   <div data-panel="personal" hidden><div id="personalView"></div><div id="personalArea"></div></div>
 
   <div data-panel="library" hidden><div id="libraryView"></div></div>
+  <div class="modal" id="gsModal" hidden role="dialog" aria-modal="true" aria-label="بحث شامل"><div class="mbox"><div class="gsin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="gsQ" type="search" placeholder="ابحث في المهام والمشاريع والعملاء والملفات…" autocomplete="off" aria-label="بحث شامل"><kbd>Esc</kbd></div><div id="gsList"></div></div></div>
+  <div class="modal" id="pvModal" hidden role="dialog" aria-modal="true" aria-labelledby="pvTitle"><div class="mbox pvbox"><div class="pvhead"><b id="pvTitle"></b><a class="btn sm" id="pvOpen" target="_blank" rel="noopener noreferrer">فتح في تبويب</a><button type="button" class="icon" id="pvClose" aria-label="إغلاق">✕</button></div><div id="pvBody"></div></div></div>
 
   <div class="bulk" id="bulk" hidden role="region" aria-label="إجراءات على المهام المحددة">
     <div class="bulk-in">
@@ -717,7 +868,8 @@ const SOON_DAYS=3; /* one threshold for tasks and projects */
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const todayISO=()=>{const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,10)};
-const LOC="ar-SA-u-ca-gregory-nu-latn";
+const LANG=(()=>{try{return localStorage.getItem("sanka.lang")==="en"?"en":"ar"}catch(_){return"ar"}})();
+const LOC=LANG==="en"?"en-GB":"ar-SA-u-ca-gregory-nu-latn";
 const fmt=d=>d?new Date(d+"T00:00").toLocaleDateString(LOC,{day:"numeric",month:"short"}):"";
 const fmtDT=iso=>iso?new Date(iso).toLocaleString(LOC,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}):"";
 function relTime(iso){if(!iso)return"";const m=Math.round((Date.now()-new Date(iso))/6e4);
@@ -801,7 +953,7 @@ async function hydrateFiles(){
   const els=[...document.querySelectorAll("[data-sign]")];if(!els.length)return;
   const nowMs=Date.now(),need=[...new Set(els.map(e=>e.dataset.sign))].filter(p=>!(SIGNED.get(p)?.exp>nowMs+60e3));
   if(need.length){try{const {data}=await SB.storage.from(BUCKET).createSignedUrls(need,3600);for(const r of data||[])if(r.signedUrl)SIGNED.set(r.path,{url:r.signedUrl,exp:nowMs+3600e3})}catch(_){}}
-  for(const e of els){const u=SIGNED.get(e.dataset.sign)?.url;if(!u)continue;if(e.tagName==="IMG"){if(e.src!==u)e.src=u}else if(e.href!==u)e.href=u}
+  for(const e of els){const u=SIGNED.get(e.dataset.sign)?.url;if(!u)continue;if(e.tagName==="IMG"||e.tagName==="VIDEO"||e.tagName==="IFRAME"){if(e.src!==u)e.src=u}else if(e.href!==u)e.href=u}
 }
 /* phone photos are often 3–8 MB; shrink big JPEG/PNG/WebP to 2000px before upload */
 async function shrinkImage(file){
@@ -1564,7 +1716,8 @@ $("mainTabs").addEventListener("click",e=>{const b=e.target.closest("[data-tab]"
 function renderTabs(){
   $("mainTabs").innerHTML=TABS.map(([k,l])=>`<button type="button" role="tab" data-tab="${k}" aria-selected="${S.tab===k}">${l}${tabBadge(k)}</button>`).join("");
   document.querySelectorAll("[data-panel]").forEach(p=>p.hidden=p.dataset.panel!==S.tab);
-  document.documentElement.dataset.brand=S.tab==="mw"?"mw":S.tab==="store"?"store":"";
+  document.documentElement.dataset.brand=S.tab==="mw"?"mw":S.tab==="store"?"store":S.tab==="library"&&S.libOwn==="mw"?"mw":S.tab==="library"&&S.libOwn==="sensing"?"store":"";
+  renderBell();
   const showBar=S.tab==="mw"||S.tab==="personal"||(S.tab==="store"&&S.stab==="tasks");
   $("taskBar").hidden=!showBar;
   $("barProj").hidden=$("barArea").hidden=S.tab!=="mw";
@@ -1833,19 +1986,37 @@ function renderPersonal(){
 
 /* ================= FILE LIBRARY ================= */
 const DEF_CATS=["وثائق الشركة","عروض وعقود وفواتير","الهوية والتصاميم","مراجع وقوالب وتقارير"];
+const OWN=[["mw","MW TECH FIX"],["sensing","sensing store"],["personal","شخصي"],["general","عام"]],OWNL=Object.fromEntries(OWN);
+const FT=[["pdf","PDF"],["word","Word"],["excel","Excel"],["image","صور"],["video","فيديو"],["other","أخرى"]],FTL=Object.fromEntries(FT);
+const docOwner=d=>OWNL[d.owner]?d.owner:"general";
+function fileType(f){if(!f)return"other";const n=String(f.name||"").toLowerCase(),t=String(f.type||"").toLowerCase();
+  if(t==="application/pdf"||/\.pdf$/.test(n))return"pdf";
+  if(/\.(docx?|dotx?|odt|rtf|pages)$/.test(n)||/wordprocessing|msword/.test(t))return"word";
+  if(/\.(xlsx?|xlsm|xltx|csv|ods|numbers)$/.test(n)||/spreadsheet|ms-excel|text\/csv/.test(t))return"excel";
+  if(t.startsWith("image/")||/\.(png|jpe?g|gif|webp|heic|heif|avif|bmp|svg)$/.test(n))return"image";
+  if(t.startsWith("video/")||/\.(mp4|mov|m4v|webm|avi|mkv|3gp)$/.test(n))return"video";
+  return"other"}
 const libCats=()=>{const s=S.settings.find(x=>x.id==="library");const c=Array.isArray(s?.cats)&&s.cats.length?s.cats:DEF_CATS;return[...c,...new Set(S.docs.map(d=>d.cat).filter(x=>x&&!c.includes(x)))]};
 const docFile=d=>{const f=Array.isArray(d.files)?d.files:[];return f[f.length-1]};
+const docType=d=>d.url?"video":fileType(docFile(d));
 const expState=d=>{if(!d.expires)return"";const n=daysUntil(d.expires);return n<0?"expired":n<=30?"soon":""};
-function docMatches(d){if(!S.libQ)return true;const c=clientById(d.clientId),p=projById(d.projectId);return norm([d.name,d.cat,(d.tags||[]).join(" "),d.note,c?.name,p?.name,...(d.files||[]).map(f=>f.name)].join(" ")).includes(norm(S.libQ))}
+function docMatches(d){if(!S.libQ)return true;const c=clientById(d.clientId),p=projById(d.projectId);return norm([d.name,d.cat,OWNL[docOwner(d)],FTL[docType(d)],(d.tags||[]).join(" "),d.note,c?.name,p?.name,...(d.files||[]).map(f=>f.name)].join(" ")).includes(norm(S.libQ))}
+const TICON={pdf:"PDF",word:"W",excel:"X",image:"IMG",video:"▶",other:"•"};
 function renderLibrary(){
+  S.libOwn=S.libOwn||"all";S.libType=S.libType||"all";
   const cats=libCats(),all=S.docs;
-  const cnt=k=>k==="all"?all.length:k==="soon"?all.filter(d=>expState(d)==="soon").length:k==="expired"?all.filter(d=>expState(d)==="expired").length:all.filter(d=>d.cat===k).length;
-  let list=all.filter(docMatches);
+  const byOwn=all.filter(d=>S.libOwn==="all"||docOwner(d)===S.libOwn);
+  const byType=byOwn.filter(d=>S.libType==="all"||docType(d)===S.libType);
+  const cnt=k=>k==="all"?byType.length:k==="soon"?byType.filter(d=>expState(d)==="soon").length:k==="expired"?byType.filter(d=>expState(d)==="expired").length:byType.filter(d=>d.cat===k).length;
+  let list=byType.filter(docMatches);
   if(S.libCat==="soon")list=list.filter(d=>expState(d)==="soon");else if(S.libCat==="expired")list=list.filter(d=>expState(d)==="expired");else if(S.libCat!=="all")list=list.filter(d=>d.cat===S.libCat);
   list=list.slice().sort((a,b)=>String(b.updated||b.created||"").localeCompare(String(a.updated||a.created||"")));
   const ed=S.dEdit&&S.dEdit!=="new"?S.docs.find(d=>d.id===S.dEdit):null;
+  const own0=ed?docOwner(ed):S.libOwn!=="all"?S.libOwn:"";
   const form=!S.dEdit?"":`<form class="panel" id="docForm"><h3>${ed?"تعديل الملف":"رفع ملف للمكتبة"}</h3><div class="fgrid">
-    ${ed?"":`<label class="wide">الملف<input type="file" name="file" required></label>`}
+    <fieldset class="wide ownpick"><legend>الملف تابع لـ</legend>${OWN.map(([k,l])=>`<label class="opick o-${k}"><input type="radio" name="owner" value="${k}" ${own0===k?"checked":""}><span>${k==="mw"||k==="sensing"?`<i class="ologo"></i>`:""}${esc(l)}</span></label>`).join("")}</fieldset>
+    ${ed?(ed.url?`<label class="wide">رابط الفيديو<input name="url" type="url" dir="ltr" value="${esc(ed.url)}"></label>`:""):`<label class="wide">الملف<input type="file" name="file"><small class="hint">PDF أو Word أو Excel أو صور أو فيديو، حتى 50 ميجا</small></label>
+    <label class="wide">أو رابط فيديو (يوتيوب، درايف…)<input name="url" type="url" dir="ltr" placeholder="https://"></label>`}
     <label class="wide">الاسم<input name="name" value="${esc(ed?.name||"")}" placeholder="يتعبى من اسم الملف إذا تركته فاضي"></label>
     <label>التصنيف<select name="cat">${cats.map(c=>`<option ${(ed?.cat||(S.libCat!=="all"&&S.libCat!=="soon"&&S.libCat!=="expired"?S.libCat:cats[0]))===c?"selected":""}>${esc(c)}</option>`).join("")}</select></label>
     <label>تاريخ الانتهاء (اختياري)<input type="date" name="expires" value="${ed?.expires||""}"></label>
@@ -1853,21 +2024,31 @@ function renderLibrary(){
     <label>المشروع<select name="project"><option value="">—</option>${S.projects.map(p=>`<option value="${esc(p.id)}" ${ed?.projectId===p.id?"selected":""}>${esc(p.name)}</option>`).join("")}</select></label>
     <label class="wide">الوسوم (افصل بفاصلة)<input name="tags" value="${esc((ed?.tags||[]).join("، "))}" placeholder="مثال: سجل تجاري، 2026، حكومي"></label>
     <label class="wide">ملاحظات<textarea name="note" rows="2">${esc(ed?.note||"")}</textarea></label></div>
+    <p class="ferr" id="docErr" role="alert"></p>
     <div class="factions"><button class="btn primary" type="submit">${ed?"حفظ":"رفع"}</button><button class="btn" type="button" data-dcancel>إلغاء</button>${S.libUploading?`<span class="hint">جاري الرفع…</span>`:""}</div></form>`;
-  const card=d=>{const f=docFile(d),id=esc(d.id),es=expState(d),c=clientById(d.clientId),p=projById(d.projectId),vers=(d.files||[]).length;
+  const card=d=>{const f=docFile(d),id=esc(d.id),es=expState(d),c=clientById(d.clientId),p=projById(d.projectId),vers=(d.files||[]).length,ty=docType(d),ow=docOwner(d);
+    const canPv=d.url||(f&&["image","video","pdf"].includes(ty));
     const ops=S.dConfirm===d.id?`<div class="confirm"><span>حذف الملف وكل نسخه نهائياً؟</span><button type="button" class="btn danger sm" data-ddel="${id}">حذف</button><button type="button" class="btn sm" data-dno>لا</button></div>`
-      :`<div class="proj-ops">${f?`<a class="btn sm" data-sign="${esc(f.path)}" target="_blank" rel="noopener noreferrer">فتح</a>`:""}<label class="btn sm upl">نسخة جديدة<input type="file" hidden data-dver="${id}"></label><span class="spacer"></span><button type="button" class="icon" data-dedit="${id}" aria-label="تعديل">${I.edit}</button><button type="button" class="icon" data-dask="${id}" aria-label="حذف">${I.del}</button></div>`;
-    return `<article class="doc ${es}"><div class="dthumb">${f&&isImg(f)?`<img data-sign="${esc(f.path)}" alt="" loading="lazy">`:`<span class="fic">${esc(extOf(f?.name||""))}</span>`}</div>
-      <div class="dbody"><h4>${esc(d.name)}</h4><div class="cmeta"><span class="chip-s">${esc(d.cat||"")}</span>${vers>1?`<span class="chip-s f">نسخة ${vers}</span>`:""}${f?`<span class="num">${fsize(f.size||0)}</span>`:""}<span class="num">${dShort((d.updated||d.created||now()).slice(0,10))}</span></div>
+      :`<div class="proj-ops">${canPv?`<button type="button" class="btn sm" data-pv="${id}">معاينة</button>`:""}${d.url?`<a class="btn sm" href="${esc(d.url)}" target="_blank" rel="noopener noreferrer">فتح</a>`:f?`<a class="btn sm" data-sign="${esc(f.path)}" target="_blank" rel="noopener noreferrer">فتح</a>`:""}${d.url?"":`<label class="btn sm upl">نسخة جديدة<input type="file" hidden data-dver="${id}"></label>`}<span class="spacer"></span><button type="button" class="icon" data-dedit="${id}" aria-label="تعديل">${I.edit}</button><button type="button" class="icon" data-dask="${id}" aria-label="حذف">${I.del}</button></div>`;
+    const thumb=f&&ty==="image"?`<img data-sign="${esc(f.path)}" alt="" loading="lazy">`:`<span class="fic t-${ty}">${ty==="video"?I4.play:esc(f?extOf(f.name):TICON[ty])}</span>`;
+    const meta=[S.libOwn==="all"?`<span class="chip-s own o-${ow}">${esc(OWNL[ow])}</span>`:"",`<span class="chip-s tch t-${ty}">${esc(FTL[ty])}</span>`,d.cat?`<span class="chip-s">${esc(d.cat)}</span>`:"",vers>1?`<span class="chip-s f">نسخة ${vers}</span>`:"",f?`<span class="num" dir="ltr">${fsize(f.size||0)}</span>`:"",`<span class="num">${dShort((d.updated||d.created||now()).slice(0,10))}</span>`].filter(Boolean).join('<span class="sep">·</span>');
+    return `<article class="doc ${es}">${canPv?`<button type="button" class="dthumb" data-pv="${id}" aria-label="معاينة ${esc(d.name)}">${thumb}</button>`:`<div class="dthumb">${thumb}</div>`}
+      <div class="dbody"><h4>${esc(d.name)}</h4><div class="cmeta">${meta}</div>
         ${d.expires?`<div class="exp ${es}">${es==="expired"?"انتهى":"ينتهي"} ${dShort(d.expires)}${es==="soon"?` · باقي <span class="num">${daysUntil(d.expires)}</span> يوم`:""}</div>`:""}
         ${c||p?`<div class="hint">${c?"العميل: "+esc(c.name):""}${c&&p?" · ":""}${p?"المشروع: "+esc(p.name):""}</div>`:""}
         ${(d.tags||[]).length?`<div class="chips">${d.tags.map(t=>`<button type="button" class="tag" data-libtag="${esc(t)}">#${esc(t)}</button>`).join("")}</div>`:""}
         ${d.note?`<p class="hint" style="white-space:pre-line">${esc(d.note)}</p>`:""}
-        ${vers>1?`<details class="vers"><summary>النسخ السابقة (${vers-1})</summary><ul>${d.files.slice(0,-1).reverse().map((v,i)=>`<li><a data-sign="${esc(v.path)}" target="_blank" rel="noopener noreferrer">نسخة ${vers-1-i}</a> <span class="muted num">${dShort(v.at.slice(0,10))} · ${fsize(v.size||0)}</span></li>`).join("")}</ul></details>`:""}
+        ${vers>1?`<details class="vers"><summary>النسخ السابقة (${vers-1})</summary><ul>${d.files.slice(0,-1).reverse().map((v,i)=>`<li><a data-sign="${esc(v.path)}" target="_blank" rel="noopener noreferrer">نسخة ${vers-1-i}</a> <span class="muted num">${dShort(v.at.slice(0,10))} · <span dir="ltr">${fsize(v.size||0)}</span></span></li>`).join("")}</ul></details>`:""}
         ${ops}</div></article>`};
-  $("libraryView").innerHTML=`<div class="lib">
+  const ownN=k=>k==="all"?all.length:all.filter(d=>docOwner(d)===k).length;
+  const typeN=k=>k==="all"?byOwn.length:byOwn.filter(d=>docType(d)===k).length;
+  const ownHead=S.libOwn==="mw"?`<div class="brandhead brand-mw"><span class="blogo" role="img" aria-label="شعار MW TECH FIX"></span><div><b dir="ltr">MW TECH FIX</b><small>ملفات الشركة: وثائق، عروض، عقود، تصاميم</small></div></div>`
+    :S.libOwn==="sensing"?`<div class="brandhead brand-store"><span class="blogo" role="img" aria-label="شعار sensing store"></span><div><b dir="ltr">sensing <span>store</span></b><small>ملفات المتجر: صور المنتجات، المحتوى، التقارير</small></div></div>`:"";
+  $("libraryView").innerHTML=`${ownHead}<nav class="ownbar" aria-label="الملفات تابعة لـ">${[["all","كل الجهات"],...OWN].map(([k,l])=>`<button type="button" class="obtn o-${k}" data-libown="${k}" aria-pressed="${S.libOwn===k}">${k==="mw"||k==="sensing"?`<i class="ologo"></i>`:""}<span>${esc(l)}</span><span class="count num">${ownN(k)}</span></button>`).join("")}</nav>
+    <div class="typebar" role="group" aria-label="نوع الملف">${[["all","كل الأنواع"],...FT].map(([k,l])=>`<button type="button" class="tbtn2 t-${k}" data-libtype="${k}" aria-pressed="${S.libType===k}">${k==="all"?"":`<i class="tdot"></i>`}${esc(l)} <span class="num">${typeN(k)}</span></button>`).join("")}</div>
+    <div class="lib">
     <aside class="libside" aria-label="التصنيفات">
-      ${[["all","كل الملفات"],...cats.map(c=>[c,c]),["soon","تنتهي خلال 30 يوم"],["expired","منتهية"]].map(([k,l])=>`<button type="button" class="libcat ${S.libCat===k?"on":""} ${k==="soon"&&cnt(k)?"warn":""} ${k==="expired"&&cnt(k)?"bad":""}" data-libcat="${esc(k)}"><span>${esc(l)}</span><span class="count num">${cnt(k)}</span></button>`).join("")}
+      ${[["all","كل التصنيفات"],...cats.map(c=>[c,c]),["soon","تنتهي خلال 30 يوم"],["expired","منتهية"]].map(([k,l])=>`<button type="button" class="libcat ${S.libCat===k?"on":""} ${k==="soon"&&cnt(k)?"warn":""} ${k==="expired"&&cnt(k)?"bad":""}" data-libcat="${esc(k)}"><span>${esc(l)}</span><span class="count num">${cnt(k)}</span></button>`).join("")}
       <form class="inline" id="catForm"><input name="c" placeholder="تصنيف جديد" aria-label="تصنيف جديد"><button class="btn sm" type="submit">+</button></form>
     </aside>
     <div class="libmain"><div class="sec-head"><label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="libQ" type="search" value="${esc(S.libQ)}" placeholder="بحث بالاسم أو الوسم أو العميل…" aria-label="بحث في المكتبة" autocomplete="off"></label><button type="button" class="btn primary" data-dnew>+ رفع ملف</button></div>
@@ -2005,6 +2186,9 @@ app.addEventListener("click",e=>{
   /* personal week plans */
   if(el=q("[data-wpdel]")){const id=el.dataset.wpdel,w=S.weekplans.find(x=>x.id===id);if(w&&S.db){const items=(w.items||[]).filter((_,i)=>i!==+el.dataset.i);write(()=>S.db.doc("weekplans/"+id).update({items}))}return}
   /* library */
+  if(el=q("[data-libown]")){S.libOwn=el.dataset.libown;S.libCat="all";render();return}
+  if(el=q("[data-libtype]")){S.libType=el.dataset.libtype;render();return}
+  if(el=q("[data-pv]")){pvOpen(el.dataset.pv);return}
   if(el=q("[data-libcat]")){S.libCat=el.dataset.libcat;render();return}
   if(el=q("[data-libtag]")){S.libQ=el.dataset.libtag;S.libCat="all";render();return}
   if(q("[data-dnew]")){S.dEdit="new";render();$("docForm")?.scrollIntoView({block:"nearest"});return}
@@ -2056,11 +2240,17 @@ app.addEventListener("submit",e=>{
     write(()=>S.db.doc("weekplans/"+id).set({week:f.dataset.wps,notes:w.notes||"",items:[...(w.items||[]),{t,done:false}]}));f.reset();return}
   if(f.id==="catForm"){e.preventDefault();const c=f.elements.c.value.trim();if(!c||!S.db)return;const cats=libCats();if(cats.includes(c)){S.libCat=c;render();return}
     write(()=>S.db.doc("settings/library").set({...stripId(S.settings.find(x=>x.id==="library")),cats:[...cats,c]}));S.libCat=c;f.reset();return}
-  if(f.id==="docForm"){e.preventDefault();if(!S.db)return;const v=k=>f.elements[k]?.value?.trim()??"";
+  if(f.id==="docForm"){e.preventDefault();if(!S.db)return;const v=k=>f.elements[k]?.value?.trim()??"";const err=m=>{const x=$("docErr");if(x)x.textContent=m};
+    const owner=f.querySelector("[name=owner]:checked")?.value;if(!owner){err("اختر الملف تابع لمين: MW أو sensing أو شخصي أو عام.");return}
     const tags=v("tags").split(/[,،]/).map(x=>x.trim()).filter(Boolean);
-    const body={name:v("name"),cat:v("cat"),expires:v("expires"),clientId:v("client")||undefined,projectId:v("project")||undefined,tags,note:v("note"),updated:now()};
-    if(S.dEdit!=="new"){const id=S.dEdit;if(!body.name)delete body.name;S.dEdit=null;write(()=>S.db.doc("docs/"+id).update(body));return}
-    const file=f.elements.file.files[0];if(!file)return;if(!body.name)body.name=file.name.replace(/\.[^.]+$/,"");
+    const body={owner,name:v("name"),cat:v("cat"),expires:v("expires"),clientId:v("client")||undefined,projectId:v("project")||undefined,tags,note:v("note"),updated:now()};
+    if(S.dEdit!=="new"){const id=S.dEdit,ed=S.docs.find(d=>d.id===id);if(!body.name)delete body.name;if(ed?.url&&v("url"))body.url=v("url");S.dEdit=null;write(()=>S.db.doc("docs/"+id).update(body));return}
+    const file=f.elements.file?.files?.[0],url=v("url");
+    if(!file&&!url){err("اختر ملف أو حط رابط فيديو.");return}
+    if(!file){if(!/^https?:\/\//i.test(url)){err("الرابط لازم يبدأ بـ https://");return}
+      if(!body.name)body.name=ytId(url)?"فيديو يوتيوب":url.replace(/^https?:\/\/(www\.)?/i,"").slice(0,60);
+      S.dEdit=null;write(()=>S.db.doc("docs/"+newId()).set({...body,url,files:[],created:now()}));return}
+    if(!body.name)body.name=file.name.replace(/\.[^.]+$/,"");
     S.libUploading=true;render();
     write(async()=>{const id=newId();try{const nf=await uploadDoc(file,id);if(nf){await S.db.doc("docs/"+id).set({...body,files:[nf],created:now()});S.dEdit=null}}finally{S.libUploading=false;render()}});return}
 });
@@ -2071,6 +2261,146 @@ function exportMetricsCsv(){
   const csv="﻿"+[head,...rows.map(r=>[r.date,...MF.map(([k])=>r[k]??""),r.note||""])].map(l=>l.map(x=>`"${String(x).replace(/"/g,'""')}"`).join(",")).join("\n");
   const a2=document.createElement("a");a2.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a2.download=`sensing-metrics-${a}_${b}.csv`;document.body.appendChild(a2);a2.click();setTimeout(()=>{URL.revokeObjectURL(a2.href);a2.remove()},1000);
 }
+
+/* ================= V4: toolbar, theme, language, save state, search, bell, quick add, preview ================= */
+const I4={
+  sun:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+  moon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',
+  auto:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>',
+  search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>',
+  bell:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>',
+  plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>',
+  play:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>',
+  file:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>'
+};
+/* ----- theme: auto → light → dark ----- */
+const THEME_KEY="sanka.theme";
+const getTheme=()=>{try{const t=localStorage.getItem(THEME_KEY);return t==="light"||t==="dark"?t:"auto"}catch(_){return"auto"}};
+function applyTheme(){const t=getTheme();if(t==="auto")delete document.documentElement.dataset.theme;else document.documentElement.dataset.theme=t;
+  const b=$("themeBtn");if(!b)return;b.innerHTML=I4[t==="dark"?"moon":t==="light"?"sun":"auto"];
+  const l=t==="dark"?"الوضع الليلي":t==="light"?"الوضع النهاري":"الوضع تلقائي حسب الجهاز";b.title=l;b.setAttribute("aria-label",l)}
+$("themeBtn").addEventListener("click",()=>{const n={auto:"light",light:"dark",dark:"auto"}[getTheme()];try{localStorage.setItem(THEME_KEY,n)}catch(_){}applyTheme()});
+applyTheme();
+/* ----- language ----- */
+$("langBtn").addEventListener("click",()=>{try{localStorage.setItem("sanka.lang",LANG==="en"?"ar":"en")}catch(_){}location.reload()});
+/* ----- save state dot ----- */
+let PEND=0,SAVE_ERR=false;
+function saveState(d=0,err){PEND=Math.max(0,PEND+d);if(err!==undefined)SAVE_ERR=err;const el=$("saveDot");if(!el)return;
+  const st=S.offline?"off":PEND?"busy":SAVE_ERR?"err":"ok";el.className="sdot "+st;
+  const l={ok:"كل شي محفوظ",busy:"جاري الحفظ…",err:"آخر حفظ ما نجح",off:"بدون اتصال"}[st];el.title=l;el.setAttribute("aria-label",l)}
+/* ----- menus ----- */
+function closeMenus(except){for(const id of ["qaMenu","bellMenu","acctMenu"])if(id!==except){$(id).hidden=true;document.querySelector(`[aria-controls="${id}"]`)?.setAttribute("aria-expanded","false")}}
+function toggleMenu(id,btn){const m=$(id),open=m.hidden;closeMenus(id);m.hidden=!open;btn.setAttribute("aria-expanded",String(open));
+  if(open){if(id==="bellMenu")renderBell(true);if(id==="acctMenu")SB?.auth?.getSession?.().then(({data})=>{$("acctEmail").textContent=data?.session?.user?.email||""}).catch(()=>{});
+    if(btn.id==="fabBtn"){m.classList.add("fabmenu")}else m.classList.remove("fabmenu");
+    m.querySelector("button")?.focus({preventScroll:true})}}
+$("qaBtn").addEventListener("click",e=>{e.stopPropagation();toggleMenu("qaMenu",e.currentTarget)});
+$("fabBtn").addEventListener("click",e=>{e.stopPropagation();toggleMenu("qaMenu",e.currentTarget)});
+$("bellBtn").addEventListener("click",e=>{e.stopPropagation();toggleMenu("bellMenu",e.currentTarget)});
+$("acctBtn").addEventListener("click",e=>{e.stopPropagation();toggleMenu("acctMenu",e.currentTarget)});
+document.addEventListener("click",e=>{if(e.target.closest(".menu")&&!e.target.closest("button,a"))return;if(e.target.closest("#qaBtn,#fabBtn,#bellBtn,#acctBtn"))return;closeMenus()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeMenus();if(!$("gsModal").hidden)gsClose();if(!$("pvModal").hidden)pvClose()}
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"&&S.db&&!S.locked){e.preventDefault();gsOpen()}});
+$("lockNowBtn").addEventListener("click",()=>lockNow());
+/* ----- quick add ----- */
+const QA={
+  task:()=>{if(S.tab==="home"||S.tab==="library")setTab("mw");openForm("task",defaultAreaForTab())},
+  proj:()=>{setTab("mw");openForm("proj",mwAreas()[0]?.id)},
+  file:()=>{S.dEdit="new";setTab("library");setTimeout(()=>$("docForm")?.scrollIntoView({block:"nearest"}))},
+  post:()=>{S.stab="content";S.postEdit="";setTab("store");setTimeout(()=>$("postForm")?.querySelector("[name=title]")?.focus())},
+  metric:()=>{S.stab="metrics";S.mDate=null;setTab("store");setTimeout(()=>$("metricForm")?.querySelector("[name=visits]")?.focus())},
+  issue:()=>{S.stab="issues";S.issueEdit="";setTab("store");setTimeout(()=>$("issueForm")?.querySelector("[name=title]")?.focus())}
+};
+$("qaMenu").addEventListener("click",e=>{const b=e.target.closest("[data-qa]");if(!b)return;closeMenus();if(!S.db)return;QA[b.dataset.qa]?.()});
+/* ----- go to an item from search or bell ----- */
+function flash(el){if(!el)return;el.scrollIntoView({block:"center",behavior:"smooth"});el.classList.add("flash");setTimeout(()=>el.classList.remove("flash"),1800)}
+function goItem(go){const i=go.indexOf(":"),k=go.slice(0,i),id=go.slice(i+1);
+  if(k==="task"){const t=S.tasks.find(x=>x.id===id);if(!t)return;const m=areaMode(areaOf(t.area));if(m==="store"){S.stab="tasks"}
+    if(S.filter!=="all"&&t.status==="done")S.filter="all";setTab(m==="store"?"store":m==="personal"?"personal":"mw");editTask(t);return}
+  if(k==="proj"){const p=projById(id);if(!p)return;S.view="areas";setTab("mw");if(p.area)S.open.add(p.id);render();
+    setTimeout(()=>flash(document.querySelector(`[data-ptoggle="${CSS.escape(id)}"]`)?.closest("article,.pcard,.proj,.card")||document.querySelector(`[data-pid="${CSS.escape(id)}"]`)));return}
+  if(k==="client"){S.view="clients";setTab("mw");setTimeout(()=>flash([...document.querySelectorAll("#clientsView article,#clientsView .ccard")].find(e=>e.textContent.includes(clientById(id)?.name||"\u0000"))));return}
+  if(k==="doc"){const d=S.docs.find(x=>x.id===id);if(!d)return;S.libOwn="all";S.libType="all";S.libCat="all";S.libQ=d.name||"";setTab("library");return}
+  if(k==="post"){S.stab="content";S.cFilter="all";S.postEdit=id;setTab("store");setTimeout(()=>$("postForm")?.scrollIntoView({block:"nearest"}));return}
+  if(k==="tab"){const [t,s]=id.split(":");if(s)S.stab=s;setTab(t)}}
+/* ----- global search ----- */
+function gsOpen(){closeMenus();const m=$("gsModal");m.hidden=false;const i=$("gsQ");i.value="";gsRender();setTimeout(()=>i.focus(),10)}
+function gsClose(){$("gsModal").hidden=true}
+function gsRender(){const raw=$("gsQ").value.trim(),q=norm(raw),out=$("gsList");
+  if(!q){out.innerHTML=`<p class="hint">اكتب اسم مهمة أو مشروع أو عميل أو ملف…</p>`;return}
+  const hit=s=>norm(String(s||"")).includes(q);
+  const groups=[
+    ["المهام",S.tasks.filter(t=>hit(t.title)||hit(t.notes)).slice(0,8).map(t=>({go:"task:"+t.id,t:t.title,s:(areaOf(t.area)?.name||"")+(t.status==="done"?" · منجزة":"")}))],
+    ["المشاريع",S.projects.filter(p=>hit(p.name)||hit(p.client)).slice(0,6).map(p=>({go:"proj:"+p.id,t:p.name,s:STAGE[stageOf(p)]||""}))],
+    ["العملاء",S.clients.filter(c=>hit(c.name)||hit(c.phone)).slice(0,5).map(c=>({go:"client:"+c.id,t:c.name,s:c.phone||""}))],
+    ["الملفات",S.docs.filter(d=>hit([d.name,d.cat,(d.tags||[]).join(" "),d.note].join(" "))).slice(0,6).map(d=>({go:"doc:"+d.id,t:d.name,s:OWNL[docOwner(d)]+" · "+(d.cat||"")}))],
+    ["المحتوى",S.posts.filter(p=>hit(p.title)||hit(p.note)).slice(0,4).map(p=>({go:"post:"+p.id,t:p.title,s:p.date?dShort(p.date):""}))]
+  ].filter(g=>g[1].length);
+  out.innerHTML=groups.length?groups.map(([h,rs])=>`<div class="gsg"><h4>${h}</h4>${rs.map(r=>`<button type="button" class="gsr" data-gsgo="${esc(r.go)}"><span>${esc(r.t)}</span><small>${esc(r.s)}</small></button>`).join("")}</div>`).join(""):`<p class="hint">ما لقيت شي يطابق.</p>`}
+$("gsQ").addEventListener("input",gsRender);
+$("gsQ").addEventListener("keydown",e=>{if(e.key==="Enter"){const b=$("gsList").querySelector("[data-gsgo]");if(b){e.preventDefault();b.click()}}
+  if(e.key==="ArrowDown"){e.preventDefault();$("gsList").querySelector("[data-gsgo]")?.focus()}});
+$("gsList").addEventListener("keydown",e=>{const all=[...$("gsList").querySelectorAll("[data-gsgo]")],i=all.indexOf(document.activeElement);if(i<0)return;
+  if(e.key==="ArrowDown"){e.preventDefault();all[Math.min(all.length-1,i+1)].focus()}if(e.key==="ArrowUp"){e.preventDefault();(i?all[i-1]:$("gsQ")).focus()}});
+$("gsModal").addEventListener("click",e=>{const b=e.target.closest("[data-gsgo]");if(b){gsClose();goItem(b.dataset.gsgo);return}if(e.target===$("gsModal")||e.target.closest("[data-gsclose]"))gsClose()});
+$("gsBtn").addEventListener("click",()=>{if(S.db)gsOpen()});
+/* ----- bell ----- */
+function bellItems(){const t=todayISO(),it=[];
+  for(const x of S.tasks.filter(x=>x.status!=="done"&&x.due&&x.due<t).sort((a,b)=>a.due.localeCompare(b.due)))it.push({c:"bad",t:x.title,s:"متأخرة · "+dShort(x.due),go:"task:"+x.id});
+  for(const x of S.tasks.filter(x=>x.status!=="done"&&x.due===t&&!(areaMode(areaOf(x.area))==="store"&&x.tier)))it.push({c:"warn",t:x.title,s:"موعدها اليوم",go:"task:"+x.id});
+  for(const p of S.projects.filter(p=>(inPipe(p)||stageOf(p)==="active")&&p.followUp&&p.followUp<=t))it.push({c:"info",t:p.name,s:"متابعة مستحقة · "+dShort(p.followUp),go:"proj:"+p.id});
+  for(const d of S.docs.filter(d=>expState(d)))it.push({c:expState(d)==="expired"?"bad":"warn",t:d.name,s:(expState(d)==="expired"?"انتهى ":"ينتهي ")+dShort(d.expires),go:"doc:"+d.id});
+  for(const x of S.issues.filter(x=>issueState(x)==="open"&&x.pri==="high"))it.push({c:"bad",t:x.title,s:"مشكلة مهمة مفتوحة",go:"tab:store:issues"});
+  return it}
+function renderBell(full){const it=bellItems(),n=$("bellN");n.hidden=!it.length;n.textContent=it.length>99?"99+":it.length;
+  $("bellBtn").setAttribute("aria-label",it.length?`التنبيهات (${it.length})`:"التنبيهات");
+  if(!full&&$("bellMenu").hidden)return;
+  $("bellMenu").innerHTML=`<div class="mhead"><b>التنبيهات</b><small>${it.length?`<span class="num">${it.length}</span> تحتاج انتباهك`:"ما فيه شي يحتاج انتباهك"}</small></div>`+
+    (it.length?`<div class="blist">${it.slice(0,30).map(x=>`<button type="button" class="bitem ${x.c}" data-bgo="${esc(x.go)}"><span class="bdot"></span><span><b>${esc(x.t)}</b><small>${esc(x.s)}</small></span></button>`).join("")}</div>`:`<p class="hint" style="padding:8px 12px">كل شي تمام 👌</p>`)}
+$("bellMenu").addEventListener("click",e=>{const b=e.target.closest("[data-bgo]");if(!b)return;closeMenus();goItem(b.dataset.bgo)});
+/* ----- file preview ----- */
+function ytId(u){const m=String(u||"").match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/))([\w-]{6,})/);return m?.[1]||""}
+function pvOpen(id){const d=S.docs.find(x=>x.id===id);if(!d)return;const f=docFile(d),ty=docType(d),b=$("pvBody"),o=$("pvOpen");
+  $("pvTitle").textContent=d.name||"";o.removeAttribute("data-sign");o.removeAttribute("href");
+  if(d.url){const y=ytId(d.url);o.href=d.url;b.innerHTML=y?`<iframe src="https://www.youtube-nocookie.com/embed/${esc(y)}" allow="encrypted-media;fullscreen" allowfullscreen title="${esc(d.name)}"></iframe>`:`<div class="pvnone">${I4.play}<p>هذا رابط خارجي. افتحه من زر «فتح في تبويب».</p></div>`}
+  else if(f){o.dataset.sign=f.path;
+    b.innerHTML=ty==="image"?`<img data-sign="${esc(f.path)}" alt="${esc(d.name)}">`:ty==="video"?`<video controls playsinline preload="metadata" data-sign="${esc(f.path)}"></video>`:ty==="pdf"?`<iframe data-sign="${esc(f.path)}" title="${esc(d.name)}"></iframe>`
+      :`<div class="pvnone"><span class="fic big t-${ty}">${esc(extOf(f.name))}</span><p>المعاينة غير متاحة لملفات ${esc(FTL[ty]||"هذا النوع")}. افتحه أو نزّله من زر «فتح في تبويب».</p></div>`}
+  $("pvModal").hidden=false;hydrateFiles();setTimeout(()=>$("pvClose").focus(),10)}
+function pvClose(){$("pvModal").hidden=true;$("pvBody").innerHTML=""}
+$("pvModal").addEventListener("click",e=>{if(e.target===$("pvModal")||e.target.closest("#pvClose"))pvClose()});
+
+$("langBtn").textContent=LANG==="en"?"ع":"EN";$("langBtn").setAttribute("aria-label",LANG==="en"?"التبديل إلى العربي":"Switch to English");$("langBtn").title=$("langBtn").getAttribute("aria-label");
+
+/* ================= ENGLISH: UI translation layer (user data stays as written) ================= */
+const EN=/*EN_DICT*/{"و":"and","أو": "or", "تم": "Done", "كل": "All", "لا": "No", "آخر": "Last", "أمس": "Yesterday", "أهم": "Top", "بعد": "after", "بند": "item", "حبة": "pcs", "حتى": "until", "حذف": "Delete", "حفظ": "Save", "خصم": "Discount", "خطة": "Plan", "دفع": "Payment", "رسم": "Chart", "رفع": "Upload", "شهر": "Month", "صور": "Images", "عام": "General", "فتح": "Open", "قبل": "before", "ملف": "File", "نشر": "Publish", "يوم": "days", "أخرى": "Other", "أيام": "days", "الكل": "All", "باقي": "left:", "بكرة": "Tomorrow", "جدول": "Schedule", "جوجل": "Google", "حالي": "Current", "حذف؟": "Delete?", "حملة": "Campaign", "دخول": "Sign in", "ساعة": "hour", "شخصي": "Personal", "شعار": "Logo", "شهري": "Monthly", "صالح": "Valid", "عميل": "client", "فاتت": "overdue", "مثال": "Example", "مجال": "area", "مخطط": "Planned", "مقطع": "clip", "ملخص": "Summary", "منها": "of which", "مهمة": "tasks", "ميتا": "Meta", "ميجا": "MB", "نسخة": "Version", "نُشر": "Posted", "يومي": "Daily", "أسبوع": "Week", "إضافة": "Add", "إغلاق": "Close", "إلغاء": "Cancel", "إنهاء": "Finish", "الاسم": "Name", "البند": "Item", "الجهة": "Owner", "الحين": "Now", "الخصم": "Discount", "الرسم": "Chart", "القسم": "Section", "الملف": "File", "الهدف": "Goal", "اليوم": "Today", "انتهى": "Expired", "تحديد": "Select", "تسليم": "Delivery", "تسويق": "Marketing", "تشغيل": "Operations", "تصدير": "Export", "تطوير": "Growth", "تعديل": "Edit", "تفاوض": "Negotiation", "جديدة": "New", "دقائق": "minutes", "دقيقة": "minute", "ساعات": "hours", "شغالة": "Active", "طباعة": "Print", "عادية": "Normal", "عالية": "High", "عناية": "Care", "فرعية": "Subtask", "فيديو": "Video", "متأخر": "Late", "مجال،": "area,", "مجدول": "Scheduled", "محتوى": "Content", "محددة": "selected", "مرفوض": "Rejected", "مشاكل": "Issues", "مشروع": "project", "مشكلة": "Issue", "معمّد": "Approved", "مقترح": "proposed", "منتهي": "Ended", "منجزة": "Done", "منشور": "posted", "منصات": "platforms", "ينتهي": "Expires", "يومين": "2 days", "أسابيع": "weeks", "أساسية": "Basic", "أسبوعي": "Weekly", "أكتوبر": "October", "إضافية": "Extra", "البيان": "Description", "الجدول": "Schedule", "الجوال": "Mobile", "الحالة": "Status", "الحملة": "Campaign", "الرابط": "Link", "الشخصي": "Personal", "الشعار": "Logo", "العائد": "Return", "العميل": "Client", "الفترة": "Period", "الفكرة": "Idea", "القيمة": "Value", "الكمية": "Qty", "المؤشر": "Metric", "المجال": "Area", "المنصة": "Platform", "المهام": "Tasks", "المهمة": "Task", "الموعد": "Due", "الوحدة": "Unit", "الوسوم": "Tags", "تقارير": "Reports", "جانبية": "Side", "زيارات": "Visits", "عميل و": "clients and", "كل يوم": "Every day", "لك فقط": "only for you", "مؤثرين": "Influencers", "مبيعات": "Sales", "متأخرة": "Late", "متابعة": "Follow-up", "متوسطة": "Medium", "مجال و": "areas and", "محلولة": "Solved", "مشروع،": "project,", "معاينة": "Preview", "مفتوحة": "Open", "مقدم و": "submitted and", "ملاحظة": "Note", "منتجات": "Products", "منتهية": "Expired", "مهمة و": "tasks and", "نوفمبر": "November", "واتساب": "WhatsApp", "، حكومي": ", government", "أكبر من": "larger than", "اختياري": "optional", "الآيبان": "IBAN", "الأسبوع": "Week", "الأهمية": "Priority", "الإنجاز": "Progress", "الإيميل": "Email", "البداية": "Start", "التاريخ": "Date", "التسليم": "Delivery", "التصنيف": "Category", "التفاعل": "Engagement", "التقرير": "Report", "التكرار": "Repeat", "التكلفة": "Cost", "التواصل": "Contact", "الروابط": "Links", "الضريبة": "VAT", "الطلبات": "Orders", "العملاء": "Clients", "العنوان": "Address", "القادمة": "Upcoming", "المجموع": "Total", "المحتوى": "Content", "المدينة": "City", "المرحلة": "Stage", "المسؤول": "Owner", "المشروع": "Project", "المشكلة": "Issue", "المصروف": "Spent", "المفروض": "Expected", "الملفات": "Files", "المنجزة": "Done", "النهاية": "End", "تم الحل": "Solved", "تيك توك": "TikTok", "جهزت لك": "I prepared", "رفع ملف": "Upload file", "عرض سعر": "Quotation", "ما رفعت": "not uploaded", "مشروع و": "projects and", "مفتوحة،": "open,", "ملاحظات": "Notes", "أضف مهمة": "Add task", "اختر يوم": "Pick a day", "الأساسية": "Basic", "الأولوية": "Priority", "الإجمالي": "Total", "الإضافية": "Extra", "الانتهاء": "Expiry", "التفاصيل": "Details", "الجانبية": "Side", "الرئيسية": "Home", "الزيارات": "Visits", "المبيعات": "Sales", "المتأخرة": "Late", "المتابعة": "Follow-up", "المرفقات": "Attachments", "المشاريع": "Projects", "المفتوحة": "Open", "الملف مو": "The file is not", "انستقرام": "Instagram", "بحث شامل": "Global search", "بند جديد": "New item", "تحتاج حل": "need a solution", "حل مشكلة": "Solve issue", "سناب شات": "Snapchat", "صالح حتى": "Valid until", "صُدّر في": "exported on", "عُمّد في": "approved on", "في العرض": "in the quote", "قبل ساعة": "an hour ago", "قفل الآن": "Lock now", "ما انرفع": "not uploaded", "مخطط لها": "Planned", "مقدم إلى": "Submitted to", "مقطع على": "clips on", "آخر تحديث": "Last update", "أرقام يوم": "Numbers for", "إضافة الـ": "Add the", "إعادة فتح": "Reopen", "اسم البنك": "Bank name", "الإعلانات": "Ads", "الباسوورد": "Password", "التصنيفات": "Categories", "التنبيهات": "Notifications", "المتابعين": "Followers", "الملف فيه": "The file has", "الميزانية": "Budget", "بدون حملة": "No campaign", "بدون مجال": "No area", "حذف البند": "Delete item", "حفظ السبب": "Save reason", "رقم العرض": "Quote no.", "سبب الرفض": "Rejection reason", "سعر البيع": "Sale price", "طلب بعائد": "order(s) with revenue", "عرض السعر": "Quotation", "عميل جديد": "New client", "قبل اليوم": "before today", "قبل دقيقة": "a minute ago", "قبل يومين": "2 days ago", "قيد العمل": "In progress", "كل الجهات": "All owners", "كل المهام": "All tasks", "مجال جديد": "New area", "مقطع جديد": "New clip", "نوع الملف": "File type", "هذا النوع": "this type", "وصف البند": "Item description", "وقت النشر": "Post time", "يوم مسجّل": "days logged", "إطلاق حملة": "Campaign launch", "اسم الحملة": "Campaign name", "اسم الرابط": "Link name", "اسم الشركة": "Company name", "اسم العميل": "Client name", "اسم المجال": "Area name", "الحل معتمد": "Solution approved", "بانتظار رد": "Waiting", "بدون اتصال": "Offline", "بدون تكرار": "No repeat", "بدون مشروع": "No project", "تحديث جديد": "New update", "تسجيل خروج": "Sign out", "تصنيف جديد": "New category", "تم التعميد": "Approved", "تنتهي خلال": "Expiring within", "جاري الرفع": "Uploading", "حذف الرابط": "Delete link", "حذف العميل": "Delete client", "حذف المحدد": "Delete selected", "حذف المهمة": "Delete task", "حملة جديدة": "New campaign", "رجوع لليوم": "Back to today", "رفع الشعار": "Upload logo", "سعر الوحدة": "Unit price", "شحن وتوصيل": "Shipping", "شهرياً يوم": "Monthly on day", "قبل ساعتين": "2 hours ago", "كل الأنواع": "All types", "كل الجداول": "All schedules", "كل شي تمام": "All good", "لهذا اليوم": "for this day", "مثال: مقطع": "e.g. clip", "مشروع جديد": "New project", "مقطع محتوى": "Content clip", "ملخص اليوم": "Today's summary", "من الملفات": "of the files", "مهام اليوم": "Today's tasks", "مهمة جديدة": "New task", "ميجا للملف": "MB per file", "نسخة جديدة": "New version", "أرقام اليوم": "Today's numbers", "إذا فيه وقت": "If there's time", "إضافة سريعة": "Quick add", "اسم المشروع": "Project name", "اعتماد الحل": "Approve solution", "افصل بفاصلة": "comma separated", "الاستفسارات": "Inquiries", "تأكيد الرفض": "Confirm rejection", "تعديل الملف": "Edit file", "تعميد مشروع": "Project approved", "جاري الحفظ…": "Saving…", "جاري الرفع…": "Uploading…", "حالة المهمة": "Task status", "حذف التحديث": "Delete update", "حذف الحملة؟": "Delete campaign?", "حذف المرفق؟": "Delete attachment?", "حذف المشروع": "Delete project", "حذف المهمة؟": "Delete task?", "حفظ التعديل": "Save changes", "خطط التسويق": "Marketing plans", "رقم التواصل": "Contact number", "سعر التكلفة": "Cost price", "شخص التواصل": "Contact person", "طريقة العرض": "View", "طلب عرض سعر": "RFQ", "عرض المقاطع": "Show clips", "قبل دقيقتين": "2 minutes ago", "قيد الدراسة": "Under review", "كل شي محفوظ": "All saved", "ما فيه مهام": "No tasks", "متوسط الطلب": "Avg. order", "محتوى اليوم": "Today's content", "مشروع مقترح": "Proposed project", "مشكلة جديدة": "New issue", "مقارنة بأمس": "vs. yesterday", "ملف للمكتبة": "File to library", "منها متأخرة": "late", "مهام المتجر": "Store tasks", "مهمة للحملة": "Campaign task", "مهمة متكررة": "Recurring task", "مهمة مفتوحة": "open tasks", "نوع التقرير": "Report type", "هذا الأسبوع": "This week", "أقسام اللوحة": "Dashboard sections", "أقسام المتجر": "Store sections", "إزالة الشعار": "Remove logo", "إضافة الحملة": "Add campaign", "إضافة العميل": "Add client", "إضافة المجال": "Add area", "إضافة المهمة": "Add task", "إنجاز المهام": "Task progress", "استيراد نسخة": "Import backup", "الحل المقترح": "Proposed solution", "اللوحة مقفلة": "Dashboard locked", "الوضع الليلي": "Night mode", "اليوم التالي": "Next day", "اليوم السابق": "Previous day", "تحديد المهمة": "Select task", "تعديل الحملة": "Edit campaign", "تعديل العميل": "Edit client", "تعديل المقطع": "Edit clip", "تعديل المهمة": "Edit task", "جاري التحقق…": "Checking…", "جاري الدخول…": "Signing in…", "حذف المشكلة؟": "Delete issue?", "خدمة العملاء": "Customer service", "رابط الفيديو": "Video link", "صلاحية العرض": "Quote validity", "عرض الجوالات": "Phones offer", "عند التسليم…": "on delivery…", "فتح في تبويب": "Open in new tab", "فيديو يوتيوب": "YouTube video", "قيمة المشروع": "Project value", "قيمة المعمّد": "Approved value", "كل التصنيفات": "All categories", "لأنه أكبر من": "because it's larger than", "ملاحظة اليوم": "Today's note", "مهام المشروع": "Project tasks", "موعد التسليم": "Delivery date", "موعدها اليوم": "Due today", "نسبة الإنجاز": "Progress", "نسبة التحويل": "Conversion rate", "نسبة التعميد": "Approval rate", "نظرة أسبوعية": "Weekly view", "وثائق الشركة": "Company documents", "وش قاعد يصير": "What's happening", "، إكسل، وورد…": ", Excel, Word…", "أو رابط فيديو": "Or a video link", "إضافة المشروع": "Add project", "إلغاء التحديد": "Clear selection", "إنهاء التحديد": "Done selecting", "إنهاء المشروع": "Close project", "الربح المتوقع": "Expected profit", "الرقم الضريبي": "VAT number", "السجل التجاري": "CR number", "الشخص المسؤول": "Person in charge", "المبيعات منها": "of sales", "المكتبة فاضية": "The library is empty", "الملف أكبر من": "File is larger than", "الملف تابع لـ": "File belongs to", "المهمة انحذفت": "Task deleted", "النسخ السابقة": "Previous versions", "الوضع النهاري": "Day mode", "الوقت المنقضي": "Time elapsed", "تاريخ الأرقام": "Numbers date", "تاريخ البداية": "Start date", "تحتاج انتباهك": "need your attention", "تسجيل المشكلة": "Log issue", "تظهر في العرض": "Shown on the quote", "تعديل المشروع": "Edit project", "تعديل المشكلة": "Edit issue", "تغيير الحالة…": "Change status…", "تقويم المحتوى": "Content calendar", "جاري الإضافة…": "Adding…", "حفظ الإعدادات": "Save settings", "عدّل التواريخ": "Fix the dates", "كل شي في وقته": "All on time", "ما فيه مرفقات": "No attachments", "ما قدرت أتحقق": "Couldn't verify", "متابعات عملاء": "Client follow-ups", "متابعة مستحقة": "Follow-up due", "مرحلة المشروع": "Project stage", "مقاطع المحتوى": "Content clips", "مكتبة الملفات": "File library", "مهمة نهائياً؟": "task permanently?", "هذا اليوم فقط": "This day only", "آخر حفظ ما نجح": "Last save failed", "أنت بدون اتصال": "You're offline", "أو شخصي أو عام": "or Personal or General", "إخفاء التفاصيل": "Hide details", "إرجاع للمقترحة": "Back to proposed", "إعدادات الشركة": "Company settings", "اضغط بعد النشر": "Tap after posting", "الأسبوع القادم": "Next week", "الأسبوع الماضي": "Last week", "الأيام المسجلة": "Logged days", "الاسم القانوني": "Legal name", "الختم والتوقيع": "Stamp & signature", "الشعار أكبر من": "Logo is larger than", "بحث في المكتبة": "Search the library", "بيانات التحويل": "Bank transfer details", "تاريخ الانتهاء": "Expiry date", "تتأشر تلقائياً": "checked automatically", "تعليق سريع على": "Quick note on", "تم إرسال العرض": "Quote sent", "قيمة المقترحات": "Proposals value", "لهذا اليوم فقط": "For this day only", "ما فيه شي قريب": "Nothing soon", "ملف في المكتبة": "file in the library", "من سجل المشاكل": "from the issues log", "موعد مهمة بكرة": "Task due tomorrow", "هذا رابط خارجي": "This is an external link", "يوتيوب، درايف…": "YouTube, Drive…", "يوم تنفيذ الحل": "Day to apply the solution", "استبدال بياناتي": "Replace my data", "اكتب آخر تحديث…": "Write the latest update…", "الرابط غير صحيح": "Invalid link", "السلات المتروكة": "Abandoned carts", "المشاكل والحلول": "Issues & solutions", "المهام المعروضة": "Shown tasks", "المورد والمخزون": "Supplier & stock", "الموقع والتقنية": "Website & tech", "بادئة رقم العرض": "Quote number prefix", "تحديد كل الظاهر": "Select all shown", "تعديل سبب الرفض": "Edit rejection reason", "تفعيل التنبيهات": "Enable notifications", "جاري الاستيراد…": "Importing…", "حفظ أرقام اليوم": "Save today's numbers", "دقيقة بدون نشاط": "minutes of inactivity", "رفع ملف للمكتبة": "Upload a file to the library", "ما فيه مهام بعد": "No tasks yet", "متأخر عن الجدول": "Behind schedule", "مثال: عرض السعر": "e.g. Quotation", "مشكلة في المتجر": "Store issue", "مصروف الإعلانات": "Ad spend", "وجرّب مرة ثانية": "and try again", "استيراد جدول الـ": "Import the schedule of", "التنبيهات مفعّلة": "Notifications on", "القيمة الإجمالية": "Total value", "المحتوى والتسويق": "Content & marketing", "المشاريع الحالية": "Current projects", "المشاريع والمهام": "Projects & tasks", "الملفات تابعة لـ": "Files belong to", "الهوية والتصاميم": "Brand & designs", "فيسبوك وانستقرام": "Facebook & Instagram", "ما انحفظ التعديل": "Change not saved", "ما فيه حملات بعد": "No campaigns yet", "ما فيه عملاء بعد": "No clients yet", "ما فيه قائمة بعد": "No list yet", "ما فيه مقاطع بعد": "No clips yet", "ما لقيت شي يطابق": "Nothing matches", "مثال: سجل تجاري،": "e.g. CR,", "مشروع مقترح جديد": "New proposed project", "مفتوحة وتحتاج حل": "open and need a solution", "مقطع اللي أرسلته": "clips you sent", "ملف ينتهي قريباً": "file expiring soon", "مهمة فرعية جديدة": "New subtask", "أرفق صور أو ملفات": "Attach images or files", "اكتب رابط يبدأ بـ": "Enter a link starting with", "الأرقام والتقارير": "Numbers & reports", "الحساب والإعدادات": "Account & settings", "الشروط والملاحظات": "Terms & notes", "المشاريع المرفوضة": "Rejected projects", "المشاريع المقترحة": "Proposed projects", "المشاريع المنتهية": "Finished projects", "الموقع الإلكتروني": "Website", "تحديث أرقام اليوم": "Update today's numbers", "تصميم، نص، إطلاق…": "Design, copy, launch…", "تغيير حالة المحدد": "Change status of selected", "جاري تجهيز العرض…": "Preparing the quote…", "جاري تحميل لوحتك…": "Loading your dashboard…", "شاكرين لكم ثقتكم،": "Thank you for your trust,", "ما فيه مجالات بعد": "No areas yet", "مشروع لهذا العميل": "project for this client", "مشكلة مهمة مفتوحة": "Open high-priority issue", "مهام المتجر اليوم": "Store tasks today", "أستورد لك جدول الـ": "I'll import your schedule of", "أضف أول عميل من زر": "Add your first client with the button", "أضف أول مجال من زر": "Add your first area with the button", "إرفاق صور أو ملفات": "Attach images or files", "اكتب الحل المقترح…": "Write the proposed solution…", "الباسوورد غير صحيح": "Wrong password", "التبديل إلى العربي": "Switch to Arabic", "الصافي قبل الضريبة": "Net before VAT", "العائد على الإعلان": "ROAS", "المتابعة والتفاصيل": "Follow-up & details", "المسؤول عن المشروع": "Project owner", "النتيجة والملاحظات": "Result & notes", "حذف المهمة الفرعية": "Delete subtask", "عروض وعقود وفواتير": "Quotes, contracts & invoices", "ما اكتمل الاستيراد": "Import didn't finish", "ما فيه تحديثات بعد": "No updates yet", "ما فيه مجال للمتجر": "No store area", "ما فيه مشاكل مسجلة": "No issues logged", "ما فيه مقاطع اليوم": "No clips today", "ما فيه ملفات تطابق": "No matching files", "ما فيه مهام متأخرة": "No late tasks", "معاينة العرض وحفظه": "Preview & save quote", "ملفات تنتهي قريباً": "Files expiring soon", "مهمة في هذا المجال": "task in this area", "، وسعر البيع للعميل": ", and the client's sale price", "اعتماد وتحويل لمهمة": "Approve & turn into a task", "الرابط لازم يبدأ بـ": "The link must start with", "تصدير نسخة احتياطية": "Export backup", "تعليق سريع: وش صار؟": "Quick note: what happened?", "فيه عميل بنفس الاسم": "A client with this name exists", "قفلتها تلقائياً بعد": "I locked it automatically after", "ما فيه مشاكل مفتوحة": "No open issues", "ما قدرت أسجّل دخولك": "Couldn't sign you in", "مبيعات من الإعلانات": "Sales from ads", "مقترح في هذا المجال": "proposal in this area", "مهام مستحقة ومتأخرة": "Due & late tasks", "وش تعلمت؟ وش أخّرك؟": "What did you learn? What held you back?", "أهداف للأسبوع القادم": "goals for next week", "أو صور أو فيديو، حتى": "or images or video, up to", "اختر الملف تابع لمين": "Choose who the file belongs to", "الرقم الضريبي والسجل": "VAT & CR", "المصروف من الميزانية": "Spent of budget", "تظهر في عروض الأسعار": "Shown on quotations", "تم تسجيل أرقام اليوم": "Today's numbers logged", "خطط التسويق والحملات": "Marketing plans & campaigns", "ضريبة القيمة المضافة": "VAT", "عبء العمل حسب المجال": "Workload by area", "ما تقدر تتراجع بعدها": "You can't undo this", "ما قدرت أحفظ التعديل": "Couldn't save the change", "متأخرة من أيام سابقة": "Late from previous days", "مراجع وقوالب وتقارير": "References, templates & reports", "مهام اليوم والمتأخرة": "Today's & late tasks", "موعد المتابعة القادم": "Next follow-up date", "استيراد نسخة احتياطية": "Import backup", "اكتب الحل المقترح أول": "Write the proposed solution first", "الإجمالي شامل الضريبة": "Total incl. VAT", "صغّره وجرّب مرة ثانية": "Make it smaller and try again", "ما فيه متابعات مستحقة": "No follow-ups due", "ما فيه مهام فرعية بعد": "No subtasks yet", "ما فيه مهام منجزة بعد": "No done tasks yet", "ما قدرت أحمّل بياناتك": "Couldn't load your data", "مشاكل المتجر المفتوحة": "Open store issues", "يومية وأسبوعية وشهرية": "Daily, weekly & monthly", "إضافة القائمة المقترحة": "Add the suggested list", "الوضع تلقائي حسب الجهاز": "Auto mode (follows device)", "بحث في المهام والمشاريع": "Search tasks and projects", "تحسينات وأفكار بدون ضغط": "Improvements & ideas, no pressure", "تقدر تعدّلها وتحذف منها": "You can edit and delete from it", "حذف من القائمة نهائياً؟": "Remove from the list permanently?", "صلاحية العرض الافتراضية": "Default quote validity", "ما فيه شي يحتاج انتباهك": "Nothing needs your attention", "مقارنة بالشهر اللي قبله": "vs. previous month", "مهمة جديدة لهذا المشروع": "New task for this project", "ويحط بدالها محتوى الملف": "and replaces it with the file's content", "أضف شي أنجزته وما انسجل…": "Add something you did that wasn't logged…", "أضف مهام وتنحسب تلقائياً": "Add tasks and they're counted automatically", "اكتب الباسوورد عشان ترجع": "Enter your password to come back", "السكربت، الكابشن، المنتج": "Script, caption, product", "المهام الفرعية والمرفقات": "Subtasks & attachments", "بداية الحملة بعد نهايتها": "Campaign starts after it ends", "صدّر نسختي الحالية أولاً": "Export my current copy first", "لايكات، تعليقات، مشاركات": "Likes, comments, shares", "ما تسجلت أرقام هذا اليوم": "No numbers logged for this day", "ما فيه مشاريع مقترحة هنا": "No proposed projects here", "ما فيه مهام مستحقة اليوم": "No tasks due today", "أضفت لك قائمة مقترحة فيها": "I added a suggested list with", "إنجاز المهام الأساسية آخر": "Basic tasks done in the last", "اختر ملف أو حط رابط فيديو": "Choose a file or add a video link", "افتحه من زر «فتح في تبويب": "Open it with the \"Open in new tab", "المعاينة غير متاحة لملفات": "Preview isn't available for", "رفع المرفقات يحتاج إنترنت": "Uploading attachments needs internet", "ما فيه مقاطع في هذا العرض": "No clips in this view", "مثال: شركة وضاح للمقاولات": "e.g. Waddah Contracting Co.", "مقارنة بالأسبوع اللي قبله": "vs. previous week", "مقطع منشور على كل المنصات": "clips posted on all platforms", "إجراءات على المهام المحددة": "Actions on selected tasks", "الشروط والأحكام الافتراضية": "Default terms & conditions", "حلولها معتمدة وقيد التنفيذ": "solutions approved, in progress", "عدّل أحدهم وجرّب مرة ثانية": "Change one of them and try again", "ما فيه عملاء يطابقون البحث": "No clients match the search", "مثال: إرسال عرض سعر للعميل": "e.g. Send a quote to the client", "موعد متابعتها اليوم أو فات": "follow-up due today or overdue", "التنبيهات موقوفة من المتصفح": "Notifications blocked by the browser", "المتصفح منع فتح نافذة العرض": "The browser blocked the quote window", "تأكد إنه نسخة من هذا الموقع": "Make sure it's a backup from this site", "حذف الملف وكل نسخه نهائياً؟": "Delete the file and all its versions permanently?", "ما فيه مشاريع معمّدة حالياً": "No approved projects right now", "مهمة موعدها بعد هذا الأسبوع": "tasks due after this week", "أضف بند لخطة الأسبوع القادم…": "Add an item to next week's plan…", "أضف مجال عشان يظهر عبء العمل": "Add an area to see the workload", "ما فيه قائمة مهام للمتجر بعد": "No store task list yet", "مهام المتجر الأساسية اليومية": "Daily basic store tasks", "الإيميل أو الباسوورد غير صحيح": "Wrong email or password", "ما فيه مشاريع لهذا العميل بعد": "No projects for this client yet", "ما فيه مقاطع مجدولة هذا اليوم": "No clips scheduled this day", "مثال: السعر أعلى من الميزانية": "e.g. Price above budget", "مثال: توريد أجهزة لجهة حكومية": "e.g. Equipment supply for a government entity", "مهام المتجر والمحتوى والأرقام": "Store tasks, content & numbers", "بحث بالاسم أو الوسم أو العميل…": "Search by name, tag or client…", "تاريخ البداية بعد موعد التسليم": "Start date is after the delivery date", "مثال: إطلاق كوبون، تأخير شحنة…": "e.g. Coupon launch, shipment delay…", "المشاريع وعروض الأسعار والعملاء": "Projects, quotations & clients", "المهام المنجزة والمتأخرة في آخر": "Done and late tasks in the last", "تأكد من الاتصال وجرّب مرة ثانية": "Check your connection and try again", "ما فيه مشاريع حالية تطابق البحث": "No current projects match the search", "مثال: تأخر شحنات الرياض أكثر من": "e.g. Riyadh shipments delayed more than", "نوفمبر، سناب وتيك توك وانستقرام": "November, Snapchat, TikTok & Instagram", "اختر من العملاء أو اكتب اسم جديد": "Pick a client or type a new name", "سجّل أرقام كل يوم من النموذج فوق": "Log each day's numbers with the form above", "ما فيه أرقام مسجلة في هذي الفترة": "No numbers logged in this period", "ما فيه مهام مفتوحة في هذا المجال": "No open tasks in this area", "ما فيه مواعيد الأسبوع القادم بعد": "Nothing scheduled for next week yet", "اختر ملف صدّرته من زر «تصدير نسخة": "Choose a file you exported with \"Export backup", "الاستيراد يحذف كل بياناتك الحالية": "Importing deletes all your current data", "عدّل الاسم أو افتح العميل الموجود": "Change the name or open the existing client", "ما فيه مهام مربوطة، فالنسبة يدوية": "No linked tasks, so progress is manual", "يتعبى من اسم الملف إذا تركته فاضي": "Filled from the file name if left empty", "افتحه أو نزّله من زر «فتح في تبويب": "Open or download it with \"Open in new tab", "الملف فيه عناصر مكررة بنفس المعرّف": "The file has duplicate items with the same ID", "ما فيه شي منجز مسجل الأسبوع الماضي": "Nothing done was logged last week", "ما فيه مهام مستحقة اليوم أو متأخرة": "No tasks due today or late", "مثال: الأسعار شاملة التوريد، الدفع": "e.g. Prices include supply, payment", "مثال: حملة الجمعة البيضاء للجوالات": "e.g. White Friday phones campaign", "الموقع مو مربوط بقاعدة البيانات بعد": "The site isn't connected to the database yet", "تشوف آخر نسخة محفوظة على هذا الجهاز": "You're seeing the last copy saved on this device", "سجّل دخولك عشان تشوف مهامك ومشاريعك": "Sign in to see your tasks and projects", "فعّلها من إعدادات الموقع في المتصفح": "Enable them in the browser's site settings", "يصير مهمة أساسية في قائمة ذاك اليوم": "It becomes a basic task on that day's list", "أضف بنود العرض: الكمية، وسعر التكلفة": "Add quote items: quantity, cost price", "ما فيه مشاريع مقترحة تطابق البحث هنا": "No proposed projects match the search here", "اسحب لإعادة الترتيب، أو استخدم الأسهم": "Drag to reorder, or use the arrows", "ما فيه مهام تطابق البحث في هذا المجال": "No tasks match the search in this area", "مثال: الأسعار شاملة التوريد والتركيب…": "e.g. Prices include supply & installation…", "هذه اللوحة تقبل التعديل من صاحبها فقط": "Only the owner can edit this dashboard", "أضف أول حملة بهدفها وميزانيتها وفترتها": "Add your first campaign with its goal, budget and period", "أضف رابط عرض السعر أو القائمة أو الشيت": "Add a link to the quote, list or sheet", "اكتب اسم مهمة أو مشروع أو عميل أو ملف…": "Type a task, project, client or file name…", "تأكد من الاتصال بالإنترنت وحدّث الصفحة": "Check your internet connection and refresh the page", "التعديل يرجع يشتغل أول ما يرجع الإنترنت": "Editing comes back as soon as you're online", "الملف ما فيه المجالات والمشاريع والمهام": "The file doesn't have areas, projects and tasks", "ملفات الشركة: وثائق، عروض، عقود، تصاميم": "Company files: documents, quotes, contracts, designs", "مهمة جانبية في تنظيم الوقت وتطوير أعمال": "side tasks on time management and growing", "حدّثت لك البيانات، أعد تعديلك إذا تحتاجه": "I refreshed the data, redo your change if needed", "لازم تخلص كل يوم، وتنحسب في نسبة الإنجاز": "Must be done every day; counted in progress", "مشروع في طلب العرض أو الإرسال أو التفاوض": "projects in RFQ, sent or negotiation", "مشروع مقترح جديد، تختار مجاله من النموذج": "New proposed project; pick its area in the form", "تأكد من الاتصال بالإنترنت وجرّب مرة ثانية": "Check your internet connection and try again", "عملاء مكتوبين في المشاريع وما هم في السجل": "Clients named in projects but not in the list", "حذف المشروع نهائياً؟ مهامه تبقى بدون مشروع": "Delete the project permanently? Its tasks stay without a project", "ابحث في المهام والمشاريع والعملاء والملفات…": "Search tasks, projects, clients and files…", "مهمة بدون موعد تظهر في عرض «المشاريع والمهام": "tasks without a date appear in \"Projects & tasks", "اربط المشروع بعميل من السجل عشان تظهر بياناته": "Link the project to a client from the list to show their details", "التعديل يحتاج إنترنت، وما تغيّر شي في بياناتك": "Editing needs internet; nothing changed in your data", "ملفات المتجر: صور المنتجات، المحتوى، التقارير": "Store files: product images, content, reports", "حذف العميل؟ مشاريعه تبقى ويبقى اسمه مكتوب فيها": "Delete the client? Their projects stay and keep the name", "ما قدرت أحفظ التعديل، جرّب مرة ثانية بعد لحظات": "Couldn't save the change, try again in a moment", "اسمح بالنوافذ المنبثقة لهذا الموقع وجرّب مرة ثانية": "Allow pop-ups for this site and try again", "اكتب الحل اللي تقترحه، وبعدين اعتمده عشان يتحول لمهمة": "Write your proposed solution, then approve it to turn it into a task", "لما يتعمّد مشروع مقترح من أي مجال، اضغط «تم التعميد» ويطلع هنا": "When a proposed project gets approved in any area, tap \"Approved\" and it shows here", "تأكد من الاتصال، وبعدها جرّب مرة ثانية أو استورد نسختك الاحتياطية": "Check your connection, then try again or import your backup", "تنبيه قبل موعد المهمة بيوم، يشتغل والموقع مفتوح أو مثبت على الجهاز": "A reminder the day before a task is due; works while the site is open or installed", "ارفع وثائق الشركة والعروض والتصاميم والقوالب عشان ترجع لها وقت ما تحتاج": "Upload company documents, quotes, designs and templates to find them when you need them", "سجّل أي مشكلة تواجهك مع الحل المقترح، ولما تعتمد الحل يتحول لمهمة أساسية في يومها": "Log any issue with a proposed solution; when you approve it, it becomes a basic task on its day", "هذا العنصر تعدّل من جهاز ثاني قبل شوي، فما حفظت تعديلك عشان ما يضيع التعديل الأحدث": "This item was just edited on another device, so I didn't save your change to avoid losing the newer one", "ب": "B"};
+const AR_RUN=/[؀-ۿ]+(?:[  \t،؛:«»\-–]+[؀-ۿ]+)*[؟…]?/g,HAS_AR=/[؀-ۿ]/;
+const EN_IDX=new Map();for(const k of Object.keys(EN)){if(!(/\s/.test(k.trim())||/[:：]$/.test(k)))continue;const f=k.split(/[\s:]/)[0];if(!EN_IDX.has(f))EN_IDX.set(f,[]);EN_IDX.get(f).push(k)}
+for(const a of EN_IDX.values())a.sort((x,y)=>y.length-x.length);
+function trRun(r){if(EN[r]!==undefined)return EN[r];const tail=r.match(/[؟…]$/);if(tail&&EN[r.slice(0,-1)]===undefined)return trRun(r.slice(0,-1))+(tail[0]==="؟"?"?":"…");
+  const seg=(multiOnly)=>{let out="",rest=r,all=true,any=false;
+    while(rest){const f=rest.split(/[\s:]/)[0],c=EN_IDX.get(f);let k=null;
+      if(c)for(const x of c)if(rest.startsWith(x)&&(rest.length===x.length||/[\s:،]/.test(rest[x.length])||/[:،]$/.test(x))){k=x;break}
+      if(!k&&!multiOnly&&EN[f]!==undefined)k=f;
+      if(!k){all=false;const m=(rest.match(/^\S+/)||[rest])[0];out+=m;rest=rest.slice(m.length)}else{out+=EN[k];rest=rest.slice(k.length);any=true}
+      const sp=(rest.match(/^[\s:،]*/)||[""])[0];out+=sp.replace(/،/g,",");rest=rest.slice(sp.length)}
+    return{out,all,any}};
+  const a=seg(false);if(a.all)return a.out;
+  const m=seg(true);return m.any?m.out:r}
+const PRE=[["ر.س","SAR"],["م.ب","MB"],["ك.ب","KB"]];
+function trText(s){if(!HAS_AR.test(s))return s;for(const [a,b] of PRE)if(s.includes(a))s=s.split(a).join(b);return s.replace(AR_RUN,trRun).replace(/؟/g,"?")}
+const TR_ATTR=["placeholder","aria-label","title","alt"];
+function trAttrs(el){for(const a of TR_ATTR){const v=el.getAttribute(a);if(v&&HAS_AR.test(v)){const t=trText(v);if(t!==v)el.setAttribute(a,t)}}}
+const trSkip=el=>el.nodeName==="TEXTAREA"||el.nodeName==="SCRIPT"||el.nodeName==="STYLE"||el.getAttribute("translate")==="no";
+function trNode(n){
+  if(n.nodeType===3){const p=n.parentElement;if(!p||p.closest('textarea,script,style,[translate="no"]'))return;const v=n.nodeValue;if(HAS_AR.test(v)){const t=trText(v);if(t!==v)n.nodeValue=t}return}
+  if(n.nodeType===1&&n.nodeName==="TEXTAREA"){trAttrs(n);return}
+  if(n.nodeType!==1||n.closest('textarea,script,style,[translate="no"]'))return;
+  trAttrs(n);const w=document.createTreeWalker(n,5,{acceptNode:x=>{if(x.nodeType===1&&trSkip(x)){if(x.nodeName==="TEXTAREA")trAttrs(x);return 2}return 1}});let x;
+  while(x=w.nextNode()){if(x.nodeType===3){const v=x.nodeValue;if(HAS_AR.test(v)){const t=trText(v);if(t!==v)x.nodeValue=t}}else trAttrs(x)}}
+if(LANG==="en"){document.documentElement.lang="en";document.documentElement.dir="ltr";trNode(document.body);
+  new MutationObserver(ms=>{for(const m of ms){if(m.type==="childList")m.addedNodes.forEach(trNode);else if(m.type==="characterData")trNode(m.target);else if(m.target.nodeType===1&&!m.target.closest('[translate="no"]'))trAttrs(m.target)}})
+    .observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:TR_ATTR})}
 
 /* ---------- Supabase data layer ---------- */
 const KIND=Object.fromEntries(KINDS_ALL);
@@ -2100,7 +2430,7 @@ function makeDb(sb){
     }
   }
   /* saves to the same row run one after another, so our own quick edits never look like a conflict */
-  function save(kind,id,data){const prev=QUEUE.get(id)||Promise.resolve();const next=prev.catch(()=>{}).then(()=>saveNow(kind,id,data));QUEUE.set(id,next);next.finally(()=>{if(QUEUE.get(id)===next)QUEUE.delete(id)}).catch(()=>{});return next}
+  function save(kind,id,data){const prev=QUEUE.get(id)||Promise.resolve();const next=prev.catch(()=>{}).then(()=>saveNow(kind,id,data));QUEUE.set(id,next);saveState(1);next.then(()=>saveState(-1,false),()=>saveState(-1,true));next.finally(()=>{if(QUEUE.get(id)===next)QUEUE.delete(id)}).catch(()=>{});return next}
   return{
     doc(path){
       const [c,id]=path.split("/"),kind=KIND[c];
@@ -2144,7 +2474,7 @@ const CACHE_KEY="sanka.cache.v1";
 function writeCache(rows){try{localStorage.setItem(CACHE_KEY,JSON.stringify({at:new Date().toISOString(),rows}))}catch(_){}}
 function readCache(){try{const c=JSON.parse(localStorage.getItem(CACHE_KEY)||"null");return c&&Array.isArray(c.rows)?c:null}catch(_){return null}}
 function clearCache(){try{localStorage.removeItem(CACHE_KEY)}catch(_){}}
-function setOffline(on,at){S.offline=on;const b=$("offline");b.hidden=!on;
+function setOffline(on,at){S.offline=on;setTimeout(()=>saveState());const b=$("offline");b.hidden=!on;
   if(on)b.textContent=`أنت بدون اتصال. تشوف آخر نسخة محفوظة على هذا الجهاز${at?" ("+fmtDT(at)+")":""}. التعديل يرجع يشتغل أول ما يرجع الإنترنت.`}
 window.addEventListener("offline",()=>{if(S.db)setOffline(true,readCache()?.at)});
 window.addEventListener("online",()=>{if(S.db)loadAll()});
