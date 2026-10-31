@@ -3424,7 +3424,7 @@ setInterval(checkNudges,10*60*1000);
 
 /* ================= V7: nightly auto-sync (called by the scheduled task) ================= */
 /* payload: {date, tiktok:{followers,items:[{at,views,url}]}, instagram:{...}, snap:{followers,views,items:[...]}, salla:{yesterday:{visits,sales,orders},today:{...},abandoned,pending:[{ref,days}],lowStock:[{name,qty}]}, errors:{src:msg}} */
-const PMAP={tiktok:"tiktok",instagram:"insta",snap:"snap"},PNAME={tiktok:"تيك توك",instagram:"انستقرام",snap:"سناب",salla:"سلة"};
+const PMAP={tiktok:"tiktok",instagram:"insta",snap:"snap"},PNAME={tiktok:"تيك توك",instagram:"انستقرام",snap:"سناب",salla:"سلة",ga:"تحليلات جوجل"};
 const ryHM=iso=>new Date(iso).toLocaleTimeString("en-GB",{timeZone:"Asia/Riyadh",hour:"2-digit",minute:"2-digit",hour12:false});
 async function applyAutoSync(P){if(!S.db)throw new Error("not signed in");const nowIso=now(),D=P.date||ryToday(),Y=addDays(D,-1),out={posted:[],missing:[],views:[],errors:{...(P.errors||{})},notes:[]};
   /* 1) match uploads to the content calendar (nearest to the scheduled time) and keep 24h views per clip */
@@ -3452,6 +3452,7 @@ async function applyAutoSync(P){if(!S.db)throw new Error("not signed in");const 
   if(P.salla?.today){const t=P.salla.today;if(num(t.visits)!=null)vals.visits=num(t.visits);if(num(t.sales)!=null)vals.sales=num(t.sales);if(num(t.orders)!=null)vals.orders=num(t.orders)}
   if(num(P.salla?.abandoned)!=null)vals.abandoned=num(P.salla.abandoned);
   if(Object.keys(vals).length)await saveMetricVals(D,vals,"auto");
+  if(num(P.ga?.sessions)!=null){const gv={gaVisits:num(P.ga.sessions)};await saveMetricVals(P.ga.date||Y,gv,"auto")}
   if(P.salla?.yesterday){const y=P.salla.yesterday,yv={};for(const k of ["visits","sales","orders"])if(num(y[k])!=null)yv[k]=num(y[k]);if(Object.keys(yv).length)await saveMetricVals(Y,yv,"auto")}
   /* 3) store follow-ups */
   const sa=storeArea()?.id;
@@ -3459,7 +3460,7 @@ async function applyAutoSync(P){if(!S.db)throw new Error("not signed in");const 
     const low=P.salla?.lowStock||[];if(low.length&&!S.tasks.some(t=>t.auto==="stock"&&t.due===D))await S.db.collection("tasks").add({title:`مخزون: ${low.length} منتج خلص أو قرب يخلص`,notes:low.slice(0,10).map(x=>`${x.name} (${x.qty})`).join("، "),area:sa,project:"",priority:"high",tier:"basic",due:D,status:"todo",auto:"stock",created:now()});
     const left=S.posts.filter(p=>p.date>D).length;if(S.posts.length&&left<5&&!S.tasks.some(t=>t.auto==="content"&&t.status!=="done"))await S.db.collection("tasks").add({title:`جهّز دفعة المحتوى الجاية (باقي ${left} مقاطع مجدولة)`,area:sa,project:"",priority:"high",tier:"basic",due:addDays(D,1),status:"todo",auto:"content",created:now()})}
   /* 4) sync status */
-  const cfg=syncCfg(),sources={...(cfg.sources||{})};for(const src of ["tiktok","instagram","snap","salla"]){if(!(src in P)&&!out.errors[src])continue;sources[src]={...(sources[src]||{}),auto:true,last:nowIso,ok:!out.errors[src],msg:out.errors[src]||""}}
+  const cfg=syncCfg(),sources={...(cfg.sources||{})};for(const src of ["tiktok","instagram","snap","salla","ga"]){if(!(src in P)&&!out.errors[src])continue;sources[src]={...(sources[src]||{}),auto:true,last:nowIso,ok:!out.errors[src],msg:out.errors[src]||""}}
   await S.db.doc("settings/sync").set({...stripId(syncCfg()),sources,lastRun:nowIso,sched,sallaMonth});
   actPush({k:"report",a:"export",n:"مزامنة تلقائية للأرقام والمحتوى"});
   /* 5) weekly report on Sundays (covers the week that just ended) */
@@ -3468,11 +3469,12 @@ async function applyAutoSync(P){if(!S.db)throw new Error("not signed in");const 
 function addMinutesHM(hm,d){const [h,m]=hm.split(":").map(Number);let t=h*60+m+d;t=Math.max(0,Math.min(1439,t));return String(Math.floor(t/60)).padStart(2,"0")+":"+String(t%60).padStart(2,"0")}
 function bestClips(days=7){const from=addDays(ryToday(),-days),l=[];for(const p of S.posts.filter(p=>p.date>=from))for(const k of ["tiktok","insta","snap"]){const v=p.views?.[k]?.v24??p.views?.[k]?.last;if(v!=null)l.push({p,k,v})}return l.sort((a,b)=>b.v-a.v)}
 function bestTime(){const by={};for(const p of S.posts)for(const k of ["tiktok","insta"]){const v=p.views?.[k]?.v24;if(v==null)continue;const t=p.time||"21:00";(by[t]=by[t]||[]).push(v)}const r=Object.entries(by).filter(([,a])=>a.length>=2).map(([t,a])=>[t,a.reduce((s,x)=>s+x,0)/a.length]).sort((a,b)=>b[1]-a[1]);return r.length>=2?r:null}
-function autoSummary(D,out,vals,P,rep){const L=[`sensing store — ${dLong(D)}`],pn={insta:"انستقرام",tiktok:"تيك توك",snap:"سناب"};
+function autoSummary(D,out,vals,P,rep){const num0=v=>v===""||v==null||!isFinite(+v)?null:+v;const L=[`sensing store — ${dLong(D)}`],pn={insta:"انستقرام",tiktok:"تيك توك",snap:"سناب"};
   if(out.posted.length)L.push("✅ نزل: "+out.posted.join("، "));
   if(out.missing.length)L.push("⚠ ما نزل: "+out.missing.join("، "));
   const f=[];for(const [k,l] of [["ttFollowers","تيك توك"],["igFollowers","انستقرام"],["snapFollowers","سناب"]])if(vals[k]!=null){const p=lastMetricWith(k,D);f.push(`${l} ${n0(vals[k])}${p?` (${vals[k]-p[k]>=0?"+":""}${n0(vals[k]-p[k])})`:""}`)}if(f.length)L.push("👥 "+f.join(" · "));
   if(out.views.length)L.push("👁 أول 24 ساعة: "+out.views.map(x=>`${x.t} ${PNAME[x.src]} ${n0(x.v)}`).join("، "));
+  if(P.ga&&num0(P.ga.sessions)!=null)L.push(`📈 تحليلات جوجل (${P.ga.date&&P.ga.date!==D?"أمس":"اليوم"}): ${n0(+P.ga.sessions)} زيارة · ${n0(+P.ga.users||0)} مستخدم${(P.ga.sources||[]).length?" — "+P.ga.sources.slice(0,3).map(x=>`${x.src} ${x.n}`).join("، "):""}`);
   const y=P.salla?.yesterday;if(y)L.push(`🛒 أمس: ${n0(+y.sales||0)} ر.س · ${+y.orders||0} طلب · ${n0(+y.visits||0)} زيارة`);
   const t=P.salla?.today;if(t)L.push(`🛍 سلة من آخر تحديث: ${n0(+t.visits||0)} زيارة · ${n0(+t.sales||0)} ر.س · ${+t.orders||0} طلب`);
   if(P.salla?.month)L.push(`📅 الشهر لين الحين: ${n0(+P.salla.month.visits||0)} زيارة · ${n0(+P.salla.month.sales||0)} ر.س · ${+P.salla.month.orders||0} طلب`);
