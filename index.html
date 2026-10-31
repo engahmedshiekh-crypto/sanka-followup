@@ -3429,6 +3429,9 @@ const ryHM=iso=>new Date(iso).toLocaleTimeString("en-GB",{timeZone:"Asia/Riyadh"
 async function applyAutoSync(P){if(!S.db)throw new Error("not signed in");const nowIso=now(),D=P.date||ryToday(),Y=addDays(D,-1),out={posted:[],missing:[],views:[],errors:{...(P.errors||{})},notes:[]};
   /* 1) match uploads to the content calendar (nearest to the scheduled time) and keep 24h views per clip */
   const REF=P.at||nowIso,refHM=ryHM(REF),mins=hm=>{const [h,m]=(hm||"21:00").split(":").map(Number);return h*60+m};
+  const cfg0=syncCfg(),sched={...(cfg0.sched||{})};out.scheduled=[];
+  for(const src of Object.keys(PMAP)){if(!P[src]?.items)continue;const m={...(sched[src]||{})};P[src].items=P[src].items.filter(x=>{if(x.scheduledFor){if(x.id)m[x.id]=x.scheduledFor;out.scheduled.push(`${PNAME[src]} ${ryDay(x.scheduledFor)===D?"اليوم":dShort(ryDay(x.scheduledFor))} ${ryHM(x.scheduledFor)}`);return false}if(x.id&&m[x.id])x.at=m[x.id];return true});
+    for(const k of Object.keys(m))if(m[k]<addDays(D,-10))delete m[k];sched[src]=m}
   for(const [src,key] of Object.entries(PMAP)){if(!P[src])continue;const items=(P[src].items||[]).filter(x=>x&&x.at).map(x=>({...x,day:ryDay(x.at),hm:ryHM(x.at)}));
     const due=S.posts.filter(p=>p.date&&p.date<=D&&p.date>=Y);const pairs=[];
     for(const p of due)for(const it of items)if(it.day===p.date)pairs.push({p,it,d:Math.abs(mins(it.hm)-mins(p.time))});
@@ -3442,6 +3445,10 @@ async function applyAutoSync(P){if(!S.db)throw new Error("not signed in");const 
   const vals={};const num=v=>v===""||v==null||!isFinite(+v)?null:+v;
   if(num(P.tiktok?.followers)!=null)vals.ttFollowers=num(P.tiktok.followers);if(num(P.instagram?.followers)!=null)vals.igFollowers=num(P.instagram.followers);if(num(P.snap?.followers)!=null)vals.snapFollowers=num(P.snap.followers);if(num(P.snap?.views)!=null)vals.snapViews=num(P.snap.views);
   for(const [src,k] of [["tiktok","ttViews24"],["instagram","igViews24"]]){const v=out.views.filter(x=>x.src===src).pop();if(v)vals[k]=v.v}
+  let sallaMonth=cfg0.sallaMonth||null;
+  if(P.salla?.month){const M=P.salla.month,mk=D.slice(0,7),prev=sallaMonth&&sallaMonth.m===mk?sallaMonth:null,base=prev||(D.slice(8)==="01"?{visits:0,sales:0,orders:0}:null);
+    if(base){P.salla.today={visits:Math.max(0,(+M.visits||0)-(+base.visits||0)),sales:Math.max(0,(+M.sales||0)-(+base.sales||0)),orders:Math.max(0,(+M.orders||0)-(+base.orders||0))}}else out.notes.push("الزيارات اليومية من سلة تبدأ تنحسب من التحديث الجاي");
+    sallaMonth={m:mk,visits:+M.visits||0,sales:+M.sales||0,orders:+M.orders||0,at:REF}}
   if(P.salla?.today){const t=P.salla.today;if(num(t.visits)!=null)vals.visits=num(t.visits);if(num(t.sales)!=null)vals.sales=num(t.sales);if(num(t.orders)!=null)vals.orders=num(t.orders)}
   if(num(P.salla?.abandoned)!=null)vals.abandoned=num(P.salla.abandoned);
   if(Object.keys(vals).length)await saveMetricVals(D,vals,"auto");
@@ -3453,7 +3460,7 @@ async function applyAutoSync(P){if(!S.db)throw new Error("not signed in");const 
     const left=S.posts.filter(p=>p.date>D).length;if(S.posts.length&&left<5&&!S.tasks.some(t=>t.auto==="content"&&t.status!=="done"))await S.db.collection("tasks").add({title:`جهّز دفعة المحتوى الجاية (باقي ${left} مقاطع مجدولة)`,area:sa,project:"",priority:"high",tier:"basic",due:addDays(D,1),status:"todo",auto:"content",created:now()})}
   /* 4) sync status */
   const cfg=syncCfg(),sources={...(cfg.sources||{})};for(const src of ["tiktok","instagram","snap","salla"]){if(!(src in P)&&!out.errors[src])continue;sources[src]={...(sources[src]||{}),auto:true,last:nowIso,ok:!out.errors[src],msg:out.errors[src]||""}}
-  await S.db.doc("settings/sync").set({...stripId(cfg),sources,lastRun:nowIso});
+  await S.db.doc("settings/sync").set({...stripId(syncCfg()),sources,lastRun:nowIso,sched,sallaMonth});
   actPush({k:"report",a:"export",n:"مزامنة تلقائية للأرقام والمحتوى"});
   /* 5) weekly report on Sundays (covers the week that just ended) */
   let rep=null;if(new Date(D+"T12:00:00Z").getUTCDay()===0&&P.weekly!==false){try{rep=await autoWeeklyReport(D)}catch(e){out.errors.report=String(e.message||e)}}
@@ -3467,7 +3474,10 @@ function autoSummary(D,out,vals,P,rep){const L=[`sensing store — ${dLong(D)}`]
   const f=[];for(const [k,l] of [["ttFollowers","تيك توك"],["igFollowers","انستقرام"],["snapFollowers","سناب"]])if(vals[k]!=null){const p=lastMetricWith(k,D);f.push(`${l} ${n0(vals[k])}${p?` (${vals[k]-p[k]>=0?"+":""}${n0(vals[k]-p[k])})`:""}`)}if(f.length)L.push("👥 "+f.join(" · "));
   if(out.views.length)L.push("👁 أول 24 ساعة: "+out.views.map(x=>`${x.t} ${PNAME[x.src]} ${n0(x.v)}`).join("، "));
   const y=P.salla?.yesterday;if(y)L.push(`🛒 أمس: ${n0(+y.sales||0)} ر.س · ${+y.orders||0} طلب · ${n0(+y.visits||0)} زيارة`);
-  const t=P.salla?.today;if(t)L.push(`🛍 اليوم لين الحين: ${n0(+t.sales||0)} ر.س · ${+t.orders||0} طلب`);
+  const t=P.salla?.today;if(t)L.push(`🛍 سلة من آخر تحديث: ${n0(+t.visits||0)} زيارة · ${n0(+t.sales||0)} ر.س · ${+t.orders||0} طلب`);
+  if(P.salla?.month)L.push(`📅 الشهر لين الحين: ${n0(+P.salla.month.visits||0)} زيارة · ${n0(+P.salla.month.sales||0)} ر.س · ${+P.salla.month.orders||0} طلب`);
+  if(out.scheduled?.length)L.push("🗓 مجدول: "+out.scheduled.join("، "));
+  for(const n of out.notes)L.push("ℹ "+n);
   if((P.salla?.pending||[]).some(x=>+x.days>=1))L.push(`📦 ${(P.salla.pending||[]).filter(x=>+x.days>=1).length} طلب ينتظر شحن أكثر من يوم`);
   if((P.salla?.lowStock||[]).length)L.push(`📉 مخزون: ${P.salla.lowStock.slice(0,3).map(x=>x.name).join("، ")}${P.salla.lowStock.length>3?"…":""}`);
   if(vals.abandoned!=null&&vals.abandoned>=cartLimit())L.push(`🛒 ${vals.abandoned} سلة متروكة، انضافت مهمة كوبون`);
